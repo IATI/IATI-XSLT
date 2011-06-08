@@ -1,0 +1,4 @@
+This folder contains XSLT for transforming IATI XML to JSON.
+
+
+iati-activities-xml-to-json-for-exhibit.xsl creates JSON for use with Simile Exhibit (http://www.simile-widgets.org/exhibit/) with some additional elements to generate Google Visualisation API graphs. It is used at http://aidinfolabs.org/laboratory/IATI-Data-Explorer/.
