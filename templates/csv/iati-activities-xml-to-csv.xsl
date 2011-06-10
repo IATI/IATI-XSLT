@@ -4,25 +4,56 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 <xsl:output method="text" encoding="utf8"/>
 <xsl:strip-space elements="*"/>
 
+<xsl:template name="toText">
+  <xsl:param name="value" select="''"/>
+  <xsl:variable name="doublequote">"</xsl:variable>
+  <xsl:value-of select="translate($value,$doublequote,'')"/>
+</xsl:template>
+
 <xsl:template name="join" >
   <xsl:param name="values" select="''"/>
+  <xsl:variable name="doublequote">"</xsl:variable>
   <xsl:for-each select="$values">
     <xsl:choose>
       <xsl:when test="position() = 1">
-        <xsl:value-of select="."/>
+        <xsl:value-of select="translate(.,$doublequote,'')"/>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:value-of select="concat(';',.) "/>
+        <xsl:value-of select="translate(concat(';',.),$doublequote,'')"/>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:for-each>
 </xsl:template>
 
 <xsl:template match="/">
-  <xsl:text>iati-identifier,hierarchy,title,default-currency,reporting-org-refs,reporting-orgs,participating-org-refs-funding,participating-orgs-funding,participating-org-refs-extending,participating-orgs-extending,participating-org-refs-accountable,participating-orgs-accountable,participating-org-refs-implementing,participating-orgs-implementing,description,start-planned,start-actual,end-planned,end-actual,activity-status-code,activity-status,contact-organisation,contact-telephone,contact-email,contact-mailing-address,default-tied-status-code,default-tied-status,related-activity-ref,related-activity-type,related-activity
+  <xsl:text>policy-markers,policy-marker-vocabulary,policy-marker-significance,policy-marker-codes,transaction-value-dates,transaction-type,transaction-date,transaction-values,iati-identifier,hierarchy,title,default-currency,reporting-org-refs,reporting-orgs,participating-org-refs-funding,participating-orgs-funding,participating-org-refs-extending,participating-orgs-extending,participating-org-refs-accountable,participating-orgs-accountable,participating-org-refs-implementing,participating-orgs-implementing,description,start-planned,start-actual,end-planned,end-actual,activity-status-code,activity-status,contact-organisation,contact-telephone,contact-email,contact-mailing-address,default-tied-status-code,default-tied-status,related-activity-ref,related-activity-type,related-activity
 </xsl:text>
   <xsl:for-each select="/iati-activities/iati-activity">
+
     <xsl:text>"</xsl:text>
+
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="policy-marker"/> </xsl:call-template>
+    <xsl:text>","</xsl:text>
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="policy-marker/@vocabulary"/> </xsl:call-template>
+    <xsl:text>","</xsl:text>
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="policy-marker/@significance"/> </xsl:call-template>
+    <xsl:text>","</xsl:text>
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="policy-marker/@code"/> </xsl:call-template>
+    <xsl:text>","</xsl:text>
+
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="transaction/value/@value-date"/> </xsl:call-template>
+    <xsl:text>","</xsl:text>
+
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="transaction/transaction-type"/> </xsl:call-template>
+    <xsl:text>","</xsl:text>
+
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="transaction/transaction-date"/> </xsl:call-template>
+    <xsl:text>","</xsl:text>
+
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="transaction/value"/> </xsl:call-template>
+    <xsl:text>","</xsl:text>
+
+
     <xsl:value-of select="iati-identifier"/>
     <xsl:text>","</xsl:text>
     <xsl:value-of select="@hierarchy"/>
@@ -64,7 +95,7 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
     <xsl:call-template name="join"> <xsl:with-param name="values" select="participating-org[@role='Implementing']"/> </xsl:call-template>
     <xsl:text>","</xsl:text>
 
-    <xsl:value-of select="description"/>
+    <xsl:call-template name="toText"> <xsl:with-param name="value" select="description"/> </xsl:call-template>
     <xsl:text>","</xsl:text>
     <xsl:value-of select="activity-date[@type='start-planned']"/>
     <xsl:text>","</xsl:text>
