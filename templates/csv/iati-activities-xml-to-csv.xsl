@@ -52,7 +52,8 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
   <xsl:text>policy-markers,policy-marker-vocabulary,policy-marker-significance,policy-marker-codes,</xsl:text>
   <xsl:text>contact-organisation,contact-telephone,contact-email,contact-mailing-address,</xsl:text>
   <xsl:text>default-tied-status-code,default-tied-status,</xsl:text>
-  <xsl:text>related-activity-ref,related-activity-type,related-activity
+  <xsl:text>related-activity-refs,related-activity-types,related-activities,</xsl:text>
+  <xsl:text>legacy-data-names,legacy-data-values,legacy-data-iati-equivalents,legacy-data
 </xsl:text>
   <xsl:for-each select="/iati-activities/iati-activity">
 
@@ -196,14 +197,29 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
     <!-- default-tied-status -->
     <xsl:call-template name="add"> <xsl:with-param name="value" select="default-tied-status"/> </xsl:call-template>
 
-    <!-- related-activity-ref -->
-    <xsl:call-template name="add"> <xsl:with-param name="value" select="related-activity/@ref"/> </xsl:call-template>
 
-    <!-- related-activity-type -->
-    <xsl:call-template name="add"> <xsl:with-param name="value" select="related-activity/@type"/> </xsl:call-template>
+    <!-- related-activity-refs -->
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="related-activity/@ref"/> </xsl:call-template>
 
-    <!-- related-activity -->
-    <xsl:call-template name="add"> <xsl:with-param name="value" select="related-activity"/> <xsl:with-param name="separator"><xsl:text>,</xsl:text></xsl:with-param> </xsl:call-template>
+    <!-- related-activity-types -->
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="related-activity/@type"/> </xsl:call-template>
+
+    <!-- related-activities -->
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="related-activity"/> </xsl:call-template>
+
+
+    <!-- legacy-data-names -->
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="legacy-data/@name"/> </xsl:call-template>
+
+    <!-- legacy-data-values -->
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="legacy-data/@value"/> </xsl:call-template>
+
+    <!-- legacy-data-iati-equivalents -->
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="legacy-data/@iati-equivalent"/> </xsl:call-template>
+
+    <!-- legacy-data -->
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="legacy-data"/> <xsl:with-param name="separator"><xsl:text></xsl:text></xsl:with-param> </xsl:call-template>
+
     <xsl:text>
 </xsl:text>
   </xsl:for-each>
