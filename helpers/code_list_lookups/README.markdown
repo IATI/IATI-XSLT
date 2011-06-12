@@ -22,15 +22,18 @@ A lookup template and lookup list which should be placed before the closing </xs
 
 A commented out example template you can use to run a lookup. For example:
 
+```xml
   <xsl:apply-templates select='document("")//FlowType:codes'>
      <xsl:with-param name="code" select="lookup/@key"/>
   </xsl:apply-templates>
+```
 
 The value of the select should be the ID you want to lookup. Often this is the field/@type or similar.
 
 ## Default values
 If you need to return a default value either when the input key is missing, or a lookup returns no values, then you can add a choose block to your template as the example below shows:
 
+```xml
 <!--Lookup template-->
 <xsl:template match="OrganisationType:codes">
   <xsl:param name="code"/>
@@ -39,3 +42,8 @@ If you need to return a default value either when the input key is missing, or a
 		<xsl:otherwise> - Unknown Organisation Type</xsl:otherwise>
 	</xsl:choose>
 </xsl:template>
+```
+
+##To Do 
+
+The current way of looking up template values does not make use of keys (I struggled to get this to work), but I believe this means it should be possible to implement a more efficient way of running lookups - particularly with larger lookup tables.
