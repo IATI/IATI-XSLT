@@ -19,16 +19,17 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
   <xsl:param name="values" select="''"/>
   <xsl:param name="quote"><xsl:text>"</xsl:text></xsl:param>
   <xsl:param name="separator"><xsl:text>,</xsl:text></xsl:param>
+  <xsl:param name="remove"></xsl:param>
   <xsl:variable name="doublequote">"</xsl:variable>
 
   <xsl:value-of select="$quote"/>
   <xsl:for-each select="$values">
     <xsl:choose>
       <xsl:when test="position() = 1">
-        <xsl:value-of select="translate(.,$doublequote,'')"/>
+        <xsl:value-of select="translate(translate(.,$doublequote,''),$remove,'')"/>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:value-of select="translate(concat('; ',.),$doublequote,'')"/>
+        <xsl:value-of select="translate(translate(concat('; ',.),$doublequote,''),$remove,'')"/>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:for-each>
@@ -79,11 +80,11 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
     <!-- transaction-date-text -->
     <xsl:call-template name="join"> <xsl:with-param name="values" select="transaction/transaction-date"/> </xsl:call-template>
 
-    <!-- transaction-date -->
-    <xsl:call-template name="join"> <xsl:with-param name="values" select="transaction/transaction-date/@iso-date"/> </xsl:call-template>
+    <!-- transaction-date - removes Z from end of ISO dates -->
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="transaction/transaction-date/@iso-date"/> <xsl:with-param name="remove">Z</xsl:with-param> </xsl:call-template>
 
-    <!-- transaction-value-dates -->
-    <xsl:call-template name="join"> <xsl:with-param name="values" select="transaction/value/@value-date"/> </xsl:call-template>
+    <!-- transaction-value-dates - removes Z from end of ISO dates -->
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="transaction/value/@value-date"/> <xsl:with-param name="remove">Z</xsl:with-param> </xsl:call-template>
 
     <!-- transaction-descriptions -->
     <xsl:call-template name="join"> <xsl:with-param name="values" select="transaction/description"/> </xsl:call-template>
