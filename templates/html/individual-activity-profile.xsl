@@ -10,6 +10,7 @@
 <!-- Tested with:
          DFID Data 
 -->
+<xsl:key name="policy-markers" match="policy-marker/@vocabulary" use="." />
 
 <xsl:template match="iati-activity">
 <!--Set up some useful variables-->
@@ -22,6 +23,7 @@
 		<style>
 			.note {display:none;}
 		</style>
+		<xsl:call-template name="GoogleViz"> <xsl:with-param name="activity" select="."/> </xsl:call-template>
  	  
 	</head>
 	<body>
@@ -78,18 +80,117 @@
 	
 	<div class="geography">
 		<h3>Recipient areas</h3>
-		<ul>
+		<ul class="geography">
 		<xsl:for-each select="recipient-country|recipient-region"><!--Check both region and country-->
-			<li><span class="recipient-geography" id="{@code}"><xsl:value-of select="."/></span></li>
+			<li><span class="recipient-geography {local-name()}" id="{@code}"><xsl:value-of select="."/></span></li>
 		</xsl:for-each>	
 		</ul>
-
+		<div id="recipient-map" class="map"></div>
 	</div>
+	
+	
+	<div class="policy-markers">
+			<h4>Policy Markers</h4>
+			<div class="graph" id="policy-markers-graph">
+			</div>
+			<table title="Policy markers" class="policy-markers datatable">
+				<tr>
+					<th>Vocabulary</th>
+					<th>Code</th>
+					<th>Marker</th>
+					<th>Significance</th>
+				</tr>
+				<xsl:for-each select="policy-marker">			
+					<xsl:sort select="@vocabulary"/>
+						<tr>
+							<td class="vocabulary"><xsl:value-of select="@vocabulary"/></td>
+							<td class="code"><xsl:value-of select="@code"/></td>
+							<td class="name"><xsl:value-of select="."/></td>
+							<td class="weight"><xsl:value-of select="@significance"/></td>
+						</tr>
+				</xsl:for-each>
+			</table>
+	</div>
+	
+	<div class="sectors">
+			<h4>Sectors</h4>
+		<div class="graph" id="sector-codes-graph">
+		</div>	
+			<table title="Sector codes" class="sector-codes datatable">
+				<tr>
+					<th>Vocabulary</th>
+					<th>Code</th>
+					<th>Sector</th>
+					<th>Percentage</th>
+				</tr>
+				<xsl:for-each select="sector">			
+					<xsl:sort select="@vocabulary"/>
+						<tr>
+							<td class="vocabulary"><xsl:value-of select="@vocabulary"/></td>
+							<td class="code"><xsl:value-of select="@code"/></td>
+							<td class="name"><xsl:value-of select="."/></td>
+							<td class="weight"><xsl:value-of select="@percentage"/></td>
+						</tr>
+				</xsl:for-each>
+			</table>
+	</div>
+	
+	
 	
 	</xsl:for-each>
 
 
 </body></html>
+</xsl:template>
+
+
+
+<xsl:template name="GoogleViz">
+  <xsl:param name="activity"/>
+	<style>
+		#recipient-map { width: 300px; height: 200px; }
+	</style>
+	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+	<script type="text/javascript">		
+       google.load('visualization', '1', {'packages': ['geochart','corechart']});
+
+	   $(document).ready(function(){
+			$(".datatable").each(function(){
+		
+				table_div = $(this).parent().find(".graph").attr("id");
+				
+				var data = new google.visualization.DataTable();
+			    data.addColumn('string', 'Name');
+			    data.addColumn('number', 'Value');
+				$(this).find("tr:has(td)").each(function(){
+					data.addRows([[$(this).find(".name").html(), parseInt($(this).find(".weight").html())]]);
+				});
+				var chart = new google.visualization.PieChart(document.getElementById(table_div));
+				chart.draw(data, {width: 400, height: 240});
+				delete data;
+			});
+			
+			$("ul.geography").each(function(){
+
+					map_div = $(this).parent().find(".map").attr("id");
+
+					var data = new google.visualization.DataTable();
+				    data.addColumn('string', 'Country');
+				    data.addColumn('number', 'Value');
+					$(this).find("li span").each(function(){
+						data.addRows([[$(this).attr("id"), 1]]);
+					});
+					var options = {};
+					var container = document.getElementById(map_div);
+				    var geochart = new google.visualization.GeoChart(container);
+				    geochart.draw(data, options);
+					delete data;
+			});
+	   });
+	
+	</script>
+
 </xsl:template>
 
 
