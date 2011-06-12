@@ -28,7 +28,7 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
         <xsl:value-of select="translate(.,$doublequote,'')"/>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:value-of select="translate(concat(';',.),$doublequote,'')"/>
+        <xsl:value-of select="translate(concat('; ',.),$doublequote,'')"/>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:for-each>
@@ -37,7 +37,21 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 </xsl:template>
 
 <xsl:template match="/">
-  <xsl:text>iati-identifier,hierarchy,title,transaction-values-sum,default-currency,transaction-values,transaction-type,transaction-date-text,transaction-date,transaction-value-dates,reporting-org-refs,reporting-orgs,participating-org-refs-funding,participating-orgs-funding,participating-org-refs-extending,participating-orgs-extending,participating-org-refs-accountable,participating-orgs-accountable,participating-org-refs-implementing,participating-orgs-implementing,description,start-planned,start-actual,end-planned,end-actual,activity-status-code,activity-status,policy-markers,policy-marker-vocabulary,policy-marker-significance,policy-marker-codes,contact-organisation,contact-telephone,contact-email,contact-mailing-address,default-tied-status-code,default-tied-status,related-activity-ref,related-activity-type,related-activity
+  <xsl:text>iati-identifier,hierarchy,title,transaction-values-sum,default-currency,</xsl:text>
+  <xsl:text>transaction-values,transaction-type,transaction-date-text,transaction-date,transaction-value-dates,</xsl:text>
+  <xsl:text>transaction-descriptions,transaction-flow-types,transaction-aid-types,</xsl:text>
+  <xsl:text>transaction-finance-types,transaction-tied_statuses,transaction-disbursement-channels,</xsl:text>
+  <xsl:text>reporting-org-refs,reporting-orgs,</xsl:text>
+  <xsl:text>participating-org-refs-funding,participating-orgs-funding,</xsl:text>
+  <xsl:text>participating-org-refs-extending,participating-orgs-extending,</xsl:text>
+  <xsl:text>participating-org-refs-accountable,participating-orgs-accountable,</xsl:text>
+  <xsl:text>participating-org-refs-implementing,participating-orgs-implementing,</xsl:text>
+  <xsl:text>description,start-planned,start-actual,end-planned,end-actual,</xsl:text>
+  <xsl:text>activity-status-code,activity-status,</xsl:text>
+  <xsl:text>policy-markers,policy-marker-vocabulary,policy-marker-significance,policy-marker-codes,</xsl:text>
+  <xsl:text>contact-organisation,contact-telephone,contact-email,contact-mailing-address,</xsl:text>
+  <xsl:text>default-tied-status-code,default-tied-status,</xsl:text>
+  <xsl:text>related-activity-ref,related-activity-type,related-activity
 </xsl:text>
   <xsl:for-each select="/iati-activities/iati-activity">
 
@@ -71,6 +85,23 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
     <!-- transaction-value-dates -->
     <xsl:call-template name="join"> <xsl:with-param name="values" select="transaction/value/@value-date"/> </xsl:call-template>
 
+    <!-- transaction-descriptions -->
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="transaction/description"/> </xsl:call-template>
+
+    <!-- transaction-flow-types -->
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="transaction/flow-type"/> </xsl:call-template>
+
+    <!-- transaction-aid-types -->
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="transaction/aid-type"/> </xsl:call-template>
+
+    <!-- transaction-finance-types -->
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="transaction/finance-type"/> </xsl:call-template>
+
+    <!-- transaction-tied_statuses -->
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="transaction/tied-status"/> </xsl:call-template>
+
+    <!-- transaction-disbursement-channels -->
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="transaction/tied-status"/> </xsl:call-template>
 
 
     <!-- reporting-org-refs -->
