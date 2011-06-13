@@ -56,10 +56,10 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
     <xsl:call-template name="add"> <xsl:with-param name="value" select="title"/> </xsl:call-template>
 
 	<!--Country-->
-    <xsl:call-template name="join"> <xsl:with-param name="value" select="recipient-country"/> </xsl:call-template>
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="recipient-country"/> </xsl:call-template>
 
 	<!--Region-->
-    <xsl:call-template name="join"> <xsl:with-param name="value" select="recipient-region"/> </xsl:call-template>
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="recipient-region"/> </xsl:call-template>
 
 	<!--title-->
     <xsl:call-template name="add"> <xsl:with-param name="value" select="title"/> </xsl:call-template>
