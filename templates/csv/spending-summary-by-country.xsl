@@ -47,7 +47,7 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 </xsl:template>
 
 <xsl:template match="/">
-  <xsl:text>iati-identifier,title,country,region</xsl:text>
+  <xsl:text>iati-identifier,title,country,region,</xsl:text>
   <xsl:text>default-currency,commitment,disbursement,reimbursement,expenditure,loan-repayment,interest-repayment,</xsl:text>
   <xsl:text>description,start-planned,start-actual,end-planned,end-actual,</xsl:text>
   <xsl:text>activity-status-code,activity-status,</xsl:text>
@@ -68,9 +68,6 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
 	<!--Region-->
     <xsl:call-template name="join"> <xsl:with-param name="values" select="recipient-region"/> </xsl:call-template>
-
-	<!--title-->
-    <xsl:call-template name="add"> <xsl:with-param name="value" select="title"/> </xsl:call-template>
 
     <!-- default-currency -->
     <xsl:call-template name="add"> <xsl:with-param name="value" select="@default-currency"/> </xsl:call-template>
