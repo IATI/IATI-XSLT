@@ -38,6 +38,14 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
   <xsl:value-of select="$separator"/>
 </xsl:template>
 
+<xsl:template name="date">
+  <xsl:param name="value" select="''"/>
+  <xsl:choose>
+  	<xsl:when test="$value/@iso-date"><xsl:call-template name="add"><xsl:with-param name="value" select="$value/@iso-date" /></xsl:call-template></xsl:when>
+  	<xsl:otherwise><xsl:call-template name="add"><xsl:with-param name="value" select="$value" /></xsl:call-template></xsl:otherwise>
+  </xsl:choose>
+</xsl:template>
+
 <xsl:template match="/">
   <xsl:text>iati-identifier,title,country,region</xsl:text>
   <xsl:text>default-currency,commitment,disbursement,reimbursement,expenditure,loan-repayment,interest-repayment,</xsl:text>
@@ -68,37 +76,37 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
     <xsl:call-template name="add"> <xsl:with-param name="value" select="@default-currency"/> </xsl:call-template>
 
     <!-- transaction-values-sum -->
-    <xsl:call-template name="add"> <xsl:with-param name="value" select="sum(transaction/value[activity-type/@code='C'])"/> <xsl:with-param name="quote"></xsl:with-param> </xsl:call-template>
+    <xsl:call-template name="add"> <xsl:with-param name="value" select="sum(transaction[activity-type/@code='C']/value)"/> <xsl:with-param name="quote"></xsl:with-param> </xsl:call-template>
 
     <!-- transaction-values-sum -->
-    <xsl:call-template name="add"> <xsl:with-param name="value" select="sum(transaction/value[activity-type/@code='D'])"/> <xsl:with-param name="quote"></xsl:with-param> </xsl:call-template>
+    <xsl:call-template name="add"> <xsl:with-param name="value" select="sum(transaction[activity-type/@code='D']/value)"/> <xsl:with-param name="quote"></xsl:with-param> </xsl:call-template>
 
     <!-- transaction-values-sum -->
-    <xsl:call-template name="add"> <xsl:with-param name="value" select="sum(transaction/value[activity-type/@code='R'])"/> <xsl:with-param name="quote"></xsl:with-param> </xsl:call-template>
+    <xsl:call-template name="add"> <xsl:with-param name="value" select="sum(transaction[activity-type/@code='R']/value)"/> <xsl:with-param name="quote"></xsl:with-param> </xsl:call-template>
 
     <!-- transaction-values-sum -->
-    <xsl:call-template name="add"> <xsl:with-param name="value" select="sum(transaction/value[activity-type/@code='E'])"/> <xsl:with-param name="quote"></xsl:with-param> </xsl:call-template>
+    <xsl:call-template name="add"> <xsl:with-param name="value" select="sum(transaction[activity-type/@code='E']/value)"/> <xsl:with-param name="quote"></xsl:with-param> </xsl:call-template>
 
     <!-- transaction-values-sum -->
-    <xsl:call-template name="add"> <xsl:with-param name="value" select="sum(transaction/value[activity-type/@code='LR'])"/> <xsl:with-param name="quote"></xsl:with-param> </xsl:call-template>
+    <xsl:call-template name="add"> <xsl:with-param name="value" select="sum(transaction[activity-type/@code='LR']/value)"/> <xsl:with-param name="quote"></xsl:with-param> </xsl:call-template>
 
     <!-- transaction-values-sum -->
-    <xsl:call-template name="add"> <xsl:with-param name="value" select="sum(transaction/value[activity-type/@code='IR'])"/> <xsl:with-param name="quote"></xsl:with-param> </xsl:call-template>
+    <xsl:call-template name="add"> <xsl:with-param name="value" select="sum(transaction[activity-type/@code='IR']/value)"/> <xsl:with-param name="quote"></xsl:with-param> </xsl:call-template>
 
     <!-- description -->
     <xsl:call-template name="add"> <xsl:with-param name="value" select="description"/> </xsl:call-template>
 
     <!-- start-planned -->
-    <xsl:call-template name="add"> <xsl:with-param name="value" select="activity-date[@type='start-planned']"/> </xsl:call-template>
+    <xsl:call-template name="date"> <xsl:with-param name="value" select="activity-date[@type='start-planned']"/> </xsl:call-template>
 
     <!-- start-actual -->
-    <xsl:call-template name="add"> <xsl:with-param name="value" select="activity-date[@type='start-actual']"/> </xsl:call-template>
+    <xsl:call-template name="date"> <xsl:with-param name="value" select="activity-date[@type='start-actual']"/> </xsl:call-template>
 
     <!-- end-planned -->
-    <xsl:call-template name="add"> <xsl:with-param name="value" select="activity-date[@type='end-planned']"/> </xsl:call-template>
+    <xsl:call-template name="date"> <xsl:with-param name="value" select="activity-date[@type='end-planned']"/> </xsl:call-template>
 
     <!-- end-actual -->
-    <xsl:call-template name="add"> <xsl:with-param name="value" select="activity-date[@type='end-actual']"/> </xsl:call-template>
+    <xsl:call-template name="date"> <xsl:with-param name="value" select="activity-date[@type='end-actual']"/> </xsl:call-template>
 
     <!-- activity-status-code -->
     <xsl:call-template name="add"> <xsl:with-param name="value" select="activity-status/@code"/> </xsl:call-template>
