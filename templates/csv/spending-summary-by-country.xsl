@@ -2,7 +2,7 @@
 xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 <!--This template provides a summary of transaction values for each transaction type including columns for country and region-->
 
-<xsl:output method="text" encoding="utf8"/>
+<xsl:output method="text" encoding="utf8" omit-xml-declaration="yes"/>
 <xsl:strip-space elements="*"/>
 
 <xsl:template name="add">
