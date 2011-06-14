@@ -38,7 +38,7 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
   <xsl:value-of select="$separator"/>
 </xsl:template>
 
-<xsl:template name="date">
+<xsl:template name="iati-date">
   <xsl:param name="value" select="''"/>
   <xsl:choose>
   	<xsl:when test="$value/@iso-date"><xsl:call-template name="add"><xsl:with-param name="value" select="$value/@iso-date" /></xsl:call-template></xsl:when>
@@ -94,16 +94,16 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
     <xsl:call-template name="add"> <xsl:with-param name="value" select="description"/> </xsl:call-template>
 
     <!-- start-planned -->
-    <xsl:call-template name="date"> <xsl:with-param name="value" select="activity-date[@type='start-planned']"/> </xsl:call-template>
+    <xsl:call-template name="iati-date"> <xsl:with-param name="value" select="activity-date[@type='start-planned']"/> </xsl:call-template>
 
     <!-- start-actual -->
-    <xsl:call-template name="date"> <xsl:with-param name="value" select="activity-date[@type='start-actual']"/> </xsl:call-template>
+    <xsl:call-template name="iati-date"> <xsl:with-param name="value" select="activity-date[@type='start-actual']"/> </xsl:call-template>
 
     <!-- end-planned -->
-    <xsl:call-template name="date"> <xsl:with-param name="value" select="activity-date[@type='end-planned']"/> </xsl:call-template>
+    <xsl:call-template name="iati-date"> <xsl:with-param name="value" select="activity-date[@type='end-planned']"/> </xsl:call-template>
 
     <!-- end-actual -->
-    <xsl:call-template name="date"> <xsl:with-param name="value" select="activity-date[@type='end-actual']"/> </xsl:call-template>
+    <xsl:call-template name="iati-date"> <xsl:with-param name="value" select="activity-date[@type='end-actual']"/> </xsl:call-template>
 
     <!-- activity-status-code -->
     <xsl:call-template name="add"> <xsl:with-param name="value" select="activity-status/@code"/> </xsl:call-template>

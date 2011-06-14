@@ -77,7 +77,6 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
     "recipient-country-code": "<xsl:value-of select="recipient-country/@code"/>", 
     </xsl:if> <!-- In this chunk we check if a country is given, if not - we check for a related sub-project with a country-->
     <xsl:if test="not(recipient-country)"><xsl:call-template name="missingCountry"> <xsl:with-param name="childProject" select="related-activity[@type=2]/@ref"/> </xsl:call-template></xsl:if>
-"blah":"blah"
   <xsl:text>},
   </xsl:text>
 </xsl:for-each>
@@ -132,7 +131,7 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
  </xsl:template>
 
 
- <xsl:template name="urlPattern"><!--Designed to be extended to provide authoritive URLs for different IATI Providing organisations-->
+ <xsl:template name="urlPattern"><!--Designed to be extended to provide authoritative URLs for different IATI Providing organisations-->
    <xsl:param name="org" select="''"/>
    <xsl:param name="id" select="''"/>
    <xsl:choose>

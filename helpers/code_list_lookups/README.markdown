@@ -44,6 +44,10 @@ If you need to return a default value either when the input key is missing, or a
 </xsl:template>
 ```
 
+## Notes
+
+Tested with the XSLT transformations on eXist. Some other parsers/parsing environments may not accept the document('') trick used to embed the code-lists in the XSLT. 
+
 ##To Do 
 
 The current way of looking up template values does not make use of keys (I struggled to get this to work), but I believe this means it should be possible to implement a more efficient way of running lookups - particularly with larger lookup tables.
