@@ -8,7 +8,7 @@
 	xmlns:TransactionType="http://dev.yipl.com.np/iati-aims/public/api/codelists/TransactionType" 
 	xmlns:GoogleRegion="http://code.google.com/apis/chart/interactive/docs/gallery/geochart.html" 
 	extension-element-prefixes="math date str">
-	<xsl:output encoding="utf-8" indent="yes" method="html"/>
+	<xsl:output encoding="utf-8" indent="yes" method="html" encoding="text/html"/>
 <!-- Tested with:
        DFID Data 
 -->
