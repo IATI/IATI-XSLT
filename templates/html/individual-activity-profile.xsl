@@ -82,8 +82,7 @@
 					<span class="note">This gives a total of commitments recorded in the default currency of <xsl:value-of select="$currency"/> .</span>
 				</span>
 				
-				<!--The following section isn't 100% reliable as it uses the order of dates in the original file. Note, uses exslt Date extension-->
-				<span class="commitment_years">Between <xsl:value-of select="date:year(date:date(transaction[transaction-type/@code='C' and position()=1][value/@currency='$currency' or not(value/@currency)]/value/@value-date))"/> and <xsl:value-of select="date:year(date:date(transaction[transaction-type/@code='C' and position()=last()][value/@currency='$currency' or not(value/@currency)]/value/@value-date))"/></span>
+				
 				
 	   	</span>
 	    <span class="spending_summary">
