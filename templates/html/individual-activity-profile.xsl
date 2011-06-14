@@ -313,7 +313,7 @@
 				}
 				years = data.getColumnRange(0); /*Year is in column 0 - change if it moves*/
 				var valueForTypeAndYear = 0; var graphRow = 0;
-				for(range=years.min;range<xsl:text disable-output-escaping="yes">&lt;</xsl:text>years.max;range++) {
+				for(range=years.min;range<xsl:value-of disable-output-escaping="yes" select="'&lt;'"/>years.max;range++) {
 					graphData.addRows(1); 
 					graphData.setCell(graphRow,0," "+range);
 					for(col in types) {
