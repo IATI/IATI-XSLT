@@ -55,7 +55,7 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
   <xsl:text>contact-organisation,contact-telephone,contact-email,contact-mailing-address,</xsl:text>
   <xsl:text>default-tied-status-code,default-tied-status,
 </xsl:text>
-  <xsl:for-each select="/iati-activities/iati-activity">
+  <xsl:for-each select="//iati-activity">
 
     <!-- iati-identifier -->
     <xsl:call-template name="add"> <xsl:with-param name="value" select="iati-identifier"/> </xsl:call-template>
