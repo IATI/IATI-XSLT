@@ -84,6 +84,11 @@
   <xsl:text>planned-disbursement-updates,planned-disbursement-period-start-descriptions,planned-disbursement-period-start-dates,</xsl:text>
   <xsl:text>planned-disbursement-period-end-descriptions,planned-disbursement-period-end-dates,</xsl:text>
   <xsl:text>planned-disbursement-values,planned-disbursement-value-dates,planned-disbursement-value-currencies,</xsl:text>
+  <xsl:text>location-percentages,location-type-codes,location-types,location-names,</xsl:text>
+  <xsl:text>location-descriptions,location-administrative,location-administrative-country,</xsl:text>
+  <xsl:text>location-administrative-admin1,location-administrative-admin2,</xsl:text>
+  <xsl:text>location-coordinates-latitudes,location-coordinates-longitudes,location-coordinates-precisions,</xsl:text>
+  <xsl:text>location-gazetteer-entries, location-gazetteer-entry-refs,</xsl:text>
   <xsl:text>legacy-data-names,legacy-data-values,legacy-data-iati-equivalents,legacy-data
 </xsl:text>
   <xsl:for-each select="/iati-activities/iati-activity">
@@ -327,6 +332,36 @@
     <!-- planned-disbursement-value-currencies -->
     <xsl:call-template name="join"> <xsl:with-param name="values" select="planned-disbursement/@updated"/> </xsl:call-template>
     <xsl:call-template name="add_start_end_value"> <xsl:with-param name="element_name">planned-disbursement</xsl:with-param> </xsl:call-template>
+
+
+    <!-- location-percentages -->
+    <!-- location-type-codes -->
+    <!-- location-types -->
+    <!-- location-names -->
+    <!-- location-descriptions -->
+    <!-- location-administrative -->
+    <!-- location-administrative-country -->
+    <!-- location-administrative-admin1 -->
+    <!-- location-administrative-admin2 -->
+    <!-- location-coordinates-latitudes -->
+    <!-- location-coordinates-longitudes -->
+    <!-- location-coordinates-precisions -->
+    <!-- location-gazetteer-entries -->
+    <!-- location-gazetteer-entry-refs -->
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="location/@percentage"/> </xsl:call-template>
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="location/location-type/@code"/> </xsl:call-template>
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="location/location-type"/> </xsl:call-template>
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="location/name"/> </xsl:call-template>
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="location/description"/> </xsl:call-template>
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="location/administrative"/> </xsl:call-template>
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="location/administrative/@country"/> </xsl:call-template>
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="location/administrative/@adm1"/> </xsl:call-template>
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="location/administrative/@adm2"/> </xsl:call-template>
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="location/coordinates/@latitude"/> </xsl:call-template>
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="location/coordinates/@longitude"/> </xsl:call-template>
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="location/coordinates/@precision"/> </xsl:call-template>
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="location/gazetteer-entry"/> </xsl:call-template>
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="location/gazetteer-entry/@gazetteer-ref"/> </xsl:call-template>
 
 
     <!-- legacy-data-names -->
