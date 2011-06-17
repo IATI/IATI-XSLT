@@ -2,12 +2,18 @@
 
 <xsl:import href="csv-utilities.xsl" />
 
-<xsl:key name="transaction" match="transaction/transaction-type" use="@code" />
-
 <xsl:template name="sum_transaction_values">
   <xsl:param name="transaction-type" select="''"/>
+  <xsl:call-template name="add">
+    <xsl:with-param name="value" select="sum(transaction/transaction-type[@code=$transaction-type]/../value)"/>
+    <xsl:with-param name="quote"></xsl:with-param>
+  </xsl:call-template>
+</xsl:template>
 
-  <xsl:call-template name="add"> <xsl:with-param name="value" select="sum(transaction/transaction-type[@code=$transaction-type]/../value)"/> <xsl:with-param name="quote"></xsl:with-param> </xsl:call-template>
+<xsl:template name="add_org">
+  <xsl:param name="role" select="''"/>
+  <xsl:call-template name="join"> <xsl:with-param name="values" select="participating-org[@role=$role]/@ref"/> </xsl:call-template>
+  <xsl:call-template name="join"> <xsl:with-param name="values" select="participating-org[@role=$role]"/> </xsl:call-template>
 </xsl:template>
 
 <xsl:template name="add_start_end_value">
@@ -128,34 +134,26 @@
     <!-- Funding: The country or institution which provides the funds. -->
     <!-- http://iatistandard.org/codelists/organisation_role -->
     <!-- participating-org-refs-funding -->
-    <xsl:call-template name="join"> <xsl:with-param name="values" select="participating-org[@role='Funding']/@ref"/> </xsl:call-template>
-
     <!-- participating-orgs-funding -->
-    <xsl:call-template name="join"> <xsl:with-param name="values" select="participating-org[@role='Funding']"/> </xsl:call-template>
+    <xsl:call-template name="add_org"> <xsl:with-param name="role">Funding</xsl:with-param> </xsl:call-template>
 
     <!-- Extending: The government entity (central, state or local government agency or department), or agency within an institution, financing the activity from its own budget -->
     <!-- http://iatistandard.org/codelists/organisation_role -->
     <!-- participating-org-refs-extending -->
-    <xsl:call-template name="join"> <xsl:with-param name="values" select="participating-org[@role='Extending']/@ref"/> </xsl:call-template>
-
     <!-- participating-orgs-extending -->
-    <xsl:call-template name="join"> <xsl:with-param name="values" select="participating-org[@role='Extending']"/> </xsl:call-template>
+    <xsl:call-template name="add_org"> <xsl:with-param name="role">Extending</xsl:with-param> </xsl:call-template>
 
     <!-- Accountable: The government agency, civil society or private sector institution which is accountable for the implementation of the activity. -->
     <!-- http://iatistandard.org/codelists/organisation_role -->
     <!-- participating-org-refs-accountable -->
-    <xsl:call-template name="join"> <xsl:with-param name="values" select="participating-org[@role='Accountable']/@ref"/> </xsl:call-template>
-
     <!-- participating-orgs-accountable -->
-    <xsl:call-template name="join"> <xsl:with-param name="values" select="participating-org[@role='Accountable']"/> </xsl:call-template>
+    <xsl:call-template name="add_org"> <xsl:with-param name="role">Accountable</xsl:with-param> </xsl:call-template>
 
     <!-- Implementing: The intermediary between the extending agency and the ultimate beneficiary. Also known as executing agency or channel of delivery. They can be public sector, non-governmental agencies (NGOs), Public-Private partnerships, or multilateral institutions -->
     <!-- http://iatistandard.org/codelists/organisation_role -->
     <!-- participating-org-refs-implementing -->
-    <xsl:call-template name="join"> <xsl:with-param name="values" select="participating-org[@role='Implementing']/@ref"/> </xsl:call-template>
-
     <!-- participating-orgs-implementing -->
-    <xsl:call-template name="join"> <xsl:with-param name="values" select="participating-org[@role='Implementing']"/> </xsl:call-template>
+    <xsl:call-template name="add_org"> <xsl:with-param name="role">Implementing</xsl:with-param> </xsl:call-template>
 
     <!-- description -->
     <xsl:call-template name="add"> <xsl:with-param name="value" select="description"/> </xsl:call-template>
