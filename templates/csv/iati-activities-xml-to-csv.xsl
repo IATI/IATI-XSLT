@@ -10,6 +10,17 @@
   <xsl:call-template name="add"> <xsl:with-param name="value" select="sum(transaction/transaction-type[@code=$transaction-type]/../value)"/> <xsl:with-param name="quote"></xsl:with-param> </xsl:call-template>
 </xsl:template>
 
+<xsl:template name="add_start_end_value">
+  <xsl:param name="element_name" select="''"/>
+  <xsl:call-template name="join"> <xsl:with-param name="values" select="*[local-name() = $element_name]/period-start"/> </xsl:call-template>
+  <xsl:call-template name="join"> <xsl:with-param name="values" select="*[local-name() = $element_name]/period-start/@iso-date"/> </xsl:call-template>
+  <xsl:call-template name="join"> <xsl:with-param name="values" select="*[local-name() = $element_name]/period-end"/> </xsl:call-template>
+  <xsl:call-template name="join"> <xsl:with-param name="values" select="*[local-name() = $element_name]/period-end/@iso-date"/> </xsl:call-template>
+  <xsl:call-template name="join"> <xsl:with-param name="values" select="*[local-name() = $element_name]/value"/> </xsl:call-template>
+  <xsl:call-template name="join"> <xsl:with-param name="values" select="*[local-name() = $element_name]/value/@value-date"/> </xsl:call-template>
+  <xsl:call-template name="join"> <xsl:with-param name="values" select="*[local-name() = $element_name]/value/@currency"/> </xsl:call-template>
+</xsl:template>
+
 <xsl:template match="/">
   <xsl:text>iati-identifier,hierarchy,title,default-currency,</xsl:text>
   <xsl:text>commitment,disbursement,</xsl:text>
@@ -31,6 +42,12 @@
   <xsl:text>contact-organisation,contact-telephone,contact-email,contact-mailing-address,</xsl:text>
   <xsl:text>default-tied-status-code,default-tied-status,</xsl:text>
   <xsl:text>related-activity-refs,related-activity-types,related-activities,</xsl:text>
+  <xsl:text>budget-types,budget-period-start-descriptions,budget-period-start-dates,</xsl:text>
+  <xsl:text>budget-period-end-descriptions,budget-period-end-dates,</xsl:text>
+  <xsl:text>budget-values,budget-value-dates,budget-value-currencies,</xsl:text>
+  <xsl:text>planned-disbursement-updates,planned-disbursement-period-start-descriptions,planned-disbursement-period-start-dates,</xsl:text>
+  <xsl:text>planned-disbursement-period-end-descriptions,planned-disbursement-period-end-dates,</xsl:text>
+  <xsl:text>planned-disbursement-values,planned-disbursement-value-dates,planned-disbursement-value-currencies,</xsl:text>
   <xsl:text>legacy-data-names,legacy-data-values,legacy-data-iati-equivalents,legacy-data
 </xsl:text>
   <xsl:for-each select="/iati-activities/iati-activity">
@@ -204,15 +221,35 @@
     <xsl:call-template name="join"> <xsl:with-param name="values" select="related-activity"/> </xsl:call-template>
 
 
+    <!-- budget-types -->
+    <!-- budget-period-start-descriptions -->
+    <!-- budget-period-start-dates -->
+    <!-- budget-period-end-descriptions -->
+    <!-- budget-period-end-dates -->
+    <!-- budget-values -->
+    <!-- budget-value-dates -->
+    <!-- budget-value-currencies -->
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="budget/@type"/> </xsl:call-template>
+    <xsl:call-template name="add_start_end_value"> <xsl:with-param name="element_name">budget</xsl:with-param> </xsl:call-template>
+
+    <!-- planned-disbursement-updates -->
+    <!-- planned-disbursement-period-start-descriptions -->
+    <!-- planned-disbursement-period-start-dates -->
+    <!-- planned-disbursement-period-end-descriptions -->
+    <!-- planned-disbursement-period-end-dates -->
+    <!-- planned-disbursement-values -->
+    <!-- planned-disbursement-value-dates -->
+    <!-- planned-disbursement-value-currencies -->
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="planned-disbursement/@updated"/> </xsl:call-template>
+    <xsl:call-template name="add_start_end_value"> <xsl:with-param name="element_name">planned-disbursement</xsl:with-param> </xsl:call-template>
+
+
     <!-- legacy-data-names -->
     <xsl:call-template name="join"> <xsl:with-param name="values" select="legacy-data/@name"/> </xsl:call-template>
-
     <!-- legacy-data-values -->
     <xsl:call-template name="join"> <xsl:with-param name="values" select="legacy-data/@value"/> </xsl:call-template>
-
     <!-- legacy-data-iati-equivalents -->
     <xsl:call-template name="join"> <xsl:with-param name="values" select="legacy-data/@iati-equivalent"/> </xsl:call-template>
-
     <!-- legacy-data -->
     <xsl:call-template name="join"> <xsl:with-param name="values" select="legacy-data"/> <xsl:with-param name="separator"><xsl:text></xsl:text></xsl:with-param> </xsl:call-template>
 
