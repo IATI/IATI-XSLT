@@ -64,7 +64,9 @@
   <xsl:text>participating-org-refs-extending,participating-orgs-extending,</xsl:text>
   <xsl:text>participating-org-refs-accountable,participating-orgs-accountable,</xsl:text>
   <xsl:text>participating-org-refs-implementing,participating-orgs-implementing,</xsl:text>
-  <xsl:text>description,start-planned,start-actual,end-planned,end-actual,</xsl:text>
+  <xsl:text>description,</xsl:text>
+  <xsl:text>document-link-urls,document-link-formats,document-link-category-codes,document-link-categories,document-link-titles,</xsl:text>
+  <xsl:text>start-planned,start-actual,end-planned,end-actual,</xsl:text>
   <xsl:text>activity-website,</xsl:text>
   <xsl:text>activity-status-code,activity-status,</xsl:text>
   <xsl:text>collaboration-type-codes,collaboration-types,</xsl:text>
@@ -206,6 +208,17 @@
 
     <!-- description -->
     <xsl:call-template name="add"> <xsl:with-param name="value" select="description"/> </xsl:call-template>
+
+    <!-- document-link-urls -->
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="document-link/@url"/> </xsl:call-template>
+    <!-- document-link-formats -->
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="document-link/@format"/> </xsl:call-template>
+    <!-- document-link-category-codes -->
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="document-link/category/@code"/> </xsl:call-template>
+    <!-- document-link-categories -->
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="document-link/category"/> </xsl:call-template>
+    <!-- document-link-titles -->
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="document-link/title"/> </xsl:call-template>
 
     <!-- start-planned -->
     <!-- start-actual -->
