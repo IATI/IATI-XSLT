@@ -74,7 +74,8 @@
   <xsl:text>activity-status-code,activity-status,</xsl:text>
   <xsl:text>collaboration-type-codes,collaboration-types,</xsl:text>
   <xsl:text>conditions-attached,condition-types,conditions,</xsl:text>
-  <xsl:text>policy-markers,policy-marker-vocabulary,policy-marker-significance,policy-marker-codes,</xsl:text>
+  <xsl:text>sectors,sector-vocabularies,sector-codes,sector-percentages,</xsl:text>
+  <xsl:text>policy-markers,policy-marker-vocabularies,policy-marker-significance,policy-marker-codes,</xsl:text>
   <xsl:text>contact-organisation,contact-person-name,contact-telephone,contact-email,contact-mailing-address,</xsl:text>
   <xsl:text>default-aid-type-code,default-aid-type,</xsl:text>
   <xsl:text>default-finance-type-code,default-finance-type,</xsl:text>
@@ -278,23 +279,30 @@
     <xsl:call-template name="add_with_code"> <xsl:with-param name="field">collaboration-type</xsl:with-param> </xsl:call-template>
 
     <!-- conditions-attached -->
-    <xsl:call-template name="add"> <xsl:with-param name="value" select="conditions/@attached"/> </xsl:call-template>
     <!-- condition-types -->
-    <xsl:call-template name="join"> <xsl:with-param name="values" select="conditions/condition/@type"/> </xsl:call-template>
     <!-- conditions -->
+    <xsl:call-template name="add"> <xsl:with-param name="value" select="conditions/@attached"/> </xsl:call-template>
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="conditions/condition/@type"/> </xsl:call-template>
     <xsl:call-template name="join"> <xsl:with-param name="values" select="conditions/condition"/> </xsl:call-template>
 
 
+    <!-- sectors -->
+    <!-- sector-vocabularies -->
+    <!-- sector-codes -->
+    <!-- sector-percentages -->
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="sector"/> </xsl:call-template>
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="sector/@vocabulary"/> </xsl:call-template>
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="sector/@code"/> </xsl:call-template>
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="sector/@percentage"/> </xsl:call-template>
+
+
     <!-- policy-markers -->
-    <xsl:call-template name="join"> <xsl:with-param name="values" select="policy-marker"/> </xsl:call-template>
-
-    <!-- policy-marker-vocabulary -->
-    <xsl:call-template name="join"> <xsl:with-param name="values" select="policy-marker/@vocabulary"/> </xsl:call-template>
-
+    <!-- policy-marker-vocabularies -->
     <!-- policy-marker-significance -->
-    <xsl:call-template name="join"> <xsl:with-param name="values" select="policy-marker/@significance"/> </xsl:call-template>
-
     <!-- policy-marker-codes -->
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="policy-marker"/> </xsl:call-template>
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="policy-marker/@vocabulary"/> </xsl:call-template>
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="policy-marker/@significance"/> </xsl:call-template>
     <xsl:call-template name="join"> <xsl:with-param name="values" select="policy-marker/@code"/> </xsl:call-template>
 
 
