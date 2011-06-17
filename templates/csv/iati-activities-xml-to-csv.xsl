@@ -45,7 +45,8 @@
 </xsl:template>
 
 <xsl:template match="/">
-  <xsl:text>iati-identifier,hierarchy,title,default-currency,</xsl:text>
+  <xsl:text>iati-identifier,other-identifier,other-identifier-owner-name,other-identifier-owner-ref,</xsl:text>
+  <xsl:text>hierarchy,title,default-currency,</xsl:text>
   <xsl:text>commitment,disbursement,</xsl:text>
   <xsl:text>reimbursement,expenditure,</xsl:text>
   <xsl:text>incoming-funds,loan-repayment,</xsl:text>
@@ -59,11 +60,13 @@
   <xsl:text>transaction-finance-type-codes,transaction-finance-types,</xsl:text>
   <xsl:text>transaction-tied_status-codes,transaction-tied_statuses,</xsl:text>
   <xsl:text>transaction-disbursement-channel-codes,transaction-disbursement-channels,</xsl:text>
-  <xsl:text>reporting-org-refs,reporting-orgs,</xsl:text>
+  <xsl:text>reporting-org-refs,reporting-org-types,reporting-orgs,</xsl:text>
   <xsl:text>participating-org-refs-funding,participating-orgs-funding,</xsl:text>
   <xsl:text>participating-org-refs-extending,participating-orgs-extending,</xsl:text>
   <xsl:text>participating-org-refs-accountable,participating-orgs-accountable,</xsl:text>
   <xsl:text>participating-org-refs-implementing,participating-orgs-implementing,</xsl:text>
+  <xsl:text>recipient-country-codes,recipient-countries,recipient-country-percentages,</xsl:text>
+  <xsl:text>recipient-region-codes,recipient-regions,recipient-region-percentages,</xsl:text>
   <xsl:text>description,</xsl:text>
   <xsl:text>document-link-urls,document-link-formats,document-link-category-codes,document-link-categories,document-link-titles,</xsl:text>
   <xsl:text>start-planned,start-actual,end-planned,end-actual,</xsl:text>
@@ -89,12 +92,26 @@
   <xsl:text>location-administrative-admin1,location-administrative-admin2,</xsl:text>
   <xsl:text>location-coordinates-latitudes,location-coordinates-longitudes,location-coordinates-precisions,</xsl:text>
   <xsl:text>location-gazetteer-entries, location-gazetteer-entry-refs,</xsl:text>
+  <xsl:text>result-types,result-titles,result-descriptions,</xsl:text>
+  <xsl:text>result-indicator-measures,result-indicator-baselines,</xsl:text>
+  <xsl:text>result-indicator-baseline-years,result-indicator-baseline-values,</xsl:text>
+  <xsl:text>result-indicator-targets,result-indicator-target-years,</xsl:text>
+  <xsl:text>result-indicator-target-values,result-indicator-actuals,</xsl:text>
+  <xsl:text>result-indicator-actual-years,result-indicator-actual-values</xsl:text>
   <xsl:text>legacy-data-names,legacy-data-values,legacy-data-iati-equivalents,legacy-data
 </xsl:text>
   <xsl:for-each select="/iati-activities/iati-activity">
 
     <!-- iati-identifier -->
     <xsl:call-template name="add"> <xsl:with-param name="value" select="iati-identifier"/> </xsl:call-template>
+
+    <!-- other-identifier -->
+    <xsl:call-template name="add"> <xsl:with-param name="value" select="other-identifier"/> </xsl:call-template>
+
+    <!-- other-identifier-owner-name -->
+    <xsl:call-template name="add"> <xsl:with-param name="value" select="other-identifier/@owner-name"/> </xsl:call-template>
+    <!-- other-identifier-owner-ref -->
+    <xsl:call-template name="add"> <xsl:with-param name="value" select="other-identifier/@owner-ref"/> </xsl:call-template>
 
     <!-- hierarchy -->
     <xsl:call-template name="add"> <xsl:with-param name="value" select="@hierarchy"/> </xsl:call-template>
@@ -182,9 +199,9 @@
 
 
     <!-- reporting-org-refs -->
-    <xsl:call-template name="join"> <xsl:with-param name="values" select="reporting-org/@ref"/> </xsl:call-template>
-
     <!-- reporting-orgs -->
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="reporting-org/@ref"/> </xsl:call-template>
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="reporting-org/@type"/> </xsl:call-template>
     <xsl:call-template name="join"> <xsl:with-param name="values" select="reporting-org"/> </xsl:call-template>
 
     <!-- Funding: The country or institution which provides the funds. -->
@@ -210,6 +227,18 @@
     <!-- participating-org-refs-implementing -->
     <!-- participating-orgs-implementing -->
     <xsl:call-template name="add_org"> <xsl:with-param name="role">Implementing</xsl:with-param> </xsl:call-template>
+
+    <!-- recipient-country-codes -->
+    <!-- recipient-countries -->
+    <!-- recipient-country-percentages -->
+    <xsl:call-template name="add_with_code"> <xsl:with-param name="field" select="recipient-country"/> </xsl:call-template>
+    <xsl:call-template name="add"> <xsl:with-param name="value" select="recipient-country/@percentage"/> </xsl:call-template>
+
+    <!-- recipient-region-codes -->
+    <!-- recipient-regions -->
+    <!-- recipient-region-percentages -->
+    <xsl:call-template name="add_with_code"> <xsl:with-param name="field" select="recipient-region"/> </xsl:call-template>
+    <xsl:call-template name="add"> <xsl:with-param name="value" select="recipient-region/@percentage"/> </xsl:call-template>
 
     <!-- description -->
     <xsl:call-template name="add"> <xsl:with-param name="value" select="description"/> </xsl:call-template>
@@ -302,12 +331,10 @@
     <xsl:call-template name="add_with_code"> <xsl:with-param name="field">default-tied-status</xsl:with-param> </xsl:call-template>
 
     <!-- related-activity-refs -->
-    <xsl:call-template name="join"> <xsl:with-param name="values" select="related-activity/@ref"/> </xsl:call-template>
-
     <!-- related-activity-types -->
-    <xsl:call-template name="join"> <xsl:with-param name="values" select="related-activity/@type"/> </xsl:call-template>
-
     <!-- related-activities -->
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="related-activity/@ref"/> </xsl:call-template>
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="related-activity/@type"/> </xsl:call-template>
     <xsl:call-template name="join"> <xsl:with-param name="values" select="related-activity"/> </xsl:call-template>
 
 
@@ -362,6 +389,33 @@
     <xsl:call-template name="join"> <xsl:with-param name="values" select="location/coordinates/@precision"/> </xsl:call-template>
     <xsl:call-template name="join"> <xsl:with-param name="values" select="location/gazetteer-entry"/> </xsl:call-template>
     <xsl:call-template name="join"> <xsl:with-param name="values" select="location/gazetteer-entry/@gazetteer-ref"/> </xsl:call-template>
+
+    <!-- result-types -->
+    <!-- result-titles -->
+    <!-- result-descriptions -->
+    <!-- result-indicator-measures -->
+    <!-- result-indicator-baselines -->
+    <!-- result-indicator-baseline-years -->
+    <!-- result-indicator-baseline-values -->
+    <!-- result-indicator-targets -->
+    <!-- result-indicator-target-years -->
+    <!-- result-indicator-target-values -->
+    <!-- result-indicator-actuals -->
+    <!-- result-indicator-actual-years -->
+    <!-- result-indicator-actual-values -->
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="result/@type"/> </xsl:call-template>
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="result/title"/> </xsl:call-template>
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="result/description"/> </xsl:call-template>
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="result/indicator/@measure"/> </xsl:call-template>
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="result/indicator/baseline"/> </xsl:call-template>
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="result/indicator/baseline/@year"/> </xsl:call-template>
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="result/indicator/baseline/@value"/> </xsl:call-template>
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="result/indicator/target"/> </xsl:call-template>
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="result/indicator/target/@year"/> </xsl:call-template>
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="result/indicator/target/@value"/> </xsl:call-template>
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="result/indicator/actual"/> </xsl:call-template>
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="result/indicator/actual/@year"/> </xsl:call-template>
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="result/indicator/actual/@value"/> </xsl:call-template>
 
 
     <!-- legacy-data-names -->
