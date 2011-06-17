@@ -68,8 +68,12 @@
   <xsl:text>activity-website,</xsl:text>
   <xsl:text>activity-status-code,activity-status,</xsl:text>
   <xsl:text>collaboration-type-codes,collaboration-types,</xsl:text>
+  <xsl:text>conditions-attached,condition-types,conditions,</xsl:text>
   <xsl:text>policy-markers,policy-marker-vocabulary,policy-marker-significance,policy-marker-codes,</xsl:text>
-  <xsl:text>contact-organisation,contact-telephone,contact-email,contact-mailing-address,</xsl:text>
+  <xsl:text>contact-organisation,contact-person-name,contact-telephone,contact-email,contact-mailing-address,</xsl:text>
+  <xsl:text>default-aid-type-code,default-aid-type,</xsl:text>
+  <xsl:text>default-finance-type-code,default-finance-type,</xsl:text>
+  <xsl:text>default-flow-type-code,default-flow-type,</xsl:text>
   <xsl:text>default-tied-status-code,default-tied-status,</xsl:text>
   <xsl:text>related-activity-refs,related-activity-types,related-activities,</xsl:text>
   <xsl:text>budget-types,budget-period-start-descriptions,budget-period-start-dates,</xsl:text>
@@ -226,6 +230,14 @@
     <!-- collaboration-types -->
     <xsl:call-template name="add_with_code"> <xsl:with-param name="field">collaboration-type</xsl:with-param> </xsl:call-template>
 
+    <!-- conditions-attached -->
+    <xsl:call-template name="add"> <xsl:with-param name="value" select="conditions/@attached"/> </xsl:call-template>
+    <!-- condition-types -->
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="conditions/condition/@type"/> </xsl:call-template>
+    <!-- conditions -->
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="conditions/condition"/> </xsl:call-template>
+
+
     <!-- policy-markers -->
     <xsl:call-template name="join"> <xsl:with-param name="values" select="policy-marker"/> </xsl:call-template>
 
@@ -242,6 +254,9 @@
     <!-- contact-organisation -->
     <xsl:call-template name="add"> <xsl:with-param name="value" select="contact-info/organisation"/> </xsl:call-template>
 
+    <!-- contact-person-name -->
+    <xsl:call-template name="add"> <xsl:with-param name="value" select="contact-info/person-name"/> </xsl:call-template>
+
     <!-- contact-telephone -->
     <xsl:call-template name="add"> <xsl:with-param name="value" select="contact-info/telephone"/> </xsl:call-template>
 
@@ -251,12 +266,22 @@
     <!-- contact-mailing-address -->
     <xsl:call-template name="add"> <xsl:with-param name="value" select="contact-info/mailing-address"/> </xsl:call-template>
 
+
+    <!-- default-aid-type-code -->
+    <!-- default-aid-type -->
+    <xsl:call-template name="add_with_code"> <xsl:with-param name="field">default-aid-type</xsl:with-param> </xsl:call-template>
+
+    <!-- default-finance-type-code -->
+    <!-- default-finance-type -->
+    <xsl:call-template name="add_with_code"> <xsl:with-param name="field">default-finance-type</xsl:with-param> </xsl:call-template>
+
+    <!-- default-flow-type-code -->
+    <!-- default-flow-type -->
+    <xsl:call-template name="add_with_code"> <xsl:with-param name="field">default-flow-type</xsl:with-param> </xsl:call-template>
+
     <!-- default-tied-status-code -->
-    <xsl:call-template name="add"> <xsl:with-param name="value" select="default-tied-status/@code"/> </xsl:call-template>
-
     <!-- default-tied-status -->
-    <xsl:call-template name="add"> <xsl:with-param name="value" select="default-tied-status"/> </xsl:call-template>
-
+    <xsl:call-template name="add_with_code"> <xsl:with-param name="field">default-tied-status</xsl:with-param> </xsl:call-template>
 
     <!-- related-activity-refs -->
     <xsl:call-template name="join"> <xsl:with-param name="values" select="related-activity/@ref"/> </xsl:call-template>
