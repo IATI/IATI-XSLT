@@ -2,9 +2,22 @@
 
 <xsl:import href="csv-utilities.xsl" />
 
+<xsl:key name="transaction" match="transaction/transaction-type" use="@code" />
+
+<xsl:template name="sum_transaction_values">
+  <xsl:param name="transaction-type" select="''"/>
+
+  <xsl:call-template name="add"> <xsl:with-param name="value" select="sum(transaction/transaction-type[@code=$transaction-type]/../value)"/> <xsl:with-param name="quote"></xsl:with-param> </xsl:call-template>
+</xsl:template>
+
 <xsl:template match="/">
-  <xsl:text>iati-identifier,hierarchy,title,transaction-values-sum,default-currency,</xsl:text>
-  <xsl:text>transaction-values,transaction-type,transaction-date-text,transaction-date,transaction-value-dates,</xsl:text>
+  <xsl:text>iati-identifier,hierarchy,title,default-currency,</xsl:text>
+  <xsl:text>commitment,disbursement,</xsl:text>
+  <xsl:text>reimbursement,expenditure,</xsl:text>
+  <xsl:text>incoming-funds,loan-repayment,</xsl:text>
+  <xsl:text>interest-repayment,</xsl:text>
+  <xsl:text>transaction-values,</xsl:text>
+  <xsl:text>transaction-type,transaction-date-text,transaction-date,transaction-value-dates,</xsl:text>
   <xsl:text>transaction-descriptions,transaction-flow-types,transaction-aid-types,</xsl:text>
   <xsl:text>transaction-finance-types,transaction-tied_statuses,transaction-disbursement-channels,</xsl:text>
   <xsl:text>reporting-org-refs,reporting-orgs,</xsl:text>
@@ -31,11 +44,29 @@
     <!-- title -->
     <xsl:call-template name="add"> <xsl:with-param name="value" select="title"/> </xsl:call-template>
 
-    <!-- transaction-values-sum -->
-    <xsl:call-template name="add"> <xsl:with-param name="value" select="sum(transaction/value)"/> <xsl:with-param name="quote"></xsl:with-param> </xsl:call-template>
-
     <!-- default-currency -->
     <xsl:call-template name="add"> <xsl:with-param name="value" select="@default-currency"/> </xsl:call-template>
+
+    <!-- commitment -->
+    <xsl:call-template name="sum_transaction_values"> <xsl:with-param name="transaction-type">C</xsl:with-param> </xsl:call-template>
+
+    <!-- disbursement -->
+    <xsl:call-template name="sum_transaction_values"> <xsl:with-param name="transaction-type">D</xsl:with-param> </xsl:call-template>
+
+    <!-- reimbursement -->
+    <xsl:call-template name="sum_transaction_values"> <xsl:with-param name="transaction-type">R</xsl:with-param> </xsl:call-template>
+
+    <!-- expenditure -->
+    <xsl:call-template name="sum_transaction_values"> <xsl:with-param name="transaction-type">E</xsl:with-param> </xsl:call-template>
+
+    <!-- incoming-funds -->
+    <xsl:call-template name="sum_transaction_values"> <xsl:with-param name="transaction-type">IF</xsl:with-param> </xsl:call-template>
+
+    <!-- loan-repayment -->
+    <xsl:call-template name="sum_transaction_values"> <xsl:with-param name="transaction-type">LR</xsl:with-param> </xsl:call-template>
+
+    <!-- interest-repayment -->
+    <xsl:call-template name="sum_transaction_values"> <xsl:with-param name="transaction-type">IR</xsl:with-param> </xsl:call-template>
 
     <!-- transaction-values -->
     <xsl:call-template name="join"> <xsl:with-param name="values" select="transaction/value"/> </xsl:call-template>
