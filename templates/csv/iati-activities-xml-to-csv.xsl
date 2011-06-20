@@ -6,7 +6,7 @@
 <xsl:template match="/">
   <xsl:text>iati-identifier,other-identifier,other-identifier_owner-name,other-identifier_owner-ref,</xsl:text>
   <xsl:text>hierarchy,title,default-currency,</xsl:text>
-  <xsl:text>transaction-value_currencies,</xsl:text>
+  <xsl:text>transaction_value_currencies,</xsl:text>
   <xsl:text>commitment,disbursement,</xsl:text>
   <xsl:text>reimbursement,expenditure,</xsl:text>
   <xsl:text>incoming-funds,loan-repayment,</xsl:text>
@@ -84,7 +84,7 @@
     <!-- default-currency -->
     <xsl:call-template name="add"> <xsl:with-param name="value" select="@default-currency"/> </xsl:call-template>
 
-    <!-- transaction-value_currencies -->
+    <!-- transaction_value_currencies -->
     <xsl:call-template name="join"> <xsl:with-param name="values" select="transaction/value/@currency"/> </xsl:call-template>
 
     <!-- commitment -->
@@ -144,23 +144,23 @@
 
     <!-- transaction_flow-type_codes -->
     <!-- transaction_flow-types -->
-    <xsl:call-template name="add_transaction_field_with_code"> <xsl:with-param name="field">flow-type</xsl:with-param> </xsl:call-template>
+    <xsl:call-template name="join_transaction_field_with_code"> <xsl:with-param name="field">flow-type</xsl:with-param> </xsl:call-template>
 
     <!-- transaction_aid-type_codes -->
     <!-- transaction_aid-types -->
-    <xsl:call-template name="add_transaction_field_with_code"> <xsl:with-param name="field">aid-type</xsl:with-param> </xsl:call-template>
+    <xsl:call-template name="join_transaction_field_with_code"> <xsl:with-param name="field">aid-type</xsl:with-param> </xsl:call-template>
 
     <!-- transaction_finance-type_codes -->
     <!-- transaction_finance-types -->
-    <xsl:call-template name="add_transaction_field_with_code"> <xsl:with-param name="field">finance-type</xsl:with-param> </xsl:call-template>
+    <xsl:call-template name="join_transaction_field_with_code"> <xsl:with-param name="field">finance-type</xsl:with-param> </xsl:call-template>
 
     <!-- transaction_tied-status_codes -->
     <!-- transaction_tied-statuses -->
-    <xsl:call-template name="add_transaction_field_with_code"> <xsl:with-param name="field">tied-status</xsl:with-param> </xsl:call-template>
+    <xsl:call-template name="join_transaction_field_with_code"> <xsl:with-param name="field">tied-status</xsl:with-param> </xsl:call-template>
 
     <!-- transaction_disbursement-channel_codes -->
     <!-- transaction_disbursement-channels -->
-    <xsl:call-template name="add_transaction_field_with_code"> <xsl:with-param name="field">disbursement-channel</xsl:with-param> </xsl:call-template>
+    <xsl:call-template name="join_transaction_field_with_code"> <xsl:with-param name="field">disbursement-channel</xsl:with-param> </xsl:call-template>
 
 
     <!-- reporting-org_ref -->
@@ -393,7 +393,7 @@
     <xsl:call-template name="join"> <xsl:with-param name="values" select="legacy-data/@value"/> </xsl:call-template>
     <!-- legacy-data_iati-equivalents -->
     <xsl:call-template name="join"> <xsl:with-param name="values" select="legacy-data/@iati-equivalent"/> </xsl:call-template>
-    <!-- legacy-data -->
+    <!-- legacy-data - sets separator param to empty string, as end of row -->
     <xsl:call-template name="join"> <xsl:with-param name="values" select="legacy-data"/> <xsl:with-param name="separator"><xsl:text></xsl:text></xsl:with-param> </xsl:call-template>
 
     <xsl:text>

@@ -18,7 +18,7 @@
   <xsl:text>aid-type_code,aid-type,</xsl:text>
   <xsl:text>finance-type_code,finance-type,</xsl:text>
   <xsl:text>tied-status_code,tied-status,</xsl:text>
-  <xsl:text>disbursement-channel-codes,disbursement-channels
+  <xsl:text>disbursement-channel_code,disbursement-channel
 </xsl:text>
   <xsl:for-each select="//iati-activity/transaction">
 
@@ -109,12 +109,10 @@
     <!-- tied-status -->
     <xsl:call-template name="add_with_code"> <xsl:with-param name="field">tied-status</xsl:with-param> </xsl:call-template>
 
-    <!-- disbursement-channel-codes -->
-    <!-- disbursement-channels -->
-    <xsl:call-template name="add_with_code"> <xsl:with-param name="field">disbursement-channel</xsl:with-param> </xsl:call-template>
-
-    <!-- legacy-data -->
-    <xsl:call-template name="join"> <xsl:with-param name="values" select="legacy-data"/> <xsl:with-param name="separator"><xsl:text></xsl:text></xsl:with-param> </xsl:call-template>
+    <!-- disbursement-channel_code -->
+    <xsl:call-template name="add"> <xsl:with-param name="value" select="disbursement-channel/@code"/> </xsl:call-template>
+    <!-- disbursement-channel - sets separator param to empty string, as end of row -->
+    <xsl:call-template name="add"> <xsl:with-param name="value" select="disbursement-channel"/> <xsl:with-param name="separator"><xsl:text></xsl:text></xsl:with-param> </xsl:call-template>
 
     <xsl:text>
 </xsl:text>
