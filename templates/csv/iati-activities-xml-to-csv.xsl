@@ -4,62 +4,63 @@
 <xsl:import href="csv-iati-helpers.xsl" />
 
 <xsl:template match="/">
-  <xsl:text>iati-identifier,other-identifier,other-identifier-owner-name,other-identifier-owner-ref,</xsl:text>
+  <xsl:text>iati-identifier,other-identifier,other-identifier_owner-name,other-identifier_owner-ref,</xsl:text>
   <xsl:text>hierarchy,title,default-currency,</xsl:text>
+  <xsl:text>transaction-value_currencies,</xsl:text>
   <xsl:text>commitment,disbursement,</xsl:text>
   <xsl:text>reimbursement,expenditure,</xsl:text>
   <xsl:text>incoming-funds,loan-repayment,</xsl:text>
   <xsl:text>interest-repayment,</xsl:text>
-  <xsl:text>transaction-values,</xsl:text>
-  <xsl:text>transaction-value-currencies,transaction-value-dates,</xsl:text>
-  <xsl:text>transaction-type,transaction-date-text,transaction-date,</xsl:text>
-  <xsl:text>transaction-provider-org-refs,transaction-provider-orgs,transaction-provider-activity-ids,</xsl:text>
-  <xsl:text>transaction-receiver-org-refs,transaction-receiver-orgs,transaction-receiver-activity-ids,</xsl:text>
-  <xsl:text>transaction-descriptions,transaction-flow-type-codes,transaction-flow-types,</xsl:text>
-  <xsl:text>transaction-aid-type-codes,transaction-aid-types,</xsl:text>
-  <xsl:text>transaction-finance-type-codes,transaction-finance-types,</xsl:text>
-  <xsl:text>transaction-tied_status-codes,transaction-tied_statuses,</xsl:text>
-  <xsl:text>transaction-disbursement-channel-codes,transaction-disbursement-channels,</xsl:text>
-  <xsl:text>reporting-org-refs,reporting-org-types,reporting-orgs,</xsl:text>
-  <xsl:text>participating-org-refs-funding,participating-orgs-funding,</xsl:text>
-  <xsl:text>participating-org-refs-extending,participating-orgs-extending,</xsl:text>
-  <xsl:text>participating-org-refs-accountable,participating-orgs-accountable,</xsl:text>
-  <xsl:text>participating-org-refs-implementing,participating-orgs-implementing,</xsl:text>
-  <xsl:text>recipient-country-codes,recipient-countries,recipient-country-percentages,</xsl:text>
-  <xsl:text>recipient-region-codes,recipient-regions,recipient-region-percentages,</xsl:text>
+  <xsl:text>transaction_values,</xsl:text>
+  <xsl:text>transaction-value_value-dates,</xsl:text>
+  <xsl:text>transaction-types,transaction-dates,transaction-date_iso-dates,</xsl:text>
+  <xsl:text>transaction_provider-org_refs,transaction_provider-orgs,transaction_provider-org_provider-activity-ids,</xsl:text>
+  <xsl:text>transaction_receiver-org_refs,transaction_receiver-orgs,transaction_receiver-org_receiver-activity-ids,</xsl:text>
+  <xsl:text>transaction_descriptions,transaction_flow-type_codes,transaction_flow-types,</xsl:text>
+  <xsl:text>transaction_aid-type_codes,transaction_aid-types,</xsl:text>
+  <xsl:text>transaction_finance-type_codes,transaction_finance-types,</xsl:text>
+  <xsl:text>transaction_tied-status_codes,transaction_tied-statuses,</xsl:text>
+  <xsl:text>transaction_disbursement-channel_codes,transaction_disbursement-channels,</xsl:text>
+  <xsl:text>reporting-org_ref,reporting-org_type,reporting-org,</xsl:text>
+  <xsl:text>participating-org_refs_funding,participating-orgs_funding,</xsl:text>
+  <xsl:text>participating-org-refs_extending,participating-orgs_extending,</xsl:text>
+  <xsl:text>participating-org-refs_accountable,participating-orgs_accountable,</xsl:text>
+  <xsl:text>participating-org_refs_implementing,participating-orgs_implementing,</xsl:text>
+  <xsl:text>recipient-country_codes,recipient-countries,recipient-country_percentages,</xsl:text>
+  <xsl:text>recipient-region_codes,recipient-regions,recipient-region_percentages,</xsl:text>
   <xsl:text>description,</xsl:text>
-  <xsl:text>document-link-urls,document-link-formats,document-link-category-codes,document-link-categories,document-link-titles,</xsl:text>
+  <xsl:text>document-link_urls,document-link_formats,document-link_category_codes,document-link_categories,document-link_titles,</xsl:text>
   <xsl:text>start-planned,start-actual,end-planned,end-actual,</xsl:text>
   <xsl:text>activity-website,</xsl:text>
-  <xsl:text>activity-status-code,activity-status,</xsl:text>
-  <xsl:text>collaboration-type-codes,collaboration-types,</xsl:text>
-  <xsl:text>conditions-attached,condition-types,conditions,</xsl:text>
-  <xsl:text>sectors,sector-vocabularies,sector-codes,sector-percentages,</xsl:text>
-  <xsl:text>policy-markers,policy-marker-vocabularies,policy-marker-significance,policy-marker-codes,</xsl:text>
-  <xsl:text>contact-organisation,contact-person-name,contact-telephone,contact-email,contact-mailing-address,</xsl:text>
-  <xsl:text>default-aid-type-code,default-aid-type,</xsl:text>
-  <xsl:text>default-finance-type-code,default-finance-type,</xsl:text>
-  <xsl:text>default-flow-type-code,default-flow-type,</xsl:text>
-  <xsl:text>default-tied-status-code,default-tied-status,</xsl:text>
-  <xsl:text>related-activity-refs,related-activity-types,related-activities,</xsl:text>
-  <xsl:text>budget-types,budget-period-start-descriptions,budget-period-start-dates,</xsl:text>
-  <xsl:text>budget-period-end-descriptions,budget-period-end-dates,</xsl:text>
-  <xsl:text>budget-values,budget-value-dates,budget-value-currencies,</xsl:text>
-  <xsl:text>planned-disbursement-updates,planned-disbursement-period-start-descriptions,planned-disbursement-period-start-dates,</xsl:text>
-  <xsl:text>planned-disbursement-period-end-descriptions,planned-disbursement-period-end-dates,</xsl:text>
-  <xsl:text>planned-disbursement-values,planned-disbursement-value-dates,planned-disbursement-value-currencies,</xsl:text>
-  <xsl:text>location-percentages,location-type-codes,location-types,location-names,</xsl:text>
-  <xsl:text>location-descriptions,location-administrative,location-administrative-country,</xsl:text>
-  <xsl:text>location-administrative-admin1,location-administrative-admin2,</xsl:text>
-  <xsl:text>location-coordinates-latitudes,location-coordinates-longitudes,location-coordinates-precisions,</xsl:text>
-  <xsl:text>location-gazetteer-entries, location-gazetteer-entry-refs,</xsl:text>
-  <xsl:text>result-types,result-titles,result-descriptions,</xsl:text>
-  <xsl:text>result-indicator-measures,result-indicator-baselines,</xsl:text>
-  <xsl:text>result-indicator-baseline-years,result-indicator-baseline-values,</xsl:text>
-  <xsl:text>result-indicator-targets,result-indicator-target-years,</xsl:text>
-  <xsl:text>result-indicator-target-values,result-indicator-actuals,</xsl:text>
-  <xsl:text>result-indicator-actual-years,result-indicator-actual-values</xsl:text>
-  <xsl:text>legacy-data-names,legacy-data-values,legacy-data-iati-equivalents,legacy-data
+  <xsl:text>activity-status_code,activity-status,</xsl:text>
+  <xsl:text>collaboration-type_code,collaboration-type,</xsl:text>
+  <xsl:text>conditions-attached,condition_types,conditions,</xsl:text>
+  <xsl:text>sectors,sector_vocabularies,sector_codes,sector_percentages,</xsl:text>
+  <xsl:text>policy-markers,policy-marker_vocabularies,policy-marker_significance,policy-marker_codes,</xsl:text>
+  <xsl:text>contact-info_organisation,contact-info_person-name,contact-info_person-name,contact-info_email,contact-info_mailing-address,</xsl:text>
+  <xsl:text>default-aid-type_code,default-aid-type,</xsl:text>
+  <xsl:text>default-finance-type_code,default-finance-type,</xsl:text>
+  <xsl:text>default-flow-type_code,default-flow-type,</xsl:text>
+  <xsl:text>default-tied-status_code,default-tied-status,</xsl:text>
+  <xsl:text>related-activity_refs,related-activity_types,related-activities,</xsl:text>
+  <xsl:text>budget_types,budget_period_starts,budget_period-start_iso-dates,</xsl:text>
+  <xsl:text>budget_period-ends,budget_period-end_iso-dates,</xsl:text>
+  <xsl:text>budget_values,budget_value_value-dates,budget_value_currencies,</xsl:text>
+  <xsl:text>planned-disbursement_updated,planned-disbursement_period_starts,planned-disbursement_period-start_iso-dates,</xsl:text>
+  <xsl:text>planned-disbursement_period-ends,planned-disbursement_period-end_iso-dates,</xsl:text>
+  <xsl:text>planned-disbursement_values,planned-disbursement_value_value-dates,planned-disbursement_value_currencies,</xsl:text>
+  <xsl:text>location_percentages,location-type_codes,location-types,location_names,</xsl:text>
+  <xsl:text>location_descriptions,location_administrative,location_administrative_country,</xsl:text>
+  <xsl:text>location_administrative_admin1,location_administrative_admin2,</xsl:text>
+  <xsl:text>location_coordinates_latitudes,location_coordinates_longitudes,location_coordinates_precisions,</xsl:text>
+  <xsl:text>location_gazetteer-entries, location_gazetteer-entry_gazetteer-refs,</xsl:text>
+  <xsl:text>result_types,result_titles,result_descriptions,</xsl:text>
+  <xsl:text>result_indicator_measures,result_indicator_baselines,</xsl:text>
+  <xsl:text>result_indicator_baseline_years,result_indicator_baseline_values,</xsl:text>
+  <xsl:text>result_indicator_targets,result_indicator_target_years,</xsl:text>
+  <xsl:text>result_indicator_target_values,result_indicator_actuals,</xsl:text>
+  <xsl:text>result_indicator_actual_years,result_indicator_actual_values</xsl:text>
+  <xsl:text>legacy-data_names,legacy-data_values,legacy-data_iati-equivalents,legacy-data
 </xsl:text>
   <xsl:for-each select="//iati-activity">
 
@@ -69,9 +70,9 @@
     <!-- other-identifier -->
     <xsl:call-template name="add"> <xsl:with-param name="value" select="other-identifier"/> </xsl:call-template>
 
-    <!-- other-identifier-owner-name -->
+    <!-- other-identifier_owner-name -->
     <xsl:call-template name="add"> <xsl:with-param name="value" select="other-identifier/@owner-name"/> </xsl:call-template>
-    <!-- other-identifier-owner-ref -->
+    <!-- other-identifier_owner-ref -->
     <xsl:call-template name="add"> <xsl:with-param name="value" select="other-identifier/@owner-ref"/> </xsl:call-template>
 
     <!-- hierarchy -->
@@ -82,6 +83,9 @@
 
     <!-- default-currency -->
     <xsl:call-template name="add"> <xsl:with-param name="value" select="@default-currency"/> </xsl:call-template>
+
+    <!-- transaction-value_currencies -->
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="transaction/value/@currency"/> </xsl:call-template>
 
     <!-- commitment -->
     <xsl:call-template name="sum_transaction_values"> <xsl:with-param name="transaction-type">C</xsl:with-param> </xsl:call-template>
@@ -104,118 +108,115 @@
     <!-- interest-repayment -->
     <xsl:call-template name="sum_transaction_values"> <xsl:with-param name="transaction-type">IR</xsl:with-param> </xsl:call-template>
 
-    <!-- transaction-values -->
+    <!-- transaction_values -->
     <xsl:call-template name="join"> <xsl:with-param name="values" select="transaction/value"/> </xsl:call-template>
 
-    <!-- transaction-value-currencies -->
-    <xsl:call-template name="join"> <xsl:with-param name="values" select="transaction/value/@currency"/> </xsl:call-template>
-
-    <!-- transaction-value-dates - removes Z from end of ISO dates -->
+    <!-- transaction-value_value-dates - removes Z from end of ISO dates -->
     <xsl:call-template name="join"> <xsl:with-param name="values" select="transaction/value/@value-date"/> <xsl:with-param name="remove">Z</xsl:with-param> </xsl:call-template>
 
-    <!-- transaction-type -->
+    <!-- transaction-types -->
     <xsl:call-template name="join"> <xsl:with-param name="values" select="transaction/transaction-type"/> </xsl:call-template>
 
-    <!-- transaction-date-text -->
+    <!-- transaction-dates -->
     <xsl:call-template name="join"> <xsl:with-param name="values" select="transaction/transaction-date"/> </xsl:call-template>
 
-    <!-- transaction-date - removes Z from end of ISO dates -->
+    <!-- transaction-date_iso-dates - removes Z from end of ISO dates -->
     <xsl:call-template name="join"> <xsl:with-param name="values" select="transaction/transaction-date/@iso-date"/> <xsl:with-param name="remove">Z</xsl:with-param> </xsl:call-template>
 
 
-    <!-- transaction-provider-org-refs -->
-    <!-- transaction-provider-orgs -->
-    <!-- transaction-provider-activity-ids -->
+    <!-- transaction_provider-org_refs -->
+    <!-- transaction_provider-orgs -->
+    <!-- transaction_provider-org_provider-activity-ids -->
     <xsl:call-template name="join"> <xsl:with-param name="values" select="transaction/provider-org/@ref"/> </xsl:call-template>
     <xsl:call-template name="join"> <xsl:with-param name="values" select="transaction/provider-org"/> </xsl:call-template>
     <xsl:call-template name="join"> <xsl:with-param name="values" select="transaction/provider-org/@provider-activity-id"/> </xsl:call-template>
 
-    <!-- transaction-receiver-org-refs -->
-    <!-- transaction-receiver-orgs -->
-    <!-- transaction-receiver-activity-ids -->
+    <!-- transaction_receiver-org_refs -->
+    <!-- transaction_receiver-orgs -->
+    <!-- transaction_receiver-org_receiver-activity-ids -->
     <xsl:call-template name="join"> <xsl:with-param name="values" select="transaction/receiver-org/@ref"/> </xsl:call-template>
     <xsl:call-template name="join"> <xsl:with-param name="values" select="transaction/receiver-org"/> </xsl:call-template>
     <xsl:call-template name="join"> <xsl:with-param name="values" select="transaction/receiver-org/@receiver-activity-id"/> </xsl:call-template>
 
 
-    <!-- transaction-descriptions -->
+    <!-- transaction_descriptions -->
     <xsl:call-template name="join"> <xsl:with-param name="values" select="transaction/description"/> </xsl:call-template>
 
-    <!-- transaction-flow-type-codes -->
-    <!-- transaction-flow-types -->
+    <!-- transaction_flow-type_codes -->
+    <!-- transaction_flow-types -->
     <xsl:call-template name="add_transaction_field_with_code"> <xsl:with-param name="field">flow-type</xsl:with-param> </xsl:call-template>
 
-    <!-- transaction-aid-type-codes -->
-    <!-- transaction-aid-types -->
+    <!-- transaction_aid-type_codes -->
+    <!-- transaction_aid-types -->
     <xsl:call-template name="add_transaction_field_with_code"> <xsl:with-param name="field">aid-type</xsl:with-param> </xsl:call-template>
 
-    <!-- transaction-finance-type-codes -->
-    <!-- transaction-finance-types -->
+    <!-- transaction_finance-type_codes -->
+    <!-- transaction_finance-types -->
     <xsl:call-template name="add_transaction_field_with_code"> <xsl:with-param name="field">finance-type</xsl:with-param> </xsl:call-template>
 
-    <!-- transaction-tied_status-codes -->
-    <!-- transaction-tied_statuses -->
+    <!-- transaction_tied-status_codes -->
+    <!-- transaction_tied-statuses -->
     <xsl:call-template name="add_transaction_field_with_code"> <xsl:with-param name="field">tied-status</xsl:with-param> </xsl:call-template>
 
-    <!-- transaction-disbursement-channel-codes -->
-    <!-- transaction-disbursement-channels -->
+    <!-- transaction_disbursement-channel_codes -->
+    <!-- transaction_disbursement-channels -->
     <xsl:call-template name="add_transaction_field_with_code"> <xsl:with-param name="field">disbursement-channel</xsl:with-param> </xsl:call-template>
 
 
-    <!-- reporting-org-refs -->
-    <!-- reporting-orgs -->
-    <xsl:call-template name="join"> <xsl:with-param name="values" select="reporting-org/@ref"/> </xsl:call-template>
-    <xsl:call-template name="join"> <xsl:with-param name="values" select="reporting-org/@type"/> </xsl:call-template>
-    <xsl:call-template name="join"> <xsl:with-param name="values" select="reporting-org"/> </xsl:call-template>
+    <!-- reporting-org_ref -->
+    <!-- reporting-org -->
+    <xsl:call-template name="add"> <xsl:with-param name="value" select="reporting-org/@ref"/> </xsl:call-template>
+    <xsl:call-template name="add"> <xsl:with-param name="value" select="reporting-org/@type"/> </xsl:call-template>
+    <xsl:call-template name="add"> <xsl:with-param name="value" select="reporting-org"/> </xsl:call-template>
 
     <!-- Funding: The country or institution which provides the funds. -->
     <!-- http://iatistandard.org/codelists/organisation_role -->
-    <!-- participating-org-refs-funding -->
-    <!-- participating-orgs-funding -->
+    <!-- participating-org_refs_funding -->
+    <!-- participating-orgs_funding -->
     <xsl:call-template name="add_participating_org"> <xsl:with-param name="role">Funding</xsl:with-param> </xsl:call-template>
 
     <!-- Extending: The government entity (central, state or local government agency or department), or agency within an institution, financing the activity from its own budget -->
     <!-- http://iatistandard.org/codelists/organisation_role -->
-    <!-- participating-org-refs-extending -->
-    <!-- participating-orgs-extending -->
+    <!-- participating-org-refs_extending -->
+    <!-- participating-orgs_extending -->
     <xsl:call-template name="add_participating_org"> <xsl:with-param name="role">Extending</xsl:with-param> </xsl:call-template>
 
     <!-- Accountable: The government agency, civil society or private sector institution which is accountable for the implementation of the activity. -->
     <!-- http://iatistandard.org/codelists/organisation_role -->
-    <!-- participating-org-refs-accountable -->
-    <!-- participating-orgs-accountable -->
+    <!-- participating-org-refs_accountable -->
+    <!-- participating-orgs_accountable -->
     <xsl:call-template name="add_participating_org"> <xsl:with-param name="role">Accountable</xsl:with-param> </xsl:call-template>
 
     <!-- Implementing: The intermediary between the extending agency and the ultimate beneficiary. Also known as executing agency or channel of delivery. They can be public sector, non-governmental agencies (NGOs), Public-Private partnerships, or multilateral institutions -->
     <!-- http://iatistandard.org/codelists/organisation_role -->
-    <!-- participating-org-refs-implementing -->
-    <!-- participating-orgs-implementing -->
+    <!-- participating-org_refs_implementing -->
+    <!-- participating-orgs_implementing -->
     <xsl:call-template name="add_participating_org"> <xsl:with-param name="role">Implementing</xsl:with-param> </xsl:call-template>
 
-    <!-- recipient-country-codes -->
+    <!-- recipient-country_codes -->
     <!-- recipient-countries -->
-    <!-- recipient-country-percentages -->
+    <!-- recipient-country_percentages -->
     <xsl:call-template name="add_with_code"> <xsl:with-param name="field" select="recipient-country"/> </xsl:call-template>
     <xsl:call-template name="add"> <xsl:with-param name="value" select="recipient-country/@percentage"/> </xsl:call-template>
 
-    <!-- recipient-region-codes -->
+    <!-- recipient-region_codes -->
     <!-- recipient-regions -->
-    <!-- recipient-region-percentages -->
+    <!-- recipient-region_percentages -->
     <xsl:call-template name="add_with_code"> <xsl:with-param name="field" select="recipient-region"/> </xsl:call-template>
     <xsl:call-template name="add"> <xsl:with-param name="value" select="recipient-region/@percentage"/> </xsl:call-template>
 
     <!-- description -->
     <xsl:call-template name="add"> <xsl:with-param name="value" select="description"/> </xsl:call-template>
 
-    <!-- document-link-urls -->
+    <!-- document-link_urls -->
     <xsl:call-template name="join"> <xsl:with-param name="values" select="document-link/@url"/> </xsl:call-template>
-    <!-- document-link-formats -->
+    <!-- document-link_formats -->
     <xsl:call-template name="join"> <xsl:with-param name="values" select="document-link/@format"/> </xsl:call-template>
-    <!-- document-link-category-codes -->
+    <!-- document-link_category_codes -->
     <xsl:call-template name="join"> <xsl:with-param name="values" select="document-link/category/@code"/> </xsl:call-template>
-    <!-- document-link-categories -->
+    <!-- document-link_categories -->
     <xsl:call-template name="join"> <xsl:with-param name="values" select="document-link/category"/> </xsl:call-template>
-    <!-- document-link-titles -->
+    <!-- document-link_titles -->
     <xsl:call-template name="join"> <xsl:with-param name="values" select="document-link/title"/> </xsl:call-template>
 
     <!-- start-planned -->
@@ -230,19 +231,16 @@
     <!-- activity-website -->
     <xsl:call-template name="add"> <xsl:with-param name="value" select="activity-website"/> </xsl:call-template>
 
-    <!-- activity-status-code -->
-    <xsl:call-template name="add"> <xsl:with-param name="value" select="activity-status/@code"/> </xsl:call-template>
-
+    <!-- activity-status_code -->
     <!-- activity-status -->
-    <xsl:call-template name="add"> <xsl:with-param name="value" select="activity-status"/> </xsl:call-template>
+    <xsl:call-template name="add_with_code"> <xsl:with-param name="field">activity-status</xsl:with-param> </xsl:call-template>
 
-
-    <!-- collaboration-type-codes -->
-    <!-- collaboration-types -->
+    <!-- collaboration-type_code -->
+    <!-- collaboration-type -->
     <xsl:call-template name="add_with_code"> <xsl:with-param name="field">collaboration-type</xsl:with-param> </xsl:call-template>
 
     <!-- conditions-attached -->
-    <!-- condition-types -->
+    <!-- condition_types -->
     <!-- conditions -->
     <xsl:call-template name="add"> <xsl:with-param name="value" select="conditions/@attached"/> </xsl:call-template>
     <xsl:call-template name="join"> <xsl:with-param name="values" select="conditions/condition/@type"/> </xsl:call-template>
@@ -250,9 +248,9 @@
 
 
     <!-- sectors -->
-    <!-- sector-vocabularies -->
-    <!-- sector-codes -->
-    <!-- sector-percentages -->
+    <!-- sector_vocabularies -->
+    <!-- sector_codes -->
+    <!-- sector_percentages -->
     <xsl:call-template name="join"> <xsl:with-param name="values" select="sector"/> </xsl:call-template>
     <xsl:call-template name="join"> <xsl:with-param name="values" select="sector/@vocabulary"/> </xsl:call-template>
     <xsl:call-template name="join"> <xsl:with-param name="values" select="sector/@code"/> </xsl:call-template>
@@ -260,92 +258,92 @@
 
 
     <!-- policy-markers -->
-    <!-- policy-marker-vocabularies -->
-    <!-- policy-marker-significance -->
-    <!-- policy-marker-codes -->
+    <!-- policy-marker_vocabularies -->
+    <!-- policy-marker_significance -->
+    <!-- policy-marker_codes -->
     <xsl:call-template name="join"> <xsl:with-param name="values" select="policy-marker"/> </xsl:call-template>
     <xsl:call-template name="join"> <xsl:with-param name="values" select="policy-marker/@vocabulary"/> </xsl:call-template>
     <xsl:call-template name="join"> <xsl:with-param name="values" select="policy-marker/@significance"/> </xsl:call-template>
     <xsl:call-template name="join"> <xsl:with-param name="values" select="policy-marker/@code"/> </xsl:call-template>
 
 
-    <!-- contact-organisation -->
+    <!-- contact-info_organisation -->
     <xsl:call-template name="add"> <xsl:with-param name="value" select="contact-info/organisation"/> </xsl:call-template>
 
-    <!-- contact-person-name -->
+    <!-- contact-info_person-name -->
     <xsl:call-template name="add"> <xsl:with-param name="value" select="contact-info/person-name"/> </xsl:call-template>
 
-    <!-- contact-telephone -->
+    <!-- contact-info_person-name -->
     <xsl:call-template name="add"> <xsl:with-param name="value" select="contact-info/telephone"/> </xsl:call-template>
 
-    <!-- contact-email -->
+    <!-- contact-info_email -->
     <xsl:call-template name="add"> <xsl:with-param name="value" select="contact-info/email"/> </xsl:call-template>
 
-    <!-- contact-mailing-address -->
+    <!-- contact-info_mailing-address -->
     <xsl:call-template name="add"> <xsl:with-param name="value" select="contact-info/mailing-address"/> </xsl:call-template>
 
 
-    <!-- default-aid-type-code -->
+    <!-- default-aid-type_code -->
     <!-- default-aid-type -->
     <xsl:call-template name="add_with_code"> <xsl:with-param name="field">default-aid-type</xsl:with-param> </xsl:call-template>
 
-    <!-- default-finance-type-code -->
+    <!-- default-finance-type_code -->
     <!-- default-finance-type -->
     <xsl:call-template name="add_with_code"> <xsl:with-param name="field">default-finance-type</xsl:with-param> </xsl:call-template>
 
-    <!-- default-flow-type-code -->
+    <!-- default-flow-type_code -->
     <!-- default-flow-type -->
     <xsl:call-template name="add_with_code"> <xsl:with-param name="field">default-flow-type</xsl:with-param> </xsl:call-template>
 
-    <!-- default-tied-status-code -->
+    <!-- default-tied-status_code -->
     <!-- default-tied-status -->
     <xsl:call-template name="add_with_code"> <xsl:with-param name="field">default-tied-status</xsl:with-param> </xsl:call-template>
 
-    <!-- related-activity-refs -->
-    <!-- related-activity-types -->
+    <!-- related-activity_refs -->
+    <!-- related-activity_types -->
     <!-- related-activities -->
     <xsl:call-template name="join"> <xsl:with-param name="values" select="related-activity/@ref"/> </xsl:call-template>
     <xsl:call-template name="join"> <xsl:with-param name="values" select="related-activity/@type"/> </xsl:call-template>
     <xsl:call-template name="join"> <xsl:with-param name="values" select="related-activity"/> </xsl:call-template>
 
 
-    <!-- budget-types -->
-    <!-- budget-period-start-descriptions -->
-    <!-- budget-period-start-dates -->
-    <!-- budget-period-end-descriptions -->
-    <!-- budget-period-end-dates -->
-    <!-- budget-values -->
-    <!-- budget-value-dates -->
-    <!-- budget-value-currencies -->
+    <!-- budget_types -->
+    <!-- budget_period_starts -->
+    <!-- budget_period-start_iso-dates -->
+    <!-- budget_period-ends -->
+    <!-- budget_period-end_iso-dates -->
+    <!-- budget_values -->
+    <!-- budget_value_value-dates -->
+    <!-- budget_value_currencies -->
     <xsl:call-template name="join"> <xsl:with-param name="values" select="budget/@type"/> </xsl:call-template>
     <xsl:call-template name="add_start_end_value"> <xsl:with-param name="element_name">budget</xsl:with-param> </xsl:call-template>
 
-    <!-- planned-disbursement-updates -->
-    <!-- planned-disbursement-period-start-descriptions -->
-    <!-- planned-disbursement-period-start-dates -->
-    <!-- planned-disbursement-period-end-descriptions -->
-    <!-- planned-disbursement-period-end-dates -->
-    <!-- planned-disbursement-values -->
-    <!-- planned-disbursement-value-dates -->
-    <!-- planned-disbursement-value-currencies -->
+    <!-- planned-disbursement_updated -->
+    <!-- planned-disbursement_period_starts -->
+    <!-- planned-disbursement_period-start_iso-dates -->
+    <!-- planned-disbursement_period-ends -->
+    <!-- planned-disbursement_period-end_iso-dates -->
+    <!-- planned-disbursement_values -->
+    <!-- planned-disbursement_value_value-dates -->
+    <!-- planned-disbursement_value_currencies -->
     <xsl:call-template name="join"> <xsl:with-param name="values" select="planned-disbursement/@updated"/> </xsl:call-template>
     <xsl:call-template name="add_start_end_value"> <xsl:with-param name="element_name">planned-disbursement</xsl:with-param> </xsl:call-template>
 
 
-    <!-- location-percentages -->
-    <!-- location-type-codes -->
+    <!-- location_percentages -->
+    <!-- location-type_codes -->
     <!-- location-types -->
-    <!-- location-names -->
-    <!-- location-descriptions -->
-    <!-- location-administrative -->
-    <!-- location-administrative-country -->
-    <!-- location-administrative-admin1 -->
-    <!-- location-administrative-admin2 -->
-    <!-- location-coordinates-latitudes -->
-    <!-- location-coordinates-longitudes -->
-    <!-- location-coordinates-precisions -->
-    <!-- location-gazetteer-entries -->
-    <!-- location-gazetteer-entry-refs -->
+    <!-- location_names -->
+    <!-- location_descriptions -->
+    <!-- location_administrative -->
+    <!-- location_administrative_country -->
+    <!-- location_administrative_admin1 -->
+    <!-- location_administrative_admin2 -->
+    <!-- location_coordinates_latitudes -->
+    <!-- location_coordinates_longitudes -->
+    <!-- location_coordinates_precisions -->
+    <!-- location_gazetteer-entries -->
+    <!-- location_gazetteer-entry_gazetteer-refs -->
     <xsl:call-template name="join"> <xsl:with-param name="values" select="location/@percentage"/> </xsl:call-template>
     <xsl:call-template name="join"> <xsl:with-param name="values" select="location/location-type/@code"/> </xsl:call-template>
     <xsl:call-template name="join"> <xsl:with-param name="values" select="location/location-type"/> </xsl:call-template>
@@ -361,19 +359,19 @@
     <xsl:call-template name="join"> <xsl:with-param name="values" select="location/gazetteer-entry"/> </xsl:call-template>
     <xsl:call-template name="join"> <xsl:with-param name="values" select="location/gazetteer-entry/@gazetteer-ref"/> </xsl:call-template>
 
-    <!-- result-types -->
-    <!-- result-titles -->
-    <!-- result-descriptions -->
-    <!-- result-indicator-measures -->
-    <!-- result-indicator-baselines -->
-    <!-- result-indicator-baseline-years -->
-    <!-- result-indicator-baseline-values -->
-    <!-- result-indicator-targets -->
-    <!-- result-indicator-target-years -->
-    <!-- result-indicator-target-values -->
-    <!-- result-indicator-actuals -->
-    <!-- result-indicator-actual-years -->
-    <!-- result-indicator-actual-values -->
+    <!-- result_types -->
+    <!-- result_titles -->
+    <!-- result_descriptions -->
+    <!-- result_indicator_measures -->
+    <!-- result_indicator_baselines -->
+    <!-- result_indicator_baseline_years -->
+    <!-- result_indicator_baseline_values -->
+    <!-- result_indicator_targets -->
+    <!-- result_indicator_target_years -->
+    <!-- result_indicator_target_values -->
+    <!-- result_indicator_actuals -->
+    <!-- result_indicator_actual_years -->
+    <!-- result_indicator_actual_values -->
     <xsl:call-template name="join"> <xsl:with-param name="values" select="result/@type"/> </xsl:call-template>
     <xsl:call-template name="join"> <xsl:with-param name="values" select="result/title"/> </xsl:call-template>
     <xsl:call-template name="join"> <xsl:with-param name="values" select="result/description"/> </xsl:call-template>
@@ -389,11 +387,11 @@
     <xsl:call-template name="join"> <xsl:with-param name="values" select="result/indicator/actual/@value"/> </xsl:call-template>
 
 
-    <!-- legacy-data-names -->
+    <!-- legacy-data_names -->
     <xsl:call-template name="join"> <xsl:with-param name="values" select="legacy-data/@name"/> </xsl:call-template>
-    <!-- legacy-data-values -->
+    <!-- legacy-data_values -->
     <xsl:call-template name="join"> <xsl:with-param name="values" select="legacy-data/@value"/> </xsl:call-template>
-    <!-- legacy-data-iati-equivalents -->
+    <!-- legacy-data_iati-equivalents -->
     <xsl:call-template name="join"> <xsl:with-param name="values" select="legacy-data/@iati-equivalent"/> </xsl:call-template>
     <!-- legacy-data -->
     <xsl:call-template name="join"> <xsl:with-param name="values" select="legacy-data"/> <xsl:with-param name="separator"><xsl:text></xsl:text></xsl:with-param> </xsl:call-template>

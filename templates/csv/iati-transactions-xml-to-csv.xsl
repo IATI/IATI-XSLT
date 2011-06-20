@@ -10,14 +10,14 @@
   <xsl:text>reimbursement,expenditure,</xsl:text>
   <xsl:text>incoming-funds,loan-repayment,</xsl:text>
   <xsl:text>interest-repayment,</xsl:text>
-  <xsl:text>transaction-value,transaction-value-currency,</xsl:text>
-  <xsl:text>transaction-type,transaction-date-text,transaction-date,transaction-value-date,</xsl:text>
+  <xsl:text>transaction-value,transaction-value_currency,</xsl:text>
+  <xsl:text>transaction-type,transaction-date,transaction-date_iso-date,transaction-value_value-date,</xsl:text>
   <xsl:text>provider-org-ref,provider-org,provider-activity-id,</xsl:text>
   <xsl:text>receiver-org-ref,receiver-org,receiver-activity-id,</xsl:text>
   <xsl:text>description,flow-type-code,flow-type,</xsl:text>
-  <xsl:text>aid-type-codes,aid-types,</xsl:text>
-  <xsl:text>finance-type-codes,finance-types,</xsl:text>
-  <xsl:text>tied_status-codes,tied_statuses,</xsl:text>
+  <xsl:text>aid-type_code,aid-type,</xsl:text>
+  <xsl:text>finance-type_code,finance-type,</xsl:text>
+  <xsl:text>tied-status_code,tied-status,</xsl:text>
   <xsl:text>disbursement-channel-codes,disbursement-channels
 </xsl:text>
   <xsl:for-each select="//iati-activity/transaction">
@@ -59,54 +59,54 @@
     <!-- transaction-value -->
     <xsl:call-template name="add"> <xsl:with-param name="value" select="value"/> </xsl:call-template>
 
-    <!-- transaction-value-currency -->
+    <!-- transaction-value_currency -->
     <xsl:call-template name="add"> <xsl:with-param name="value" select="value/@currency"/> </xsl:call-template>
 
-    <!-- transaction-value-date - removes Z from end of ISO dates -->
+    <!-- transaction-value_value-date - removes Z from end of ISO dates -->
     <xsl:call-template name="add"> <xsl:with-param name="value" select="value/@value-date"/> <xsl:with-param name="remove">Z</xsl:with-param> </xsl:call-template>
 
     <!-- transaction-type -->
     <xsl:call-template name="add"> <xsl:with-param name="value" select="transaction-type"/> </xsl:call-template>
 
-    <!-- transaction-date-text -->
+    <!-- transaction-date -->
     <xsl:call-template name="add"> <xsl:with-param name="value" select="transaction-date"/> </xsl:call-template>
 
-    <!-- transaction-date - removes Z from end of ISO dates -->
+    <!-- transaction-date_iso-date - removes Z from end of ISO dates -->
     <xsl:call-template name="add"> <xsl:with-param name="value" select="transaction-date/@iso-date"/> <xsl:with-param name="remove">Z</xsl:with-param> </xsl:call-template>
 
 
-    <!-- provider-org-refs -->
-    <!-- provider-orgs -->
-    <!-- provider-activity-ids -->
+    <!-- provider-org_ref -->
+    <!-- provider-org -->
+    <!-- provider-org_provider-activity-id -->
     <xsl:call-template name="add"> <xsl:with-param name="value" select="provider-org/@ref"/> </xsl:call-template>
     <xsl:call-template name="add"> <xsl:with-param name="value" select="provider-org"/> </xsl:call-template>
     <xsl:call-template name="add"> <xsl:with-param name="value" select="provider-org/@provider-activity-id"/> </xsl:call-template>
 
-    <!-- receiver-org-refs -->
-    <!-- receiver-orgs -->
-    <!-- receiver-activity-ids -->
+    <!-- receiver-org_ref -->
+    <!-- receiver-org -->
+    <!-- receiver-org_receiver-activity-id -->
     <xsl:call-template name="add"> <xsl:with-param name="value" select="receiver-org/@ref"/> </xsl:call-template>
     <xsl:call-template name="add"> <xsl:with-param name="value" select="receiver-org"/> </xsl:call-template>
     <xsl:call-template name="add"> <xsl:with-param name="value" select="receiver-org/@receiver-activity-id"/> </xsl:call-template>
 
 
-    <!-- descriptions -->
-    <xsl:call-template name="add"> <xsl:with-param name="value" select="transaction/description"/> </xsl:call-template>
+    <!-- description -->
+    <xsl:call-template name="add"> <xsl:with-param name="value" select="description"/> </xsl:call-template>
 
-    <!-- flow-type-codes -->
-    <!-- flow-types -->
+    <!-- flow-type_code -->
+    <!-- flow-type -->
     <xsl:call-template name="add_with_code"> <xsl:with-param name="field">flow-type</xsl:with-param> </xsl:call-template>
 
-    <!-- aid-type-codes -->
-    <!-- aid-types -->
+    <!-- aid-type_code -->
+    <!-- aid-type -->
     <xsl:call-template name="add_with_code"> <xsl:with-param name="field">aid-type</xsl:with-param> </xsl:call-template>
 
-    <!-- finance-type-codes -->
-    <!-- finance-types -->
+    <!-- finance-type_code -->
+    <!-- finance-type -->
     <xsl:call-template name="add_with_code"> <xsl:with-param name="field">finance-type</xsl:with-param> </xsl:call-template>
 
-    <!-- tied_status-codes -->
-    <!-- tied_statuses -->
+    <!-- tied-status_code -->
+    <!-- tied-status -->
     <xsl:call-template name="add_with_code"> <xsl:with-param name="field">tied-status</xsl:with-param> </xsl:call-template>
 
     <!-- disbursement-channel-codes -->
