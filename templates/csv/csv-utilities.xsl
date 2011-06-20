@@ -7,9 +7,10 @@
   <xsl:param name="value" select="''"/>
   <xsl:param name="quote"><xsl:text>"</xsl:text></xsl:param>
   <xsl:param name="separator"><xsl:text>,</xsl:text></xsl:param>
+  <xsl:param name="remove"></xsl:param>
   <xsl:variable name="doublequote">"</xsl:variable>
   <xsl:value-of select="$quote"/>
-  <xsl:value-of select="translate($value,$doublequote,'')"/>
+  <xsl:value-of select="translate(translate($value,$doublequote,''),$remove,'')"/>
   <xsl:value-of select="$quote"/>
   <xsl:value-of select="$separator"/>
 </xsl:template>

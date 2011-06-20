@@ -1,48 +1,7 @@
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
 <xsl:import href="csv-utilities.xsl" />
-
-<xsl:template name="sum_transaction_values">
-  <xsl:param name="transaction-type" select="''"/>
-  <xsl:call-template name="add">
-    <xsl:with-param name="value" select="sum(transaction/transaction-type[@code=$transaction-type]/../value)"/>
-    <xsl:with-param name="quote"></xsl:with-param>
-  </xsl:call-template>
-</xsl:template>
-
-<xsl:template name="add_org">
-  <xsl:param name="role" select="''"/>
-  <xsl:call-template name="join"> <xsl:with-param name="values" select="participating-org[@role=$role]/@ref"/> </xsl:call-template>
-  <xsl:call-template name="join"> <xsl:with-param name="values" select="participating-org[@role=$role]"/> </xsl:call-template>
-</xsl:template>
-
-<xsl:template name="add_transaction_field_with_code">
-  <xsl:param name="field" select="''"/>
-  <xsl:call-template name="join"> <xsl:with-param name="values" select="transaction/*[local-name() = $field]/@code"/> </xsl:call-template>
-  <xsl:call-template name="join"> <xsl:with-param name="values" select="transaction/*[local-name() = $field]"/> </xsl:call-template>
-</xsl:template>
-
-<xsl:template name="add_with_code">
-  <xsl:param name="field" select="''"/>
-  <xsl:call-template name="join"> <xsl:with-param name="values" select="*[local-name() = $field]/@code"/> </xsl:call-template>
-  <xsl:call-template name="join"> <xsl:with-param name="values" select="*[local-name() = $field]"/> </xsl:call-template>
-</xsl:template>
-
-<xsl:template name="add_activity_date">
-  <xsl:param name="type" select="''"/>
-  <xsl:call-template name="add"> <xsl:with-param name="value" select="activity-date[@type=$type]"/> </xsl:call-template>
-</xsl:template>
-
-<xsl:template name="add_start_end_value">
-  <xsl:param name="element_name" select="''"/>
-  <xsl:call-template name="join"> <xsl:with-param name="values" select="*[local-name() = $element_name]/period-start"/> </xsl:call-template>
-  <xsl:call-template name="join"> <xsl:with-param name="values" select="*[local-name() = $element_name]/period-start/@iso-date"/> </xsl:call-template>
-  <xsl:call-template name="join"> <xsl:with-param name="values" select="*[local-name() = $element_name]/period-end"/> </xsl:call-template>
-  <xsl:call-template name="join"> <xsl:with-param name="values" select="*[local-name() = $element_name]/period-end/@iso-date"/> </xsl:call-template>
-  <xsl:call-template name="join"> <xsl:with-param name="values" select="*[local-name() = $element_name]/value"/> </xsl:call-template>
-  <xsl:call-template name="join"> <xsl:with-param name="values" select="*[local-name() = $element_name]/value/@value-date"/> </xsl:call-template>
-  <xsl:call-template name="join"> <xsl:with-param name="values" select="*[local-name() = $element_name]/value/@currency"/> </xsl:call-template>
-</xsl:template>
+<xsl:import href="csv-iati-helpers.xsl" />
 
 <xsl:template match="/">
   <xsl:text>iati-identifier,other-identifier,other-identifier-owner-name,other-identifier-owner-ref,</xsl:text>
@@ -52,7 +11,8 @@
   <xsl:text>incoming-funds,loan-repayment,</xsl:text>
   <xsl:text>interest-repayment,</xsl:text>
   <xsl:text>transaction-values,</xsl:text>
-  <xsl:text>transaction-type,transaction-date-text,transaction-date,transaction-value-dates,</xsl:text>
+  <xsl:text>transaction-value-currencies,transaction-value-dates,</xsl:text>
+  <xsl:text>transaction-type,transaction-date-text,transaction-date,</xsl:text>
   <xsl:text>transaction-provider-org-refs,transaction-provider-orgs,transaction-provider-activity-ids,</xsl:text>
   <xsl:text>transaction-receiver-org-refs,transaction-receiver-orgs,transaction-receiver-activity-ids,</xsl:text>
   <xsl:text>transaction-descriptions,transaction-flow-type-codes,transaction-flow-types,</xsl:text>
@@ -101,7 +61,7 @@
   <xsl:text>result-indicator-actual-years,result-indicator-actual-values</xsl:text>
   <xsl:text>legacy-data-names,legacy-data-values,legacy-data-iati-equivalents,legacy-data
 </xsl:text>
-  <xsl:for-each select="/iati-activities/iati-activity">
+  <xsl:for-each select="//iati-activity">
 
     <!-- iati-identifier -->
     <xsl:call-template name="add"> <xsl:with-param name="value" select="iati-identifier"/> </xsl:call-template>
@@ -147,6 +107,12 @@
     <!-- transaction-values -->
     <xsl:call-template name="join"> <xsl:with-param name="values" select="transaction/value"/> </xsl:call-template>
 
+    <!-- transaction-value-currencies -->
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="transaction/value/@currency"/> </xsl:call-template>
+
+    <!-- transaction-value-dates - removes Z from end of ISO dates -->
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="transaction/value/@value-date"/> <xsl:with-param name="remove">Z</xsl:with-param> </xsl:call-template>
+
     <!-- transaction-type -->
     <xsl:call-template name="join"> <xsl:with-param name="values" select="transaction/transaction-type"/> </xsl:call-template>
 
@@ -155,9 +121,6 @@
 
     <!-- transaction-date - removes Z from end of ISO dates -->
     <xsl:call-template name="join"> <xsl:with-param name="values" select="transaction/transaction-date/@iso-date"/> <xsl:with-param name="remove">Z</xsl:with-param> </xsl:call-template>
-
-    <!-- transaction-value-dates - removes Z from end of ISO dates -->
-    <xsl:call-template name="join"> <xsl:with-param name="values" select="transaction/value/@value-date"/> <xsl:with-param name="remove">Z</xsl:with-param> </xsl:call-template>
 
 
     <!-- transaction-provider-org-refs -->
@@ -209,25 +172,25 @@
     <!-- http://iatistandard.org/codelists/organisation_role -->
     <!-- participating-org-refs-funding -->
     <!-- participating-orgs-funding -->
-    <xsl:call-template name="add_org"> <xsl:with-param name="role">Funding</xsl:with-param> </xsl:call-template>
+    <xsl:call-template name="add_participating_org"> <xsl:with-param name="role">Funding</xsl:with-param> </xsl:call-template>
 
     <!-- Extending: The government entity (central, state or local government agency or department), or agency within an institution, financing the activity from its own budget -->
     <!-- http://iatistandard.org/codelists/organisation_role -->
     <!-- participating-org-refs-extending -->
     <!-- participating-orgs-extending -->
-    <xsl:call-template name="add_org"> <xsl:with-param name="role">Extending</xsl:with-param> </xsl:call-template>
+    <xsl:call-template name="add_participating_org"> <xsl:with-param name="role">Extending</xsl:with-param> </xsl:call-template>
 
     <!-- Accountable: The government agency, civil society or private sector institution which is accountable for the implementation of the activity. -->
     <!-- http://iatistandard.org/codelists/organisation_role -->
     <!-- participating-org-refs-accountable -->
     <!-- participating-orgs-accountable -->
-    <xsl:call-template name="add_org"> <xsl:with-param name="role">Accountable</xsl:with-param> </xsl:call-template>
+    <xsl:call-template name="add_participating_org"> <xsl:with-param name="role">Accountable</xsl:with-param> </xsl:call-template>
 
     <!-- Implementing: The intermediary between the extending agency and the ultimate beneficiary. Also known as executing agency or channel of delivery. They can be public sector, non-governmental agencies (NGOs), Public-Private partnerships, or multilateral institutions -->
     <!-- http://iatistandard.org/codelists/organisation_role -->
     <!-- participating-org-refs-implementing -->
     <!-- participating-orgs-implementing -->
-    <xsl:call-template name="add_org"> <xsl:with-param name="role">Implementing</xsl:with-param> </xsl:call-template>
+    <xsl:call-template name="add_participating_org"> <xsl:with-param name="role">Implementing</xsl:with-param> </xsl:call-template>
 
     <!-- recipient-country-codes -->
     <!-- recipient-countries -->
