@@ -196,14 +196,14 @@
     <!-- recipient-country_codes -->
     <!-- recipient-countries -->
     <!-- recipient-country_percentages -->
-    <xsl:call-template name="add_with_code"> <xsl:with-param name="field" select="recipient-country"/> </xsl:call-template>
-    <xsl:call-template name="add"> <xsl:with-param name="value" select="recipient-country/@percentage"/> </xsl:call-template>
+    <xsl:call-template name="join_with_code"> <xsl:with-param name="field" select="recipient-country"/> </xsl:call-template>
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="recipient-country/@percentage"/> </xsl:call-template>
 
     <!-- recipient-region_codes -->
     <!-- recipient-regions -->
     <!-- recipient-region_percentages -->
-    <xsl:call-template name="add_with_code"> <xsl:with-param name="field" select="recipient-region"/> </xsl:call-template>
-    <xsl:call-template name="add"> <xsl:with-param name="value" select="recipient-region/@percentage"/> </xsl:call-template>
+    <xsl:call-template name="join_with_code"> <xsl:with-param name="field" select="recipient-region"/> </xsl:call-template>
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="recipient-region/@percentage"/> </xsl:call-template>
 
     <!-- description -->
     <xsl:call-template name="add"> <xsl:with-param name="value" select="description"/> </xsl:call-template>

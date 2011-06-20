@@ -28,10 +28,16 @@
   <xsl:call-template name="join"> <xsl:with-param name="values" select="transaction/*[local-name() = $field]"/> </xsl:call-template>
 </xsl:template>
 
-<xsl:template name="add_with_code">
+<xsl:template name="join_with_code">
   <xsl:param name="field" select="''"/>
   <xsl:call-template name="join"> <xsl:with-param name="values" select="*[local-name() = $field]/@code"/> </xsl:call-template>
   <xsl:call-template name="join"> <xsl:with-param name="values" select="*[local-name() = $field]"/> </xsl:call-template>
+</xsl:template>
+
+<xsl:template name="add_with_code">
+  <xsl:param name="field" select="''"/>
+  <xsl:call-template name="add"> <xsl:with-param name="value" select="*[local-name() = $field]/@code"/> </xsl:call-template>
+  <xsl:call-template name="add"> <xsl:with-param name="value" select="*[local-name() = $field]"/> </xsl:call-template>
 </xsl:template>
 
 <xsl:template name="add_activity_date">
