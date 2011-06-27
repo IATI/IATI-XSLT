@@ -1,6 +1,5 @@
 <xsl:stylesheet version="1.0" 
-xmlns:xsl="http://www.w3.org/1999/XSL/Transform"><!--ToDo: Currency warning. Need to warn when we've got an activity with multiple currencies-->
-<xsl:output method="text" encoding="application/json"/> 
+xmlns:xsl="http://www.w3.org/1999/XSL/Transform"><!--ToDo: Currency warning. Need to warn when we've got an activity with multiple currencies--><xsl:output method="text" encoding="application/json"/> 
 
 <xsl:key name="reporting-orgs" match="reporting-org|participating-org" use="@ref"/>
 <xsl:key name="policy-marker" match="policy-marker" use="."/>
@@ -194,8 +193,8 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform"><!--ToDo: Currency warning. Nee
   <xsl:param name="hierarchy" select="''"/> 
   <xsl:choose>
   	<xsl:when test="1">Project</xsl:when>
-  	<xsl:when test="2">Project component</xsl:when>
-  	<xsl:otherwise>Project Component</xsl:otherwise>
+  	<xsl:when test="2">Project_Component</xsl:when>
+  	<xsl:otherwise>Project_Component</xsl:otherwise>
   </xsl:choose>
 </xsl:template>
 
