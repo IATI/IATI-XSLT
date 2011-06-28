@@ -11,9 +11,9 @@
 <xsl:output method="text" encoding="utf8"/>
 <xsl:strip-space elements="*"/>
 
-<xsl:key name="refs" match="@ref" use="@ref"/>
+<xsl:key name="refs" match="." use="@ref"/>
 
-<xsl:for-each select="//*[generate-id() = generate-id(key('refs',@ref)[1])]">
+<xsl:for-each select="//*[generate-id() = generate-id(key('ref',@ref)[1])]">
 <xsl:value-of select="@ref"/>,<xsl:value-of select="."/><xsl:text>
 </xsl:text>
 </xsl:for-each>
