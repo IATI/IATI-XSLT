@@ -16,11 +16,12 @@
   <xsl:text>transaction-types,transaction-dates,transaction-date_iso-dates,</xsl:text>
   <xsl:text>transaction_provider-org_refs,transaction_provider-orgs,transaction_provider-org_provider-activity-ids,</xsl:text>
   <xsl:text>transaction_receiver-org_refs,transaction_receiver-orgs,transaction_receiver-org_receiver-activity-ids,</xsl:text>
-  <xsl:text>transaction_descriptions,transaction_flow-type_codes,transaction_flow-types,</xsl:text>
-  <xsl:text>transaction_aid-type_codes,transaction_aid-types,</xsl:text>
-  <xsl:text>transaction_finance-type_codes,transaction_finance-types,</xsl:text>
-  <xsl:text>transaction_tied-status_codes,transaction_tied-statuses,</xsl:text>
-  <xsl:text>transaction_disbursement-channel_codes,transaction_disbursement-channels,</xsl:text>
+  <xsl:text>transaction_description_langs,transaction_descriptions,</xsl:text>
+  <xsl:text>transaction_flow-type_codes,transaction_flow-type_langs,transaction_flow-types,</xsl:text>
+  <xsl:text>transaction_aid-type_codes,transaction_aid-type_langs,transaction_aid-types,</xsl:text>
+  <xsl:text>transaction_finance-type_codes,transaction_finance-type_langs,transaction_finance-types,</xsl:text>
+  <xsl:text>transaction_tied-status_codes,transaction_tied-status_langs,transaction_tied-statuses,</xsl:text>
+  <xsl:text>transaction_disbursement-channel_codes,transaction_disbursement-channel_langs,transaction_disbursement-channels,</xsl:text>
   <xsl:text>reporting-org_ref,reporting-org_type,reporting-org_lang,reporting-org,</xsl:text>
   <xsl:text>participating-org_refs_funding,participating-org_types_funding,participating-org_langs_funding,participating-orgs_funding,</xsl:text>
   <xsl:text>participating-org-refs_extending,participating-org-types_extending,participating-org_langs_extending,participating-orgs_extending,</xsl:text>
@@ -150,28 +151,35 @@
     <xsl:call-template name="join"> <xsl:with-param name="values" select="transaction/receiver-org/@receiver-activity-id"/> </xsl:call-template>
 
 
+    <!-- transaction_description_langs -->
     <!-- transaction_descriptions -->
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="transaction/description/@xml:lang"/> </xsl:call-template>
     <xsl:call-template name="join"> <xsl:with-param name="values" select="transaction/description"/> </xsl:call-template>
 
     <!-- transaction_flow-type_codes -->
+    <!-- transaction_flow-type_langs -->
     <!-- transaction_flow-types -->
-    <xsl:call-template name="join_transaction_field_with_code"> <xsl:with-param name="field">flow-type</xsl:with-param> </xsl:call-template>
+    <xsl:call-template name="join_transaction_field_with_code_and_lang"> <xsl:with-param name="field">flow-type</xsl:with-param> </xsl:call-template>
 
     <!-- transaction_aid-type_codes -->
+    <!-- transaction_aid-type_langs -->
     <!-- transaction_aid-types -->
-    <xsl:call-template name="join_transaction_field_with_code"> <xsl:with-param name="field">aid-type</xsl:with-param> </xsl:call-template>
+    <xsl:call-template name="join_transaction_field_with_code_and_lang"> <xsl:with-param name="field">aid-type</xsl:with-param> </xsl:call-template>
 
     <!-- transaction_finance-type_codes -->
+    <!-- transaction_finance-type_langs -->
     <!-- transaction_finance-types -->
-    <xsl:call-template name="join_transaction_field_with_code"> <xsl:with-param name="field">finance-type</xsl:with-param> </xsl:call-template>
+    <xsl:call-template name="join_transaction_field_with_code_and_lang"> <xsl:with-param name="field">finance-type</xsl:with-param> </xsl:call-template>
 
     <!-- transaction_tied-status_codes -->
+    <!-- transaction_tied-status_langs -->
     <!-- transaction_tied-statuses -->
-    <xsl:call-template name="join_transaction_field_with_code"> <xsl:with-param name="field">tied-status</xsl:with-param> </xsl:call-template>
+    <xsl:call-template name="join_transaction_field_with_code_and_lang"> <xsl:with-param name="field">tied-status</xsl:with-param> </xsl:call-template>
 
     <!-- transaction_disbursement-channel_codes -->
+    <!-- transaction_disbursement-channel_langs -->
     <!-- transaction_disbursement-channels -->
-    <xsl:call-template name="join_transaction_field_with_code"> <xsl:with-param name="field">disbursement-channel</xsl:with-param> </xsl:call-template>
+    <xsl:call-template name="join_transaction_field_with_code_and_lang"> <xsl:with-param name="field">disbursement-channel</xsl:with-param> </xsl:call-template>
 
 
     <!-- reporting-org_ref -->
