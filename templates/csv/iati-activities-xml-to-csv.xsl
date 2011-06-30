@@ -38,8 +38,8 @@
   <xsl:text>activity-status_code,activity-status_lang,activity-status,</xsl:text>
   <xsl:text>collaboration-type_code,collaboration-type_lang,collaboration-type,</xsl:text>
   <xsl:text>conditions-attached,condition_types,conditions,</xsl:text>
-  <xsl:text>sectors,sector_vocabularies,sector_codes,sector_percentages,</xsl:text>
-  <xsl:text>policy-markers,policy-marker_vocabularies,policy-marker_significance,policy-marker_codes,</xsl:text>
+  <xsl:text>sector_langs,sectors,sector_vocabularies,sector_codes,sector_percentages,</xsl:text>
+  <xsl:text>policy-marker_langs,policy-markers,policy-marker_vocabularies,policy-marker_significance,policy-marker_codes,</xsl:text>
   <xsl:text>contact-info_organisation,contact-info_person-name,contact-info_person-name,contact-info_email,contact-info_mailing-address,</xsl:text>
   <xsl:text>default-aid-type_code,default-aid-type_lang,default-aid-type,</xsl:text>
   <xsl:text>default-finance-type_code,default-finance-type_lang,default-finance-type,</xsl:text>
@@ -52,8 +52,8 @@
   <xsl:text>planned-disbursement_updated,planned-disbursement_period_starts,planned-disbursement_period-start_iso-dates,</xsl:text>
   <xsl:text>planned-disbursement_period-ends,planned-disbursement_period-end_iso-dates,</xsl:text>
   <xsl:text>planned-disbursement_values,planned-disbursement_value_value-dates,planned-disbursement_value_currencies,</xsl:text>
-  <xsl:text>location_percentages,location-type_codes,location-types,location_names,</xsl:text>
-  <xsl:text>location_descriptions,location_administrative,location_administrative_country,</xsl:text>
+  <xsl:text>location_percentages,location-type_codes,location-type_langs,location-types,location_name_langs,location_names,</xsl:text>
+  <xsl:text>location_description_langs,location_descriptions,location_administrative,location_administrative_country,</xsl:text>
   <xsl:text>location_administrative_admin1,location_administrative_admin2,</xsl:text>
   <xsl:text>location_coordinates_latitudes,location_coordinates_longitudes,location_coordinates_precisions,</xsl:text>
   <xsl:text>location_gazetteer-entries, location_gazetteer-entry_gazetteer-refs,</xsl:text>
@@ -285,20 +285,24 @@
     <xsl:call-template name="join"> <xsl:with-param name="values" select="conditions/condition"/> </xsl:call-template>
 
 
+    <!-- sector_langs -->
     <!-- sectors -->
     <!-- sector_vocabularies -->
     <!-- sector_codes -->
     <!-- sector_percentages -->
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="sector/@xml:lang"/> </xsl:call-template>
     <xsl:call-template name="join"> <xsl:with-param name="values" select="sector"/> </xsl:call-template>
     <xsl:call-template name="join"> <xsl:with-param name="values" select="sector/@vocabulary"/> </xsl:call-template>
     <xsl:call-template name="join"> <xsl:with-param name="values" select="sector/@code"/> </xsl:call-template>
     <xsl:call-template name="join"> <xsl:with-param name="values" select="sector/@percentage"/> </xsl:call-template>
 
 
+    <!-- policy-marker_langs -->
     <!-- policy-markers -->
     <!-- policy-marker_vocabularies -->
     <!-- policy-marker_significance -->
     <!-- policy-marker_codes -->
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="policy-marker/@xml:lang"/> </xsl:call-template>
     <xsl:call-template name="join"> <xsl:with-param name="values" select="policy-marker"/> </xsl:call-template>
     <xsl:call-template name="join"> <xsl:with-param name="values" select="policy-marker/@vocabulary"/> </xsl:call-template>
     <xsl:call-template name="join"> <xsl:with-param name="values" select="policy-marker/@significance"/> </xsl:call-template>
@@ -374,8 +378,11 @@
 
     <!-- location_percentages -->
     <!-- location-type_codes -->
+    <!-- location-type_langs -->
     <!-- location-types -->
+    <!-- location_name_langs -->
     <!-- location_names -->
+    <!-- location_description_langs -->
     <!-- location_descriptions -->
     <!-- location_administrative -->
     <!-- location_administrative_country -->
@@ -388,8 +395,11 @@
     <!-- location_gazetteer-entry_gazetteer-refs -->
     <xsl:call-template name="join"> <xsl:with-param name="values" select="location/@percentage"/> </xsl:call-template>
     <xsl:call-template name="join"> <xsl:with-param name="values" select="location/location-type/@code"/> </xsl:call-template>
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="location/location-type/@xml:lang"/> </xsl:call-template>
     <xsl:call-template name="join"> <xsl:with-param name="values" select="location/location-type"/> </xsl:call-template>
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="location/name/@xml:lang"/> </xsl:call-template>
     <xsl:call-template name="join"> <xsl:with-param name="values" select="location/name"/> </xsl:call-template>
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="location/description/@xml:lang"/> </xsl:call-template>
     <xsl:call-template name="join"> <xsl:with-param name="values" select="location/description"/> </xsl:call-template>
     <xsl:call-template name="join"> <xsl:with-param name="values" select="location/administrative"/> </xsl:call-template>
     <xsl:call-template name="join"> <xsl:with-param name="values" select="location/administrative/@country"/> </xsl:call-template>
