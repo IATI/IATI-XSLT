@@ -22,12 +22,12 @@
   <xsl:text>transaction_tied-status_codes,transaction_tied-statuses,</xsl:text>
   <xsl:text>transaction_disbursement-channel_codes,transaction_disbursement-channels,</xsl:text>
   <xsl:text>reporting-org_ref,reporting-org_type,reporting-org_lang,reporting-org,</xsl:text>
-  <xsl:text>participating-org_refs_funding,participating-orgs_funding,</xsl:text>
-  <xsl:text>participating-org-refs_extending,participating-orgs_extending,</xsl:text>
-  <xsl:text>participating-org-refs_accountable,participating-orgs_accountable,</xsl:text>
-  <xsl:text>participating-org_refs_implementing,participating-orgs_implementing,</xsl:text>
-  <xsl:text>recipient-country_codes,recipient-countries,recipient-country_percentages,</xsl:text>
-  <xsl:text>recipient-region_codes,recipient-regions,recipient-region_percentages,</xsl:text>
+  <xsl:text>participating-org_refs_funding,participating-org_types_funding,participating-org_langs_funding,participating-orgs_funding,</xsl:text>
+  <xsl:text>participating-org-refs_extending,participating-org-types_extending,participating-org_langs_extending,participating-orgs_extending,</xsl:text>
+  <xsl:text>participating-org-refs_accountable,participating-org-types_accountable,participating-org_langs_accountable,participating-orgs_accountable,</xsl:text>
+  <xsl:text>participating-org_refs_implementing,participating-org_types_implementing,participating-org_langs_implementing,participating-orgs_implementing,</xsl:text>
+  <xsl:text>recipient-country_codes,recipient-country_langs,recipient-countries,recipient-country_percentages,</xsl:text>
+  <xsl:text>recipient-region_codes,recipient-region_langs,recipient-regions,recipient-region_percentages,</xsl:text>
   <xsl:text>description_types,description_langs,descriptions,</xsl:text>
   <xsl:text>document-link_urls,document-link_formats,document-link_category_codes,document-link_categories,document-link_titles,</xsl:text>
   <xsl:text>start-planned_iso-date,start-planned_lang,start-planned,</xsl:text>
@@ -186,37 +186,47 @@
     <!-- Funding: The country or institution which provides the funds. -->
     <!-- http://iatistandard.org/codelists/organisation_role -->
     <!-- participating-org_refs_funding -->
+    <!-- participating-org_types_funding -->
+    <!-- participating-org_langs_funding -->
     <!-- participating-orgs_funding -->
     <xsl:call-template name="add_participating_org"> <xsl:with-param name="role">Funding</xsl:with-param> </xsl:call-template>
 
     <!-- Extending: The government entity (central, state or local government agency or department), or agency within an institution, financing the activity from its own budget -->
     <!-- http://iatistandard.org/codelists/organisation_role -->
     <!-- participating-org-refs_extending -->
+    <!-- participating-org-types_extending -->
+    <!-- participating-org-langs_extending -->
     <!-- participating-orgs_extending -->
     <xsl:call-template name="add_participating_org"> <xsl:with-param name="role">Extending</xsl:with-param> </xsl:call-template>
 
     <!-- Accountable: The government agency, civil society or private sector institution which is accountable for the implementation of the activity. -->
     <!-- http://iatistandard.org/codelists/organisation_role -->
     <!-- participating-org-refs_accountable -->
+    <!-- participating-org-types_accountable -->
+    <!-- participating-org-langs_accountable -->
     <!-- participating-orgs_accountable -->
     <xsl:call-template name="add_participating_org"> <xsl:with-param name="role">Accountable</xsl:with-param> </xsl:call-template>
 
     <!-- Implementing: The intermediary between the extending agency and the ultimate beneficiary. Also known as executing agency or channel of delivery. They can be public sector, non-governmental agencies (NGOs), Public-Private partnerships, or multilateral institutions -->
     <!-- http://iatistandard.org/codelists/organisation_role -->
     <!-- participating-org_refs_implementing -->
+    <!-- participating-org_types_implementing -->
+    <!-- participating-org_langs_implementing -->
     <!-- participating-orgs_implementing -->
     <xsl:call-template name="add_participating_org"> <xsl:with-param name="role">Implementing</xsl:with-param> </xsl:call-template>
 
     <!-- recipient-country_codes -->
+    <!-- recipient-country_langs -->
     <!-- recipient-countries -->
     <!-- recipient-country_percentages -->
-    <xsl:call-template name="join_with_code"> <xsl:with-param name="field" select="recipient-country"/> </xsl:call-template>
+    <xsl:call-template name="join_with_code_and_lang"> <xsl:with-param name="field" select="recipient-country"/> </xsl:call-template>
     <xsl:call-template name="join"> <xsl:with-param name="values" select="recipient-country/@percentage"/> </xsl:call-template>
 
     <!-- recipient-region_codes -->
+    <!-- recipient-region_langs -->
     <!-- recipient-regions -->
     <!-- recipient-region_percentages -->
-    <xsl:call-template name="join_with_code"> <xsl:with-param name="field" select="recipient-region"/> </xsl:call-template>
+    <xsl:call-template name="join_with_code_and_lang"> <xsl:with-param name="field" select="recipient-region"/> </xsl:call-template>
     <xsl:call-template name="join"> <xsl:with-param name="values" select="recipient-region/@percentage"/> </xsl:call-template>
 
     <!-- description_types -->

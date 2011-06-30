@@ -19,6 +19,8 @@
 <xsl:template name="add_participating_org">
   <xsl:param name="role" select="''"/>
   <xsl:call-template name="join"> <xsl:with-param name="values" select="participating-org[@role=$role]/@ref"/> </xsl:call-template>
+  <xsl:call-template name="join"> <xsl:with-param name="values" select="participating-org[@role=$role]/@type"/> </xsl:call-template>
+  <xsl:call-template name="join"> <xsl:with-param name="values" select="participating-org[@role=$role]/@xml:lang"/> </xsl:call-template>
   <xsl:call-template name="join"> <xsl:with-param name="values" select="participating-org[@role=$role]"/> </xsl:call-template>
 </xsl:template>
 
@@ -28,9 +30,10 @@
   <xsl:call-template name="join"> <xsl:with-param name="values" select="transaction/*[local-name() = $field]"/> </xsl:call-template>
 </xsl:template>
 
-<xsl:template name="join_with_code">
+<xsl:template name="join_with_code_and_lang">
   <xsl:param name="field" select="''"/>
   <xsl:call-template name="join"> <xsl:with-param name="values" select="*[local-name() = $field]/@code"/> </xsl:call-template>
+  <xsl:call-template name="join"> <xsl:with-param name="values" select="*[local-name() = $field]/@lang"/> </xsl:call-template>
   <xsl:call-template name="join"> <xsl:with-param name="values" select="*[local-name() = $field]"/> </xsl:call-template>
 </xsl:template>
 
