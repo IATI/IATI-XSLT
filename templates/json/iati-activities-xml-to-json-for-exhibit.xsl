@@ -1,6 +1,6 @@
 <xsl:stylesheet version="1.0" 
-xmlns:xsl="http://www.w3.org/1999/XSL/Transform"><!--ToDo: Currency warning. Need to warn when we've got an activity with multiple currencies-->
-<xsl:output method="text" encoding="application/json"/> 
+xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+xmlns:exist="http://exist.sourceforge.net/NS/exist"><!--ToDo: Currency warning. Need to warn when we've got an activity with multiple currencies--><xsl:output method="text" encoding="application/json"/> 
 
 <xsl:key name="reporting-orgs" match="reporting-org|participating-org" use="@ref"/>
 <xsl:key name="policy-marker" match="policy-marker" use="."/>
@@ -17,6 +17,10 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform"><!--ToDo: Currency warning. Nee
    "reporting-org": {
      "valueType": "item",
      "label" : "Reporting organisation"	     
+   },
+   "funding-org": {
+     "valueType": "item",
+     "label" : "Funding organisation"	     
    },
    "components": {
       "valueType": "item",
@@ -53,15 +57,36 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform"><!--ToDo: Currency warning. Nee
    "end-date-planned": {
       "valueType": "date",
       "label": "End Date (Planned)"
+   },
+   "recipient-region": {
+      "valueType": "text",
+      "label": "Recipient Region"
+   },
+   "recipient-country": {
+      "valueType": "text",
+      "label": "Recipient Country"
+   },
+   "default-aid-type": {
+      "valueType": "text",
+      "label": "Default Aid Type"
    }
 
   },
 "items": 
   [</xsl:text>
+<xsl:for-each select="/exist:result">
+	<xsl:text>{</xsl:text> "type": "summary",
+		"id": "query-summary",
+		"label": "Data Summary",	
+		"label": "Showing <xsl:value-of select="@exist:count"/> of <xsl:value-of select="@exist:hits"/> projects or components."	
+	<xsl:text>},
+	  </xsl:text>
+</xsl:for-each>
 
 <xsl:for-each select="//iati-activity">
   <xsl:text>{</xsl:text> "type": "activity",
     "id": "<xsl:value-of select="iati-identifier"/>",
+	"iati-identifier": "<xsl:value-of select="iati-identifier"/>",
     "uri": "<xsl:call-template name="urlPattern"> <xsl:with-param name="activity" select="."/></xsl:call-template>",
     "label": "<xsl:value-of select="title"/>",
     "type": "<xsl:call-template name="hierarchy"> <xsl:with-param name="hierarchy" select="@hierarchy"/></xsl:call-template>",
@@ -70,11 +95,13 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform"><!--ToDo: Currency warning. Nee
     "end-date-actual": "<xsl:call-template name="iati-date"><xsl:with-param name="value" select="activity-date[@type='end-actual']"/> </xsl:call-template>",  
     "start-date-planned": "<xsl:call-template name="iati-date"><xsl:with-param name="value" select="activity-date[@type='start-planned']"/> </xsl:call-template>",  
     "end-date-planned": "<xsl:call-template name="iati-date"><xsl:with-param name="value" select="activity-date[@type='end-planned']"/> </xsl:call-template>",  
-    "activity-status": "<xsl:value-of select="activity-status"/>", <!--Codelist available-->
-    "collaboration-type": "<xsl:value-of select="collaboration-type"/>", <!--Codelist available-->
-    "default-flow-type": "<xsl:value-of select="default-flow-type"/>", <!--Codelist available-->
-    "default-aid-type": "<xsl:value-of select="default-aid-type"/>", <!--Codelist available-->
+    "activity-status": "<xsl:value-of select="activity-status"/>", 
+    "collaboration-type": "<xsl:value-of select="collaboration-type"/>",
+    "default-flow-type": "<xsl:value-of select="default-flow-type"/>", 
+    "default-aid-type": "<xsl:value-of select="default-aid-type"/>", 
+    "default-tied-status": "<xsl:value-of select="default-tied-status"/>", 
     "reporting-org": "<xsl:value-of select="reporting-org/@ref"/>",
+	"funding-org": [ <xsl:call-template name="join"> <xsl:with-param name="valueList" select="participating-org[@role='Funding']/@ref"/> </xsl:call-template> ],
     "participating-org": [ <xsl:call-template name="join"> <xsl:with-param name="valueList" select="participating-org/@ref"/> </xsl:call-template> ],
     "default-currency": "<xsl:value-of select="@default-currency"/>",
     "currency-note": "<xsl:value-of select="'Not available'"/>",
@@ -90,7 +117,10 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform"><!--ToDo: Currency warning. Nee
     "sector-amounts": [ <xsl:call-template name="join"> <xsl:with-param name="valueList" select="sector/@percentage"/> </xsl:call-template> ], 
     "components":  [ <xsl:call-template name="join"> <xsl:with-param name="valueList" select="related-activity[@type=2]/@ref"/> </xsl:call-template> ],
     "parents":  [ <xsl:call-template name="join"> <xsl:with-param name="valueList" select="related-activity[@type=1]/@ref"/> </xsl:call-template> ],
+	"latlng":  "<xsl:value-of select="geocoded-latlng"/>",
+    "geotype":  "<xsl:value-of select="geocoded-type"/>",
     "recipient-country": "<xsl:value-of select="recipient-country"/>", 
+    "recipient-region": "<xsl:value-of select="recipient-region"/>", 
     "recipient-country-code": "<xsl:value-of select="recipient-country/@code"/>"
   <xsl:text>},
   </xsl:text>
@@ -193,9 +223,9 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform"><!--ToDo: Currency warning. Nee
 <xsl:template name="hierarchy">
   <xsl:param name="hierarchy" select="''"/> 
   <xsl:choose>
-  	<xsl:when test="1">Project</xsl:when>
-  	<xsl:when test="2">Project component</xsl:when>
-  	<xsl:otherwise>Project Component</xsl:otherwise>
+  	<xsl:when test="1">project</xsl:when>
+  	<xsl:when test="2">component</xsl:when>
+  	<xsl:otherwise>component</xsl:otherwise>
   </xsl:choose>
 </xsl:template>
 
