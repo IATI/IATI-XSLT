@@ -19,6 +19,7 @@
   <xsl:param name="values" select="''"/>
   <xsl:param name="quote"><xsl:text>"</xsl:text></xsl:param>
   <xsl:param name="separator"><xsl:text>,</xsl:text></xsl:param>
+  <xsl:param name="concatenation_separator"><xsl:text>; </xsl:text></xsl:param>
   <xsl:param name="remove"></xsl:param>
   <xsl:variable name="doublequote">"</xsl:variable>
 
@@ -29,7 +30,7 @@
         <xsl:value-of select="translate(translate(.,$doublequote,''),$remove,'')"/>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:value-of select="translate(translate(concat('; ',.),$doublequote,''),$remove,'')"/>
+        <xsl:value-of select="translate(translate(concat($concatenation_separator,.),$doublequote,''),$remove,'')"/>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:for-each>

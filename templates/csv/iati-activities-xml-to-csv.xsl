@@ -5,7 +5,7 @@
 
 <xsl:template match="/">
   <xsl:text>iati-identifier,other-identifier,other-identifier_owner-name,other-identifier_owner-ref,</xsl:text>
-  <xsl:text>hierarchy,title,default-currency,</xsl:text>
+  <xsl:text>hierarchy,title_lang,title,default-currency,default-language,last-updated-datetime,</xsl:text>
   <xsl:text>transaction_value_currencies,</xsl:text>
   <xsl:text>commitment,disbursement,</xsl:text>
   <xsl:text>reimbursement,expenditure,</xsl:text>
@@ -21,27 +21,30 @@
   <xsl:text>transaction_finance-type_codes,transaction_finance-types,</xsl:text>
   <xsl:text>transaction_tied-status_codes,transaction_tied-statuses,</xsl:text>
   <xsl:text>transaction_disbursement-channel_codes,transaction_disbursement-channels,</xsl:text>
-  <xsl:text>reporting-org_ref,reporting-org_type,reporting-org,</xsl:text>
+  <xsl:text>reporting-org_ref,reporting-org_type,reporting-org_lang,reporting-org,</xsl:text>
   <xsl:text>participating-org_refs_funding,participating-orgs_funding,</xsl:text>
   <xsl:text>participating-org-refs_extending,participating-orgs_extending,</xsl:text>
   <xsl:text>participating-org-refs_accountable,participating-orgs_accountable,</xsl:text>
   <xsl:text>participating-org_refs_implementing,participating-orgs_implementing,</xsl:text>
   <xsl:text>recipient-country_codes,recipient-countries,recipient-country_percentages,</xsl:text>
   <xsl:text>recipient-region_codes,recipient-regions,recipient-region_percentages,</xsl:text>
-  <xsl:text>description,</xsl:text>
+  <xsl:text>description_types,description_langs,descriptions,</xsl:text>
   <xsl:text>document-link_urls,document-link_formats,document-link_category_codes,document-link_categories,document-link_titles,</xsl:text>
-  <xsl:text>start-planned,start-actual,end-planned,end-actual,</xsl:text>
+  <xsl:text>start-planned_iso-date,start-planned_lang,start-planned,</xsl:text>
+  <xsl:text>start-actual_iso-date,start-actual_lang,start-actual,</xsl:text>
+  <xsl:text>end-planned_iso-date,end-planned_lang,end-planned,</xsl:text>
+  <xsl:text>end-actual_iso-date,end-actual_lang,end-actual,</xsl:text>
   <xsl:text>activity-website,</xsl:text>
-  <xsl:text>activity-status_code,activity-status,</xsl:text>
-  <xsl:text>collaboration-type_code,collaboration-type,</xsl:text>
+  <xsl:text>activity-status_code,activity-status_lang,activity-status,</xsl:text>
+  <xsl:text>collaboration-type_code,collaboration-type_lang,collaboration-type,</xsl:text>
   <xsl:text>conditions-attached,condition_types,conditions,</xsl:text>
   <xsl:text>sectors,sector_vocabularies,sector_codes,sector_percentages,</xsl:text>
   <xsl:text>policy-markers,policy-marker_vocabularies,policy-marker_significance,policy-marker_codes,</xsl:text>
   <xsl:text>contact-info_organisation,contact-info_person-name,contact-info_person-name,contact-info_email,contact-info_mailing-address,</xsl:text>
-  <xsl:text>default-aid-type_code,default-aid-type,</xsl:text>
-  <xsl:text>default-finance-type_code,default-finance-type,</xsl:text>
-  <xsl:text>default-flow-type_code,default-flow-type,</xsl:text>
-  <xsl:text>default-tied-status_code,default-tied-status,</xsl:text>
+  <xsl:text>default-aid-type_code,default-aid-type_lang,default-aid-type,</xsl:text>
+  <xsl:text>default-finance-type_code,default-finance-type_lang,default-finance-type,</xsl:text>
+  <xsl:text>default-flow-type_code,default-flow-type_lang,default-flow-type,</xsl:text>
+  <xsl:text>default-tied-status_code,default-tied-status_lang,default-tied-status,</xsl:text>
   <xsl:text>related-activity_refs,related-activity_types,related-activities,</xsl:text>
   <xsl:text>budget_types,budget_period_starts,budget_period-start_iso-dates,</xsl:text>
   <xsl:text>budget_period-ends,budget_period-end_iso-dates,</xsl:text>
@@ -78,11 +81,19 @@
     <!-- hierarchy -->
     <xsl:call-template name="add"> <xsl:with-param name="value" select="@hierarchy"/> </xsl:call-template>
 
+    <!-- title_lang -->
     <!-- title -->
+    <xsl:call-template name="add"> <xsl:with-param name="value" select="title/@xml:lang"/> </xsl:call-template>
     <xsl:call-template name="add"> <xsl:with-param name="value" select="title"/> </xsl:call-template>
 
     <!-- default-currency -->
     <xsl:call-template name="add"> <xsl:with-param name="value" select="@default-currency"/> </xsl:call-template>
+
+    <!-- default-language -->
+    <xsl:call-template name="add"> <xsl:with-param name="value" select="@xml:lang"/> </xsl:call-template>
+
+    <!-- last-updated-datetime -->
+    <xsl:call-template name="add"> <xsl:with-param name="value" select="@last-updated-datetime"/> </xsl:call-template>
 
     <!-- transaction_value_currencies -->
     <xsl:call-template name="join"> <xsl:with-param name="values" select="transaction/value/@currency"/> </xsl:call-template>
@@ -164,9 +175,12 @@
 
 
     <!-- reporting-org_ref -->
+    <!-- reporting-org_type -->
+    <!-- reporting-org_lang -->
     <!-- reporting-org -->
     <xsl:call-template name="add"> <xsl:with-param name="value" select="reporting-org/@ref"/> </xsl:call-template>
     <xsl:call-template name="add"> <xsl:with-param name="value" select="reporting-org/@type"/> </xsl:call-template>
+    <xsl:call-template name="add"> <xsl:with-param name="value" select="reporting-org/@xml:lang"/> </xsl:call-template>
     <xsl:call-template name="add"> <xsl:with-param name="value" select="reporting-org"/> </xsl:call-template>
 
     <!-- Funding: The country or institution which provides the funds. -->
@@ -205,8 +219,12 @@
     <xsl:call-template name="join_with_code"> <xsl:with-param name="field" select="recipient-region"/> </xsl:call-template>
     <xsl:call-template name="join"> <xsl:with-param name="values" select="recipient-region/@percentage"/> </xsl:call-template>
 
-    <!-- description -->
-    <xsl:call-template name="add"> <xsl:with-param name="value" select="description"/> </xsl:call-template>
+    <!-- description_types -->
+    <!-- description_langs -->
+    <!-- descriptions -->
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="description/@type"/> </xsl:call-template>
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="description/@xml:lang"/> </xsl:call-template>
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="description"/> <xsl:with-param name="concatenation_separator"><xsl:text> | </xsl:text></xsl:with-param> </xsl:call-template>
 
     <!-- document-link_urls -->
     <xsl:call-template name="join"> <xsl:with-param name="values" select="document-link/@url"/> </xsl:call-template>
@@ -219,9 +237,17 @@
     <!-- document-link_titles -->
     <xsl:call-template name="join"> <xsl:with-param name="values" select="document-link/title"/> </xsl:call-template>
 
+    <!-- start-planned_iso-date -->
+    <!-- start-planned_lang -->
     <!-- start-planned -->
+    <!-- start-actual_iso-date -->
+    <!-- start-actual_lang -->
     <!-- start-actual -->
+    <!-- end-planned_iso-date -->
+    <!-- end-planned_lang -->
     <!-- end-planned -->
+    <!-- end-actual_iso-date -->
+    <!-- end-actual_lang -->
     <!-- end-actual -->
     <xsl:call-template name="add_activity_date"> <xsl:with-param name="type">start-planned</xsl:with-param> </xsl:call-template>
     <xsl:call-template name="add_activity_date"> <xsl:with-param name="type">start-actual</xsl:with-param> </xsl:call-template>
@@ -232,12 +258,14 @@
     <xsl:call-template name="add"> <xsl:with-param name="value" select="activity-website"/> </xsl:call-template>
 
     <!-- activity-status_code -->
+    <!-- activity-status_lang -->
     <!-- activity-status -->
-    <xsl:call-template name="add_with_code"> <xsl:with-param name="field">activity-status</xsl:with-param> </xsl:call-template>
+    <xsl:call-template name="add_with_code_and_lang"> <xsl:with-param name="field">activity-status</xsl:with-param> </xsl:call-template>
 
     <!-- collaboration-type_code -->
+    <!-- collaboration-type_lang -->
     <!-- collaboration-type -->
-    <xsl:call-template name="add_with_code"> <xsl:with-param name="field">collaboration-type</xsl:with-param> </xsl:call-template>
+    <xsl:call-template name="add_with_code_and_lang"> <xsl:with-param name="field">collaboration-type</xsl:with-param> </xsl:call-template>
 
     <!-- conditions-attached -->
     <!-- condition_types -->
@@ -284,20 +312,24 @@
 
 
     <!-- default-aid-type_code -->
+    <!-- default-aid-type_lang -->
     <!-- default-aid-type -->
-    <xsl:call-template name="add_with_code"> <xsl:with-param name="field">default-aid-type</xsl:with-param> </xsl:call-template>
+    <xsl:call-template name="add_with_code_and_lang"> <xsl:with-param name="field">default-aid-type</xsl:with-param> </xsl:call-template>
 
     <!-- default-finance-type_code -->
+    <!-- default-finance-type_lang -->
     <!-- default-finance-type -->
-    <xsl:call-template name="add_with_code"> <xsl:with-param name="field">default-finance-type</xsl:with-param> </xsl:call-template>
+    <xsl:call-template name="add_with_code_and_lang"> <xsl:with-param name="field">default-finance-type</xsl:with-param> </xsl:call-template>
 
     <!-- default-flow-type_code -->
+    <!-- default-flow-type_lang -->
     <!-- default-flow-type -->
-    <xsl:call-template name="add_with_code"> <xsl:with-param name="field">default-flow-type</xsl:with-param> </xsl:call-template>
+    <xsl:call-template name="add_with_code_and_lang"> <xsl:with-param name="field">default-flow-type</xsl:with-param> </xsl:call-template>
 
     <!-- default-tied-status_code -->
+    <!-- default-tied-status_lang -->
     <!-- default-tied-status -->
-    <xsl:call-template name="add_with_code"> <xsl:with-param name="field">default-tied-status</xsl:with-param> </xsl:call-template>
+    <xsl:call-template name="add_with_code_and_lang"> <xsl:with-param name="field">default-tied-status</xsl:with-param> </xsl:call-template>
 
     <!-- related-activity_refs -->
     <!-- related-activity_types -->
