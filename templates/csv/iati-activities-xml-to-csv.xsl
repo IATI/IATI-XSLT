@@ -48,7 +48,7 @@
   <xsl:text>default-finance-type_code,default-finance-type_lang,default-finance-type,</xsl:text>
   <xsl:text>default-flow-type_code,default-flow-type_lang,default-flow-type,</xsl:text>
   <xsl:text>default-tied-status_code,default-tied-status_lang,default-tied-status,</xsl:text>
-  <xsl:text>related-activity_refs,related-activity_types,related-activities,</xsl:text>
+  <xsl:text>related-activity_refs,related-activity_types,related-activity_langs,related-activities,</xsl:text>
   <xsl:text>budget_types,budget_period_starts,budget_period-start_iso-dates,</xsl:text>
   <xsl:text>budget_period-ends,budget_period-end_iso-dates,</xsl:text>
   <xsl:text>budget_values,budget_value_value-dates,budget_value_currencies,</xsl:text>
@@ -366,9 +366,11 @@
 
     <!-- related-activity_refs -->
     <!-- related-activity_types -->
+    <!-- related-activity_langs -->
     <!-- related-activities -->
     <xsl:call-template name="join"> <xsl:with-param name="values" select="related-activity/@ref"/> </xsl:call-template>
     <xsl:call-template name="join"> <xsl:with-param name="values" select="related-activity/@type"/> </xsl:call-template>
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="related-activity/@xml:lang"/> </xsl:call-template>
     <xsl:call-template name="join"> <xsl:with-param name="values" select="related-activity"/> </xsl:call-template>
 
 
