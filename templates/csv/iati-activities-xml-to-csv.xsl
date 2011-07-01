@@ -38,7 +38,7 @@
   <xsl:text>activity-website,</xsl:text>
   <xsl:text>activity-status_code,activity-status_lang,activity-status,</xsl:text>
   <xsl:text>collaboration-type_code,collaboration-type_lang,collaboration-type,</xsl:text>
-  <xsl:text>conditions-attached,condition_types,conditions,</xsl:text>
+  <xsl:text>conditions-attached,condition_types,condition_langs,conditions,</xsl:text>
   <xsl:text>sector_langs,sectors,sector_vocabularies,sector_codes,sector_percentages,</xsl:text>
   <xsl:text>policy-marker_langs,policy-markers,policy-marker_vocabularies,policy-marker_significance,policy-marker_codes,</xsl:text>
   <xsl:text>contact-info_organisation,contact-info_person-name,contact-info_person-name,contact-info_email,contact-info_mailing-address,</xsl:text>
@@ -58,7 +58,7 @@
   <xsl:text>location_administrative_admin1,location_administrative_admin2,</xsl:text>
   <xsl:text>location_coordinates_latitudes,location_coordinates_longitudes,location_coordinates_precisions,</xsl:text>
   <xsl:text>location_gazetteer-entries, location_gazetteer-entry_gazetteer-refs,</xsl:text>
-  <xsl:text>result_types,result_titles,result_descriptions,</xsl:text>
+  <xsl:text>result_types,result_title_langs,result_titles,result_description_langs,result_descriptions,</xsl:text>
   <xsl:text>result_indicator_measures,result_indicator_baselines,</xsl:text>
   <xsl:text>result_indicator_baseline_years,result_indicator_baseline_values,</xsl:text>
   <xsl:text>result_indicator_targets,result_indicator_target_years,</xsl:text>
@@ -287,9 +287,11 @@
 
     <!-- conditions-attached -->
     <!-- condition_types -->
+    <!-- condition_langs -->
     <!-- conditions -->
     <xsl:call-template name="add"> <xsl:with-param name="value" select="conditions/@attached"/> </xsl:call-template>
     <xsl:call-template name="join"> <xsl:with-param name="values" select="conditions/condition/@type"/> </xsl:call-template>
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="conditions/condition/@xml:lang"/> </xsl:call-template>
     <xsl:call-template name="join"> <xsl:with-param name="values" select="conditions/condition"/> </xsl:call-template>
 
 
@@ -420,7 +422,9 @@
     <xsl:call-template name="join"> <xsl:with-param name="values" select="location/gazetteer-entry/@gazetteer-ref"/> </xsl:call-template>
 
     <!-- result_types -->
+    <!-- result_title_langs -->
     <!-- result_titles -->
+    <!-- result_description_langs -->
     <!-- result_descriptions -->
     <!-- result_indicator_measures -->
     <!-- result_indicator_baselines -->
@@ -433,7 +437,9 @@
     <!-- result_indicator_actual_years -->
     <!-- result_indicator_actual_values -->
     <xsl:call-template name="join"> <xsl:with-param name="values" select="result/@type"/> </xsl:call-template>
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="result/title/@xml:lang"/> </xsl:call-template>
     <xsl:call-template name="join"> <xsl:with-param name="values" select="result/title"/> </xsl:call-template>
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="result/description/@xml:lang"/> </xsl:call-template>
     <xsl:call-template name="join"> <xsl:with-param name="values" select="result/description"/> </xsl:call-template>
     <xsl:call-template name="join"> <xsl:with-param name="values" select="result/indicator/@measure"/> </xsl:call-template>
     <xsl:call-template name="join"> <xsl:with-param name="values" select="result/indicator/baseline"/> </xsl:call-template>
