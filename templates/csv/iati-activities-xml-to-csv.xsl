@@ -59,11 +59,12 @@
   <xsl:text>location_coordinates_latitudes,location_coordinates_longitudes,location_coordinates_precisions,</xsl:text>
   <xsl:text>location_gazetteer-entries, location_gazetteer-entry_gazetteer-refs,</xsl:text>
   <xsl:text>result_types,result_title_langs,result_titles,result_description_langs,result_descriptions,</xsl:text>
+  <xsl:text>result_indicator_title_langs,result_indicator_titles,result_indicator_description_langs,result_indicator_descriptions,</xsl:text>
   <xsl:text>result_indicator_measures,result_indicator_baselines,</xsl:text>
   <xsl:text>result_indicator_baseline_years,result_indicator_baseline_values,</xsl:text>
   <xsl:text>result_indicator_targets,result_indicator_target_years,</xsl:text>
   <xsl:text>result_indicator_target_values,result_indicator_actuals,</xsl:text>
-  <xsl:text>result_indicator_actual_years,result_indicator_actual_values</xsl:text>
+  <xsl:text>result_indicator_actual_years,result_indicator_actual_values,</xsl:text>
   <xsl:text>legacy-data_names,legacy-data_values,legacy-data_iati-equivalents,legacy-data
 </xsl:text>
   <xsl:for-each select="//iati-activity">
@@ -426,6 +427,10 @@
     <!-- result_titles -->
     <!-- result_description_langs -->
     <!-- result_descriptions -->
+    <!-- result_indicator_title_langs -->
+    <!-- result_indicator_titles -->
+    <!-- result_indicator_description_langs -->
+    <!-- result_indicator_descriptions -->
     <!-- result_indicator_measures -->
     <!-- result_indicator_baselines -->
     <!-- result_indicator_baseline_years -->
@@ -441,6 +446,10 @@
     <xsl:call-template name="join"> <xsl:with-param name="values" select="result/title"/> </xsl:call-template>
     <xsl:call-template name="join"> <xsl:with-param name="values" select="result/description/@xml:lang"/> </xsl:call-template>
     <xsl:call-template name="join"> <xsl:with-param name="values" select="result/description"/> </xsl:call-template>
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="result/indicator/title/@xml:lang"/> </xsl:call-template>
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="result/indicator/title"/> </xsl:call-template>
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="result/indicator/description/@xml:lang"/> </xsl:call-template>
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="result/indicator/description"/> </xsl:call-template>
     <xsl:call-template name="join"> <xsl:with-param name="values" select="result/indicator/@measure"/> </xsl:call-template>
     <xsl:call-template name="join"> <xsl:with-param name="values" select="result/indicator/baseline"/> </xsl:call-template>
     <xsl:call-template name="join"> <xsl:with-param name="values" select="result/indicator/baseline/@year"/> </xsl:call-template>
