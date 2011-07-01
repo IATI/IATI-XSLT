@@ -5,7 +5,7 @@
 
 <xsl:template match="/">
   <xsl:text>iati-identifier,</xsl:text>
-  <xsl:text>hierarchy,title,default-currency,</xsl:text>
+  <xsl:text>hierarchy,titles,default-currency,</xsl:text>
   <xsl:text>commitment,disbursement,</xsl:text>
   <xsl:text>reimbursement,expenditure,</xsl:text>
   <xsl:text>incoming-funds,loan-repayment,</xsl:text>
@@ -29,8 +29,8 @@
     <!-- hierarchy -->
     <xsl:call-template name="add"> <xsl:with-param name="value" select="../@hierarchy"/> </xsl:call-template>
 
-    <!-- title -->
-    <xsl:call-template name="add"> <xsl:with-param name="value" select="../title"/> </xsl:call-template>
+    <!-- titles -->
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="../title"/> </xsl:call-template>
 
     <!-- default-currency -->
     <xsl:call-template name="add"> <xsl:with-param name="value" select="../@default-currency"/> </xsl:call-template>

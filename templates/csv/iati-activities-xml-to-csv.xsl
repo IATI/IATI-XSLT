@@ -5,7 +5,7 @@
 
 <xsl:template match="/">
   <xsl:text>iati-identifier,other-identifier,other-identifier_owner-name,other-identifier_owner-ref,</xsl:text>
-  <xsl:text>hierarchy,title_lang,title,default-currency,default-language,last-updated-datetime,</xsl:text>
+  <xsl:text>hierarchy,titles_lang,titles,default-currency,default-language,last-updated-datetime,</xsl:text>
   <xsl:text>transaction_value_currencies,</xsl:text>
   <xsl:text>commitment,disbursement,</xsl:text>
   <xsl:text>reimbursement,expenditure,</xsl:text>
@@ -82,10 +82,10 @@
     <!-- hierarchy -->
     <xsl:call-template name="add"> <xsl:with-param name="value" select="@hierarchy"/> </xsl:call-template>
 
-    <!-- title_lang -->
-    <!-- title -->
-    <xsl:call-template name="add"> <xsl:with-param name="value" select="title/@xml:lang"/> </xsl:call-template>
-    <xsl:call-template name="add"> <xsl:with-param name="value" select="title"/> </xsl:call-template>
+    <!-- titles_lang -->
+    <!-- titles -->
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="title/@xml:lang"/> </xsl:call-template>
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="title"/> </xsl:call-template>
 
     <!-- default-currency -->
     <xsl:call-template name="add"> <xsl:with-param name="value" select="@default-currency"/> </xsl:call-template>
