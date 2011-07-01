@@ -227,14 +227,14 @@
     <!-- recipient-country_langs -->
     <!-- recipient-countries -->
     <!-- recipient-country_percentages -->
-    <xsl:call-template name="join_with_code_and_lang"> <xsl:with-param name="field" select="recipient-country"/> </xsl:call-template>
+    <xsl:call-template name="join_with_code_and_lang"> <xsl:with-param name="field">recipient-country</xsl:with-param> </xsl:call-template>
     <xsl:call-template name="join"> <xsl:with-param name="values" select="recipient-country/@percentage"/> </xsl:call-template>
 
     <!-- recipient-region_codes -->
     <!-- recipient-region_langs -->
     <!-- recipient-regions -->
     <!-- recipient-region_percentages -->
-    <xsl:call-template name="join_with_code_and_lang"> <xsl:with-param name="field" select="recipient-region"/> </xsl:call-template>
+    <xsl:call-template name="join_with_code_and_lang"> <xsl:with-param name="field">recipient-region</xsl:with-param> </xsl:call-template>
     <xsl:call-template name="join"> <xsl:with-param name="values" select="recipient-region/@percentage"/> </xsl:call-template>
 
     <!-- description_types -->
