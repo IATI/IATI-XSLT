@@ -1,1 +1,17 @@
 *.bak
+
+testcases/query-results-multiple-donors.xml
+
+testcases/results-from-xpath-query.xml
+
+templates/json/result.txt
+
+templates/html/result_2.html
+
+templates/html/result.txt
+
+templates/html/result.html
+
+templates/csv/result.txt
+
+.gitignore
