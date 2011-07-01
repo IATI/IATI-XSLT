@@ -30,7 +30,9 @@
   <xsl:text>recipient-country_codes,recipient-country_langs,recipient-countries,recipient-country_percentages,</xsl:text>
   <xsl:text>recipient-region_codes,recipient-region_langs,recipient-regions,recipient-region_percentages,</xsl:text>
   <xsl:text>description_types,description_langs,descriptions,</xsl:text>
-  <xsl:text>document-link_urls,document-link_formats,document-link_category_codes,document-link_categories,document-link_titles,</xsl:text>
+  <xsl:text>document-link_urls,document-link_formats,document-link_languages,</xsl:text>
+  <xsl:text>document-link_category_codes,document-link_category_langs,document-link_categories,</xsl:text>
+  <xsl:text>document-link_title_langs,document-link_titles,</xsl:text>
   <xsl:text>start-planned_iso-date,start-planned_lang,start-planned,</xsl:text>
   <xsl:text>start-actual_iso-date,start-actual_lang,start-actual,</xsl:text>
   <xsl:text>end-planned_iso-date,end-planned_lang,end-planned,</xsl:text>
@@ -249,10 +251,16 @@
     <xsl:call-template name="join"> <xsl:with-param name="values" select="document-link/@url"/> </xsl:call-template>
     <!-- document-link_formats -->
     <xsl:call-template name="join"> <xsl:with-param name="values" select="document-link/@format"/> </xsl:call-template>
+    <!-- document-link_languages -->
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="document-link/language"/> </xsl:call-template>
     <!-- document-link_category_codes -->
     <xsl:call-template name="join"> <xsl:with-param name="values" select="document-link/category/@code"/> </xsl:call-template>
+    <!-- document-link_category_langs -->
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="document-link/category/@xml:lang"/> </xsl:call-template>
     <!-- document-link_categories -->
     <xsl:call-template name="join"> <xsl:with-param name="values" select="document-link/category"/> </xsl:call-template>
+    <!-- document-link_title_langs -->
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="document-link/title/@xml:lang"/> </xsl:call-template>
     <!-- document-link_titles -->
     <xsl:call-template name="join"> <xsl:with-param name="values" select="document-link/title"/> </xsl:call-template>
 
