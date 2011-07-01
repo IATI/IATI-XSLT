@@ -33,13 +33,14 @@
   <html>
 	<head>
 		<title>IATI Activity Viewer - <xsl:value-of select="title"/></title>
-		<style>
-			.note {display:none;}
-		</style>
-		<xsl:call-template name="GoogleViz"> <xsl:with-param name="activity" select="."/> </xsl:call-template>
- 	  
+		<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+		<script type="text/javascript" src="enhance.js"></script>
+		<link media="screen" rel="stylesheet" href="activity.css" />  	  
 	</head>
 	<body>
+		
+
 	
 <xsl:for-each select=".">
 	<h1 class="title"><xsl:value-of select="title"/></h1>
@@ -57,19 +58,6 @@
 		</xsl:for-each>
 	</div>
 	
-	
-	<div class="contacts">
-		<h4>Contacts</h4>
-		<xsl:for-each select="contact-info">
-			<div class="vcard">
-				<div class="org"><xsl:value-of select="organisation"/></div>
-				<xsl:if test="email"><a class="email" href="mailto:{email}"><xsl:if test="person-name"><xsl:value-of select="person-name"/></xsl:if><xsl:if test="not(person-name)"><xsl:value-of select="email"/></xsl:if></a></xsl:if>
-				<xsl:if test="telephone"><div class="tel"><xsl:value-of select="telephone"/></div></xsl:if>
-				<xsl:if test="mailing-address"><div class="addr"><xsl:value-of select="mailing-address"/></div></xsl:if>
-			</div>
-		</xsl:for-each>
-	</div>
-	
 	<div class="financials">
 	  	<span class="commitment_data">
 			<span class="commitment_header">Total Commitments</span>
@@ -77,22 +65,18 @@
 				<span class="commitments">
 				<xsl:call-template name="formatCurrency">
 					<xsl:with-param name="currency" select="$currency"/>
-					<xsl:with-param name="value" select="sum(transaction[transaction-type/@code='C'][value/@currency='$currency' or not(value/@currency)]/value)"/>
+					<xsl:with-param name="value" select="sum(transaction[transaction-type/@code='C']/value)"/>
 				</xsl:call-template>
 					<span class="note">This gives a total of commitments recorded in the default currency of <xsl:value-of select="$currency"/> .</span>
-				</span>
-				
-				
-				
+				</span>	
 	   	</span>
 	    <span class="spending_summary">
 		 	<!--We assume all transaction as recorded in the default currency-->
 			Recorded spending so far: 
 			<xsl:call-template name="formatCurrency">
 				<xsl:with-param name="currency" select="$currency"/>
-				<xsl:with-param name="value" select="sum(transaction[transaction-type/@code='E' or transaction-type/@code='D'][value/@currency='$currency' or not(value/@currency)]/value)"/>
+				<xsl:with-param name="value" select="sum(transaction[transaction-type/@code='E' or transaction-type/@code='D']/value)"/>
 			</xsl:call-template>
-			
 		</span>
 	</div>
 	
@@ -106,10 +90,19 @@
 		<h3>Participating Organisations</h3>
 		<ul>
 		<xsl:for-each select="participating-org">	
-			<li><span class="participating-org role-{@role}" id="{@ref}"><xsl:value-of select="."/> (<xsl:value-of select="@role"/><xsl:apply-templates select='document("")//OrganisationType:codes'><xsl:with-param name="code" select="@type"/></xsl:apply-templates>
+			<li><span class="participating-org role-{@role}" id="{@ref}"><xsl:value-of select="."/> (<xsl:value-of select="@role"/> - <xsl:apply-templates select='document("")//OrganisationType:codes'><xsl:with-param name="code" select="@type"/></xsl:apply-templates>
 			)</span></li>
 		</xsl:for-each>
 		</ul>
+		
+		<xsl:if test="related-activity">
+			<h3>Related Activities</h3>
+			<ul>
+			<xsl:for-each select="related-activity">	
+				<li><a href="/explorer/activity/?activity={@ref}" title="{.}"><xsl:value-of select="."/></a></li>
+			</xsl:for-each>
+			</ul>
+		</xsl:if>
 	</div>
 	
 	<div class="geography">
@@ -122,26 +115,48 @@
 		<div id="{iati-identifier}-recipient-map" class="map"></div>
 	</div>
 	
+	<div class="periods">
+		<xsl:if test="activity-date[@type='start-planned']|activity-date[@type='end-planned']">
+			<div class="planned-dates">Planned dates: <span class="date-entry start-planned"><xsl:call-template name="iati-date"><xsl:with-param name="value" select="activity-date[@type='start-planned']"/> </xsl:call-template></span> until <span class="date-entry end-planned"><xsl:call-template name="iati-date"> <xsl:with-param name="value" select="activity-date[@type='end-planned']"/> </xsl:call-template></span></div>
+		</xsl:if>
+		<xsl:if test="activity-date[@type='start-actual']|activity-date[@type='end-actual']">
+			<div class="actual-dates">Actual dates: <span class="date-entry start-actual"><xsl:call-template name="iati-date"><xsl:with-param name="value" select="activity-date[@type='start-actual']"/> </xsl:call-template></span> until <span class="date-entry end-actual"><xsl:call-template name="iati-date"> <xsl:with-param name="value" select="activity-date[@type='end-actual']"/> </xsl:call-template></span></div>
+		</xsl:if>
+	</div>
 	
-	<div class="policy-markers">
-			<h4>Policy Markers</h4>
-			<div class="graph" id="{iati-identifier}-policy-markers-graph">
-			</div>
-			<table title="Policy markers" class="policy-markers datatable">
+	
+	<div class="sectors">
+		<h4>Transaction</h4>
+		<div class="graph" id="{iati-identifier}-transactions-graph"></div>
+		<div class="table" id="{iati-identifier}-transactions-table"></div>	
+			<table title="Transaction_Table" class="transactions transactiontable">
+			<!--Right now we only handle the basics of the transaction details. We need to include more detail on flow types etc. in future-->
 				<tr>
-					<th class="vocabulary">Vocabulary</th>
-					<th class="code">Code</th>
-					<th class="name">Marker</th>
-					<th class="weight">Significance</th>
+					<th class="transaction-date">Date</th>
+					<th class="transaction-type">Type</th>
+					<th class="transaction-provider">Provider</th>
+					<th class="transaction-receiver">Receiver</th>
+					<th class="transaction-value">Value</th>
+					<th class="transaction-description">Description</th>
 				</tr>
-				<xsl:for-each select="policy-marker">			
-					<xsl:sort select="@vocabulary"/>
-						<tr>
-							<td class="vocabulary"><xsl:value-of select="@vocabulary"/></td>
-							<td class="code"><xsl:value-of select="@code"/></td>
-							<td class="name"><xsl:value-of select="."/></td>
-							<td class="weight"><xsl:value-of select="@significance"/></td>
-						</tr>
+				<xsl:for-each select="transaction">			
+					<xsl:sort select="transaction-type/@code"/><xsl:sort select="value/@value-date"/>
+							<tr>
+								<td class="transaction-date"><xsl:call-template name="iati-date"><xsl:with-param name="date_format" select="'yyyy-MM-dd'" /><xsl:with-param name="value" select="transaction-date"/> </xsl:call-template></td>
+								<td class="transaction-type transaction-type-{type/@code}">
+									<xsl:apply-templates select='document("")//TransactionType:codes'><xsl:with-param name="code" select="transaction-type/@code"/></xsl:apply-templates>
+								</td>
+								<td class="transaction-provider"><span class="organisation" id="{provider-org/@ref}"><xsl:value-of select="provider-org"/></span></td>
+								<td class="transaction-receiver"><span class="organisation" id="{receiver-org/@ref}"><xsl:value-of select="receiver-org"/></span></td>
+								<td class="transaction-value">
+									<!--Note, at the moment we're only handling for the default currency-->
+									<xsl:call-template name="formatCurrency">
+										<xsl:with-param name="currency" select="$currency"/>
+										<xsl:with-param name="value" select="value"/>
+									</xsl:call-template>
+								</td>
+								<td class="transaction-description"><xsl:value-of select="description"/></td>								
+							</tr>					
 				</xsl:for-each>
 			</table>
 	</div>
@@ -197,51 +212,59 @@
 				<td class="value"><xsl:value-of select="default-tied-status"/></td>	
 			</tr></xsl:if>
 		</table>
-	</div>
+	</div>	
 	
-	<div class="periods">
-		<xsl:if test="activity-date[@type='start-planned']|activity-date[@type='end-planned']">
-			<div class="planned-dates">Planned dates: <span class="date-entry start-planned"><xsl:call-template name="iati-date"><xsl:with-param name="value" select="activity-date[@type='start-planned']"/> </xsl:call-template></span> until <span class="date-entry end-planned"><xsl:call-template name="iati-date"> <xsl:with-param name="value" select="activity-date[@type='end-planned']"/> </xsl:call-template></span></div>
-		</xsl:if>
-		<xsl:if test="activity-date[@type='start-actual']|activity-date[@type='end-actual']">
-			<div class="actual-dates">Actual dates: <span class="date-entry start-actual"><xsl:call-template name="iati-date"><xsl:with-param name="value" select="activity-date[@type='start-actual']"/> </xsl:call-template></span> until <span class="date-entry end-actual"><xsl:call-template name="iati-date"> <xsl:with-param name="value" select="activity-date[@type='end-actual']"/> </xsl:call-template></span></div>
-		</xsl:if>
-	</div>
-	
-	<div class="sectors">
-		<h4>Transaction</h4>
-		<div class="graph" id="{iati-identifier}-transactions-graph"></div>
-		<div class="table" id="{iati-identifier}-transactions-table"></div>	
-			<table title="Sector codes" class="transactions transactiontable">
-			<!--Right now we only handle the basics of the transaction details. We need to include more detail on flow types etc. in future-->
+	<div class="policy-markers">
+			<h4>Policy Markers</h4>
+			<xsl:if test="policy-marker[@significance>0]">
+			<table title="Policy markers" class="policy-markers">
 				<tr>
-					<th class="transaction-date">Date</th>
-					<th class="transaction-type">Type</th>
-					<th class="transaction-provider">Provider</th>
-					<th class="transaction-receiver">Receiver</th>
-					<th class="transaction-value">Value</th>
-					<th class="transaction-description">Description</th>
+					<th class="vocabulary">Vocabulary</th>
+					<th class="code">Code</th>
+					<th class="name">Marker</th>
+					<th class="weight">Significance</th>
 				</tr>
-				<xsl:for-each select="transaction">			
-					<xsl:sort select="transaction-type/@code"/><xsl:sort select="value/@value-date"/>
-							<tr>
-								<td class="transaction-date"><xsl:call-template name="iati-date"><xsl:with-param name="date_format" select="'yyyy-MM-dd'" /><xsl:with-param name="value" select="transaction-date"/> </xsl:call-template></td>
-								<td class="transaction-type transaction-type-{type/@code}">
-									<xsl:apply-templates select='document("")//TransactionType:codes'><xsl:with-param name="code" select="transaction-type/@code"/></xsl:apply-templates>
-								</td>
-								<td class="transaction-provider"><span class="organisation" id="{provider-org/@ref}"><xsl:value-of select="provider-org"/></span></td>
-								<td class="transaction-receiver"><span class="organisation" id="{receiver-org/@ref}"><xsl:value-of select="receiver-org"/></span></td>
-								<td class="transaction-value">
-									<!--Note, at the moment we're only handling for the default currency-->
-									<xsl:call-template name="formatCurrency">
-										<xsl:with-param name="currency" select="$currency"/>
-										<xsl:with-param name="value" select="value"/>
-									</xsl:call-template>
-								</td>
-								<td class="transaction-description"><xsl:value-of select="description"/></td>								
-							</tr>					
+				<xsl:for-each select="policy-marker[@significance>0]">			
+					<xsl:sort select="@vocabulary"/>
+						<tr>
+							<td class="vocabulary"><xsl:value-of select="@vocabulary"/></td>
+							<td class="code"><xsl:value-of select="@code"/></td>
+							<td class="name"><xsl:value-of select="."/></td>
+							<td class="weight"><xsl:value-of select="@significance"/></td>
+						</tr>
 				</xsl:for-each>
 			</table>
+			</xsl:if>
+			<xsl:if test="not(policy-marker[@significance>0])">
+				No policy marker data available.
+			</xsl:if>
+	</div>
+	
+	<div class="documents">
+		<h4>Documents</h4>
+		<ul>
+			<xsl:for-each select="document-link">
+				<li><a href="{@url}" target="_blank" title="{title}"><xsl:value-of select="title"/></a> - <xsl:call-template name="join"> <xsl:with-param name="values" select="category"/> </xsl:call-template></li> 				
+			</xsl:for-each>
+		</ul>
+	</div>	
+	
+	
+	<div class="contacts">
+		<h4>Contacts</h4>
+		<xsl:for-each select="contact-info">
+			<div class="vcard">
+				<div class="org"><xsl:value-of select="organisation"/></div>
+				<xsl:if test="email"><a class="email" href="mailto:{email}"><xsl:if test="person-name"><xsl:value-of select="person-name"/></xsl:if><xsl:if test="not(person-name)"><xsl:value-of select="email"/></xsl:if></a></xsl:if>
+				<xsl:if test="telephone"><div class="tel"><xsl:value-of select="telephone"/></div></xsl:if>
+				<xsl:if test="mailing-address"><div class="addr"><xsl:value-of select="mailing-address"/></div></xsl:if>
+			</div>
+		</xsl:for-each>
+	</div>
+		
+	<div class="documents">
+		<h4>Other formats</h4>
+		<a href="/exist/rest//db/iati?query={iati-identifer}" target="_blank">XML</a> - <a href="/process/?query=//iati-activity[iati-identifier='{iati-identifier}']&amp;xsl=/db/xsl/iati-activities-xml-to-csv.xsl&amp;format=csv" target="_blank">CSV (Activity)</a> - <a href="/process/?query=//iati-activity[iati-identifier='{iati-identifier}']&amp;xsl=/db/xsl/iati-transactions-xml-to-csv.xsl&amp;format=csv" target="_blank">CSV (Transactions)</a> - JSON (Coming soon)
 	</div>
 	
 
@@ -255,105 +278,26 @@
 </xsl:template>
 <!--EXTRA TEMPLATES-->
 
-<!--Include this template in the header to have tables auto-visualised-->
-<xsl:template name="GoogleViz">
-  <xsl:param name="activity"/>
-	<style>
-		.map { width: 300px; height: 200px; }
-	</style>
-	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
-	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
-	<script type="text/javascript">		
-       google.load('visualization', '1', {'packages': ['geochart','corechart','table']});
+<xsl:template name="join" >
+  <xsl:param name="values" select="''"/>
+  <xsl:param name="quote"><xsl:text>"</xsl:text></xsl:param>
+  <xsl:param name="separator"><xsl:text>,</xsl:text></xsl:param>
+  <xsl:param name="remove"></xsl:param>
+  <xsl:variable name="doublequote">"</xsl:variable>
 
-	   $(document).ready(function(){
-			$(".datatable").each(function(){
-		
-				table_div = $(this).parent().find(".graph").attr("id");
-				
-				var data = new google.visualization.DataTable();
-			    data.addColumn('string', 'Name');
-			    data.addColumn('number', 'Value');
-				$(this).find("tr:has(td)").each(function(){
-					data.addRows([[$(this).find(".name").html(), parseInt($(this).find(".weight").html())]]);
-				});
-				var chart = new google.visualization.PieChart(document.getElementById(table_div));
-				chart.draw(data, {width: 400, height: 240});
-				delete data;
-			});
-			
-			$(".transactiontable").each(function(){
-				/* For transactions we first build a data-table and replace the original table with it...*/
-				table_div = $(this).parent().find(".table").attr("id");
-				graph_div = $(this).parent().find(".graph").attr("id");
-								
-				var data = new google.visualization.DataTable();
-				var re = new RegExp("[^0-9]","g");
-			    data.addColumn('number', 'Year');
-			    data.addColumn('string', 'Currency');
-			    data.addColumn('number', 'Value');
-			    data.addColumn('string', 'Type');
-				$(this).find("tr:has(td)").each(function(){
-					year = new Date($(this).find(".transaction-date").html()).getFullYear();
-					valueString = $(this).find(".transaction-value").html();
-					currency = valueString.substr(0,3);
-					value = parseInt(valueString.replace(re,""));
-					data.addRows([[year,currency, value, $(this).find(".transaction-type").html()]]);
-				});
-				var table = new google.visualization.Table(document.getElementById(table_div));
-				$(this).hide();
-				table.draw(data, {showRowNumber: false});
-
-				/* Now we need to find out what range the transaction values range over, and then build a new data table summarising them */
-				var graphData = new google.visualization.DataTable();
-				graphData.addColumn('string', 'Year');
-				types = data.getDistinctValues(3); /*Type is in column 3 - change if it moves*/
-				for(col in types) {
-					graphData.addColumn('number', types[col]);
-				}
-				years = data.getColumnRange(0); /*Year is in column 0 - change if it moves*/
-				var valueForTypeAndYear = 0; var graphRow = 0;
-				for(range=years.min;range!=years.max;range++) {
-					graphData.addRows(1); 
-					graphData.setCell(graphRow,0," "+range);
-					for(col in types) {
-						rowsForTypeAndYear = data.getFilteredRows([{column:0, value: range},{column:3,value:types[col]}]);
-						for(row in rowsForTypeAndYear) {
-							valueForTypeAndYear = valueForTypeAndYear + data.getValue(parseInt(rowsForTypeAndYear[row]),2);
-						}
-						graphData.setCell(graphRow,parseInt(col)+1,valueForTypeAndYear);						
-						valueForTypeAndYear = 0;
-					}
-					graphRow++;
-				}
-				var chart = new google.visualization.ColumnChart(document.getElementById(graph_div));
-				chart.draw(graphData, {width: 600, height: 300, title: 'Transactions', legend: 'bottom',
-				                          hAxis: {title: 'Year'}, vAxis: {title: currency}
-				                         });
-
-			});
-			
-			
-			$("ul.geography").each(function(){
-
-					map_div = $(this).parent().find(".map").attr("id");
-
-					var data = new google.visualization.DataTable();
-				    data.addColumn('string', 'Country');
-				    data.addColumn('number', 'Value');
-					$(this).find("li span").each(function(){
-						data.addRows([[$(this).attr("id"), 1]]);
-					});
-					var options = {};
-					var container = document.getElementById(map_div);
-				    var geochart = new google.visualization.GeoChart(container);
-				    geochart.draw(data, options);
-					delete data;
-			});
-	   });
-	
-	</script>
-
+  <xsl:value-of select="$quote"/>
+  <xsl:for-each select="$values">
+    <xsl:choose>
+      <xsl:when test="position() = 1">
+        <xsl:value-of select="translate(translate(.,$doublequote,''),$remove,'')"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:value-of select="translate(translate(concat('; ',.),$doublequote,''),$remove,'')"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:for-each>
+  <xsl:value-of select="$quote"/>
+  <xsl:value-of select="$separator"/>
 </xsl:template>
 
 <!--IATI Dates could be found in @iso-date or in the node. This checks for the former, and if not available, uses the later-->
@@ -405,7 +349,7 @@
 <xsl:template match="OrganisationType:codes">
   <xsl:param name="code"/>
 	<xsl:choose>
-		<xsl:when test="OrganisationType:code[@id=$code]"> - <xsl:value-of select="OrganisationType:code[@id=$code]"/></xsl:when>
+		<xsl:when test="OrganisationType:code[@id=$code]"><xsl:value-of select="OrganisationType:code[@id=$code]"/></xsl:when>
 		<xsl:otherwise></xsl:otherwise>
 	</xsl:choose>
 </xsl:template>
