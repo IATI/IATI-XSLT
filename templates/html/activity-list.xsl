@@ -16,7 +16,7 @@
 	</tr>
 	<xsl:for-each select="iati-activity">
 		<tr>
-		 <td class="iati-identifier"><a href="http://tools.aidinfolabs.org/explorer/activity/?activity={iati-identifier}" class="iati-colorbox"<xsl:value-of select="iati-identifier"/></a></td>
+		 <td class="iati-identifier"><a href="http://tools.aidinfolabs.org/explorer/activity/?activity={iati-identifier}" class="iati-colorbox"><xsl:value-of select="iati-identifier"/></a></td>
 		 <td class="iati-title"><xsl:value-of select="title"/></td>
 		 <td class="iati-sectors"><xsl:call-template name="join"> <xsl:with-param name="values" select="sector"/> </xsl:call-template></td>
 		 <td class="iati-date"><xsl:if test="activity-date[@type='start-actual']"><xsl:value-of select="activity-date[@type='start-actual']/@iso-date"/></xsl:if><xsl:if test="not(activity-date[@type='start-planned'])"><xsl:value-of select="activity-date[@type='start-planned']/@iso-date"/></xsl:if></td>
