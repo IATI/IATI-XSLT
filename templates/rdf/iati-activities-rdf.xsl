@@ -42,9 +42,11 @@
 				<xsl:for-each select="participating-org">
 					<iati:participatingOrg>
 						<rdf:Description rdf:about="http://data.kasabi.com/dataset/international-aid-transparency-initiative-aid-activities/activity/{../iati-identifier}/orgs/{./@ref}">
-							<owl:sameAs rdf:resource="http://data.kasabi.com/dataset/international-aid-transparency-initiative-aid-activities/org/{./@ref}"/>
-							<dc:title><xsl:value-of select="."/></dc:title>
-							<iati:participatingOrgType rdf:resource="http://data.kasabi.com/dataset/international-aid-transparency-initiative-aid-activities/codelists/OrganisationType/{./@type}"/>
+							<owl:sameAs>
+								<rdf:Description rdf:about="http://data.kasabi.com/dataset/international-aid-transparency-initiative-aid-activities/org/{./@ref}">
+								<dc:title><xsl:value-of select="."/></dc:title>
+								<iati:orgType rdf:resource="http://data.kasabi.com/dataset/international-aid-transparency-initiative-aid-activities/codelists/OrganisationType/{./@type}"/>
+							</owl:sameAs> 							
 							<iati:participatingOrgRole><xsl:value-of select="@role"/></iati:participatingOrgRole>
 						</rdf:Description>
 					</iati:participatingOrg>
@@ -52,8 +54,12 @@
 				
 				<xsl:for-each select="recipient-country">
 					<iati:recipientCountry>
-						<rdf:Description rdf:about="http://data.kasabi.com/dataset/international-aid-transparency-initiative-aid-activities/codelists/Country/{./@code}">
-							<dc:title><xsl:value-of select="."/></dc:title>
+						<rdf:Description rdf:about="http://data.kasabi.com/dataset/international-aid-transparency-initiative-aid-activities/activity/{iati-identifier}/recipientCountry/{./@code}">
+							<iati:country> 
+								<rdf:Description rdf:about="http://data.kasabi.com/dataset/international-aid-transparency-initiative-aid-activities/codelists/Country/{./@code}">
+									<dc:title><xsl:value-of select="."/></dc:title>
+								</rdf:Description>
+							</iati:country>
 							<iati:recipientCountryPercentage><xsl:value-of select="@percentage"/></iati:recipientCountryPercentage>
 						</rdf:Description>
 					</iati:recipientCountry>
@@ -61,8 +67,12 @@
 				
 				<xsl:for-each select="recipient-region">
 					<iati:recipientRegion>
-						<rdf:Description rdf:about="http://data.kasabi.com/dataset/international-aid-transparency-initiative-aid-activities/codelists/Region/{./@code}">
-							<dc:title><xsl:value-of select="."/></dc:title>
+						<rdf:Description rdf:about="http://data.kasabi.com/dataset/international-aid-transparency-initiative-aid-activities/activity/{iati-identifier}/recipientRegion/{./@code}">
+							<iati:region>
+								<rdf:Description rdf:about="http://data.kasabi.com/dataset/international-aid-transparency-initiative-aid-activities/codelists/Region/{./@code}">
+									<dc:title><xsl:value-of select="."/></dc:title>
+								</rdf:Description>
+							</iati:region>
 							<iati:recipientRegionPercentage><xsl:value-of select="@percentage"/></iati:recipientRegionPercentage>
 						</rdf:Description>
 					</iati:recipientRegion>
@@ -72,9 +82,7 @@
 						<iati:location rdf:parseType="Resource">
 							<iati:locationPercentage><xsl:value-of select="@percentage"/></iati:locationPercentage>
 							<iati:locationType><xsl:value-of select="location-type"/></iati:locationType>
-
 							<iati:locationTypeCode rdf:about="http://data.kasabi.com/dataset/international-aid-transparency-initiative-aid-activities/codelists/LocationType/{location-type/@code}"/>
-
 							<iati:locationName><xsl:value-of select="name"/></iati:locationName>
 							<iati:locationDescription><xsl:value-of select="description"/></iati:locationDescription>
 							<iati:locationDescription><xsl:value-of select="description/text()"/></iati:locationDescription>
