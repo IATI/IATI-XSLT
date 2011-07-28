@@ -10,26 +10,26 @@
 		<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dc="http://purl.org/dc/elements/1.1/">
 			
 		<xsl:for-each select="//iati-activity">
-			<rdf:Description rdf:about="http://data.kasabi.com/dataset/international-aid-transparency-initiative-aid-activities/activity/{iati-identifier}">	
+			<rdf:Description rdf:about="http://data.kasabi.com/dataset/iati/activity/{iati-identifier}">	
 				<dc:title><xsl:value-of select="title"/></dc:title>
-				<iati:defaultCurrency rdf:resource="http://data.kasabi.com/dataset/international-aid-transparency-initiative-aid-activities/codelists/Currency/{./@default-currency}"/>
+				<iati:defaultCurrency rdf:resource="http://data.kasabi.com/dataset/iati/codelists/Currency/{./@default-currency}"/>
 				<iati:hierarchicalPosition><xsl:value-of select="./@hierarchy"/></iati:hierarchicalPosition>
 				<iati:lastUpdatedDatetime><xsl:value-of select="./@last-updated-datetime"/></iati:lastUpdatedDatetime>
 				<dc:description><xsl:value-of select="description"/></dc:description>
-				<iati:activityStatusCode rdf:resource="http://data.kasabi.com/dataset/international-aid-transparency-initiative-aid-activities/codelists/Currency/{activity-status/@code}"/>
+				<iati:activityStatusCode rdf:resource="http://data.kasabi.com/dataset/iati/codelists/Currency/{activity-status/@code}"/>
 				<iati:activityDateIsoDate><xsl:value-of select="activity-date/@iso-date"/></iati:activityDateIsoDate>
 				<iati:activityDateTextDate><xsl:value-of select="activity-date/text()"/></iati:activityDateTextDate>
 				
 				<iati:reportingOrgIdentifier>
-						<rdf:Description rdf:about="http://data.kasabi.com/dataset/international-aid-transparency-initiative-aid-activities/org/{reporting-org/@ref}">
+						<rdf:Description rdf:about="http://data.kasabi.com/dataset/iati/org/{reporting-org/@ref}">
 							<iati:reportingOrgName><xsl:value-of select="reporting-org/text()"/></iati:reportingOrgName>
-							<iati:reportingOrgType rdf:resource="http://data.kasabi.com/dataset/international-aid-transparency-initiative-aid-activities/codelists/OrganisationType/{reporting-org/@type}"/>
+							<iati:reportingOrgType rdf:resource="http://data.kasabi.com/dataset/iati/codelists/OrganisationType/{reporting-org/@type}"/>
 						</rdf:Description>
 				</iati:reportingOrgIdentifier>
 				
 				<xsl:for-each select="contact-info">
 					<iati:contactInfoOrganisation>
-							<rdf:Description rdf:about="http://data.kasabi.com/dataset/international-aid-transparency-initiative-aid-activities/contacts/{translate(organisation,' ','')}">
+							<rdf:Description rdf:about="http://data.kasabi.com/dataset/iati/contacts/{translate(organisation,' ','')}">
 									<dc:title><xsl:value-of select="organisation/text()"/></dc:title>
 									<iati:contactInfoPerson><xsl:value-of select="person-name"/></iati:contactInfoPerson>
 									<iati:contactInfoPhone><xsl:value-of select="telephone"/></iati:contactInfoPhone>
@@ -41,11 +41,11 @@
 				
 				<xsl:for-each select="participating-org">
 					<iati:participatingOrg>
-						<rdf:Description rdf:about="http://data.kasabi.com/dataset/international-aid-transparency-initiative-aid-activities/activity/{../iati-identifier}/orgs/{./@ref}">
+						<rdf:Description rdf:about="http://data.kasabi.com/dataset/iati/activity/{../iati-identifier}/orgs/{./@ref}">
 							<owl:sameAs>
-								<rdf:Description rdf:about="http://data.kasabi.com/dataset/international-aid-transparency-initiative-aid-activities/org/{./@ref}">
+								<rdf:Description rdf:about="http://data.kasabi.com/dataset/iati/org/{./@ref}">
 								<dc:title><xsl:value-of select="."/></dc:title>
-								<iati:orgType rdf:resource="http://data.kasabi.com/dataset/international-aid-transparency-initiative-aid-activities/codelists/OrganisationType/{./@type}"/>
+								<iati:orgType rdf:resource="http://data.kasabi.com/dataset/iati/codelists/OrganisationType/{./@type}"/>
 							</owl:sameAs> 							
 							<iati:participatingOrgRole><xsl:value-of select="@role"/></iati:participatingOrgRole>
 						</rdf:Description>
@@ -54,9 +54,9 @@
 				
 				<xsl:for-each select="recipient-country">
 					<iati:recipientCountry>
-						<rdf:Description rdf:about="http://data.kasabi.com/dataset/international-aid-transparency-initiative-aid-activities/activity/{iati-identifier}/recipientCountry/{./@code}">
+						<rdf:Description rdf:about="http://data.kasabi.com/dataset/iati/activity/{iati-identifier}/recipientCountry/{./@code}">
 							<iati:country> 
-								<rdf:Description rdf:about="http://data.kasabi.com/dataset/international-aid-transparency-initiative-aid-activities/codelists/Country/{./@code}">
+								<rdf:Description rdf:about="http://data.kasabi.com/dataset/iati/codelists/Country/{./@code}">
 									<dc:title><xsl:value-of select="."/></dc:title>
 								</rdf:Description>
 							</iati:country>
@@ -67,9 +67,9 @@
 				
 				<xsl:for-each select="recipient-region">
 					<iati:recipientRegion>
-						<rdf:Description rdf:about="http://data.kasabi.com/dataset/international-aid-transparency-initiative-aid-activities/activity/{iati-identifier}/recipientRegion/{./@code}">
+						<rdf:Description rdf:about="http://data.kasabi.com/dataset/iati/activity/{iati-identifier}/recipientRegion/{./@code}">
 							<iati:region>
-								<rdf:Description rdf:about="http://data.kasabi.com/dataset/international-aid-transparency-initiative-aid-activities/codelists/Region/{./@code}">
+								<rdf:Description rdf:about="http://data.kasabi.com/dataset/iati/codelists/Region/{./@code}">
 									<dc:title><xsl:value-of select="."/></dc:title>
 								</rdf:Description>
 							</iati:region>
@@ -82,7 +82,7 @@
 						<iati:location rdf:parseType="Resource">
 							<iati:locationPercentage><xsl:value-of select="@percentage"/></iati:locationPercentage>
 							<iati:locationType><xsl:value-of select="location-type"/></iati:locationType>
-							<iati:locationTypeCode rdf:about="http://data.kasabi.com/dataset/international-aid-transparency-initiative-aid-activities/codelists/LocationType/{location-type/@code}"/>
+							<iati:locationTypeCode rdf:about="http://data.kasabi.com/dataset/iati/codelists/LocationType/{location-type/@code}"/>
 							<iati:locationName><xsl:value-of select="name"/></iati:locationName>
 							<iati:locationDescription><xsl:value-of select="description"/></iati:locationDescription>
 							<iati:locationDescription><xsl:value-of select="description/text()"/></iati:locationDescription>
@@ -110,7 +110,7 @@
 						<iati:sector rdf:parseType="Resource">
 							<iati:sectorVocabulary><xsl:value-of select="@vocabulary"/></iati:sectorVocabulary>
 							<iati:sectorCode>
-								<rdf:Description rdf:about="http://data.kasabi.com/dataset/international-aid-transparency-initiative-aid-activities/codelists/Sector/{./@code}">
+								<rdf:Description rdf:about="http://data.kasabi.com/dataset/iati/codelists/Sector/{./@code}">
 								<dc:title><xsl:value-of select="."/></dc:title>
 								</rdf:Description>
 							</iati:sectorCode>
@@ -122,7 +122,7 @@
 						<iati:policyMarker rdf:parseType="Resource">
 							<iati:policyMarkerVocabulary><xsl:value-of select="@vocabulary"/></iati:policyMarkerVocabulary>
 							<iati:policyMarkerCode>
-								<rdf:Description rdf:about="http://data.kasabi.com/dataset/international-aid-transparency-initiative-aid-activities/codelists/Sector/{./@code}">
+								<rdf:Description rdf:about="http://data.kasabi.com/dataset/iati/codelists/Sector/{./@code}">
 								<dc:title><xsl:value-of select="."/></dc:title>
 								</rdf:Description>
 							</iati:policyMarkerCode>
@@ -130,19 +130,19 @@
 						</iati:policyMarker>
 					</xsl:for-each>
 						
-					<iati:collaborationType rdf:resource="http://data.kasabi.com/dataset/international-aid-transparency-initiative-aid-activities/codelists/CollaborationType/{collaboration-type/@code}"/>
+					<iati:collaborationType rdf:resource="http://data.kasabi.com/dataset/iati/codelists/CollaborationType/{collaboration-type/@code}"/>
 
-					<iati:defaultFlowType rdf:resource="http://data.kasabi.com/dataset/international-aid-transparency-initiative-aid-activities/codelists/FlowType/{default-flow-type/@code}"/>
+					<iati:defaultFlowType rdf:resource="http://data.kasabi.com/dataset/iati/codelists/FlowType/{default-flow-type/@code}"/>
 
-					<iati:defaultFinanceType rdf:resource="http://data.kasabi.com/dataset/international-aid-transparency-initiative-aid-activities/codelists/FinanceType/{default-finance-type/@code}"/>
+					<iati:defaultFinanceType rdf:resource="http://data.kasabi.com/dataset/iati/codelists/FinanceType/{default-finance-type/@code}"/>
 
-					<iati:defaultAidType rdf:resource="http://data.kasabi.com/dataset/international-aid-transparency-initiative-aid-activities/codelists/AidType/{default-aid-type/@code}"/>
+					<iati:defaultAidType rdf:resource="http://data.kasabi.com/dataset/iati/codelists/AidType/{default-aid-type/@code}"/>
 
-					<iati:defaultTiedStatusName rdf:resource="http://data.kasabi.com/dataset/international-aid-transparency-initiative-aid-activities/codelists/TiedStatus/{default-tied-status/text()"/>
+					<iati:defaultTiedStatusName rdf:resource="http://data.kasabi.com/dataset/iati/codelists/TiedStatus/{default-tied-status/text()"/>
 
 					<xsl:for-each select="budget">
 						<iati:budget>
-							<rdf:Description rdf:about="http://data.kasabi.com/dataset/international-aid-transparency-initiative-aid-activities/activity/{../iati-identifier}/budget/{period-start}">
+							<rdf:Description rdf:about="http://data.kasabi.com/dataset/iati/activity/{../iati-identifier}/budget/{period-start}">
 								<iati:budgetType><xsl:value-of select="@type"/></iati:budgetType>
 								
 								<iati:budgetPeriodStart><xsl:value-of select="period-start"/></iati:budgetPeriodStart>
@@ -169,21 +169,21 @@
 					
 					<xsl:for-each select="transaction">
 						<iati:transaction>
-							<rdf:Description rdf:about="http://data.kasabi.com/dataset/international-aid-transparency-initiative-aid-activities/activity/{../iati-identifier}/transaction/{@ref}-{transaction-type/@code}-{value/@value-date}">
+							<rdf:Description rdf:about="http://data.kasabi.com/dataset/iati/activity/{../iati-identifier}/transaction/{@ref}-{transaction-type/@code}-{value/@value-date}">
 							<iati:transactionTransactionReference><xsl:value-of select="@ref"/></iati:transactionTransactionReference>
-							<iati:transactionType rdf:resource="http://data.kasabi.com/dataset/international-aid-transparency-initiative-aid-activities/codelists/TransactionType/{transaction-type/@code}"/>
+							<iati:transactionType rdf:resource="http://data.kasabi.com/dataset/iati/codelists/TransactionType/{transaction-type/@code}"/>
 							
 								<iati:providerOrg>
-										<rdf:Description rdf:about="http://data.kasabi.com/dataset/international-aid-transparency-initiative-aid-activities/org/{provider-org/@ref}">
+										<rdf:Description rdf:about="http://data.kasabi.com/dataset/iati/org/{provider-org/@ref}">
 										<dc:title><xsl:value-of select="provider-org"/></dc:title>
-										<iati:orgType rdf:resource="http://data.kasabi.com/dataset/international-aid-transparency-initiative-aid-activities/codelists/OrganisationType/{provider-org/@type}"/>
+										<iati:orgType rdf:resource="http://data.kasabi.com/dataset/iati/codelists/OrganisationType/{provider-org/@type}"/>
 										</rdf:Description>
 								</iati:providerOrg>
 								
 								<iati:recieverOrg>
-										<rdf:Description rdf:about="http://data.kasabi.com/dataset/international-aid-transparency-initiative-aid-activities/org/{reciever-org/@ref}">
+										<rdf:Description rdf:about="http://data.kasabi.com/dataset/iati/org/{reciever-org/@ref}">
 										<dc:title><xsl:value-of select="reciever-org"/></dc:title>
-										<iati:orgType rdf:resource="http://data.kasabi.com/dataset/international-aid-transparency-initiative-aid-activities/codelists/OrganisationType/{provider-org/@type}"/>
+										<iati:orgType rdf:resource="http://data.kasabi.com/dataset/iati/codelists/OrganisationType/{provider-org/@type}"/>
 										</rdf:Description>
 								</iati:recieverOrg>
 	
@@ -201,15 +201,15 @@
 
 							<iati:transactionDate><xsl:value-of select="transaction-date"/></iati:transactionDate>
 
-							<iati:flowType rdf:resource="http://data.kasabi.com/dataset/international-aid-transparency-initiative-aid-activities/codelists/FlowType/{flow-type/@code}"/>
+							<iati:flowType rdf:resource="http://data.kasabi.com/dataset/iati/codelists/FlowType/{flow-type/@code}"/>
 
-							<iati:financeType rdf:resource="http://data.kasabi.com/dataset/international-aid-transparency-initiative-aid-activities/codelists/FinanceType/{finance-type/@code}"/>
+							<iati:financeType rdf:resource="http://data.kasabi.com/dataset/iati/codelists/FinanceType/{finance-type/@code}"/>
 
-							<iati:aidType rdf:resource="http://data.kasabi.com/dataset/international-aid-transparency-initiative-aid-activities/codelists/AidType/{aid-type/@code}"/>
+							<iati:aidType rdf:resource="http://data.kasabi.com/dataset/iati/codelists/AidType/{aid-type/@code}"/>
 
-							<iati:disbursementChannelCode rdf:resource="http://data.kasabi.com/dataset/international-aid-transparency-initiative-aid-activities/codelists/DisbursementChannel/{disbursement-channel/@code}"/>
+							<iati:disbursementChannelCode rdf:resource="http://data.kasabi.com/dataset/iati/codelists/DisbursementChannel/{disbursement-channel/@code}"/>
 					
-						<iati:tiedStatus rdf:resource="http://data.kasabi.com/dataset/international-aid-transparency-initiative-aid-activities/codelists/TiedStatus/{tied-status/@code}"/>
+						<iati:tiedStatus rdf:resource="http://data.kasabi.com/dataset/iati/codelists/TiedStatus/{tied-status/@code}"/>
 						</rdf:Description>
 						</iati:transaction>
 					</xsl:for-each>
@@ -218,13 +218,13 @@
 						<iati:document-links>
 							<rdf:Description rdf:about="{@url}">
 								
-								<iati:documentFormat rdf:resource="http://data.kasabi.com/dataset/international-aid-transparency-initiative-aid-activities/codelists/FileFormat/{@format}"/>
+								<iati:documentFormat rdf:resource="http://data.kasabi.com/dataset/iati/codelists/FileFormat/{@format}"/>
 								
 								<iati:documentLanguage><xsl:value-of select="language"/></iati:documentLanguage>
 
 								<iati:documentCategory><xsl:value-of select="category"/></iati:documentCategory>
 
-								<iati:documentCategoryCode rdf:resource="http://data.kasabi.com/dataset/international-aid-transparency-initiative-aid-activities/codelists/Document/{category/@code}"/>
+								<iati:documentCategoryCode rdf:resource="http://data.kasabi.com/dataset/iati/codelists/Document/{category/@code}"/>
 
 								
 								<dc:title><xsl:value-of select="document-link/title"/></dc:title>
