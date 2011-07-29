@@ -237,6 +237,7 @@
 
 					<iati:activityWebsiteUrl><xsl:value-of select="activity-website/text()"/></iati:activityWebsiteUrl>						
 					
+					<!-- This should use a better n-ary relationship pattern-->
 					<xsl:for-each select="related-activity">
 						<iati:relatedActivity rdf:parseType="Resource">
 							<iati:relatedActivityType><xsl:value-of select="@type"/></iati:relatedActivityType>
