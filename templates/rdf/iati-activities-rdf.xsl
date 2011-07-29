@@ -44,8 +44,9 @@
 						<rdf:Description rdf:about="http://data.kasabi.com/dataset/iati/activity/{../iati-identifier}/orgs/{./@ref}">
 							<owl:sameAs>
 								<rdf:Description rdf:about="http://data.kasabi.com/dataset/iati/org/{./@ref}">
-								<dc:title><xsl:value-of select="."/></dc:title>
-								<iati:orgType rdf:resource="http://data.kasabi.com/dataset/iati/codelists/OrganisationType/{./@type}"/>
+									<dc:title><xsl:value-of select="."/></dc:title>
+									<iati:orgType rdf:resource="http://data.kasabi.com/dataset/iati/codelists/OrganisationType/{./@type}"/>
+								</rdf:Description>
 							</owl:sameAs> 							
 							<iati:participatingOrgRole><xsl:value-of select="@role"/></iati:participatingOrgRole>
 						</rdf:Description>
