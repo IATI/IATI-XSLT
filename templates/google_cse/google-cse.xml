@@ -3,7 +3,7 @@
 
 <xsl:template match="/">
 	<GoogleCustomizations>
-		<CustomSearchEngine id="ps-jjept8dy" creator="009845794682232062836" language="en" enable_suggest="true" top_refinements="">
+		<CustomSearchEngine id="ps-jjept8dy" creator="009845794682232062836" language="en" enable_suggest="true" top_refinements="12">
 		<Title>IATI Documents</Title>
 		<Description>International Aid Transparency Initiative Documents</Description>
 			<Context>
