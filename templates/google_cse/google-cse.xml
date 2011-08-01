@@ -11,9 +11,10 @@
 						<Label name="iati_document" mode="FILTER"/>
 					</BackgroundLabels>
 				</Context>
+			</CustomSearchEngine>
 				<Annotations>
 					<xsl:for-each select="//document-link">
-					  <Annotation about="{@url}" score="1">
+					  <Annotation about="{@url}*" score="1">
 					    <Label name="iati_document" />
 						<xsl:for-each select="category">
 							<Label name="{@code}" />
@@ -21,7 +22,7 @@
 					  </Annotation>
 					</xsl:for-each>
 				</Annotations>
-			</CustomSearchEngine>
+
 		</GoogleCustomizations>	
 	</xsl:template>	
 	
