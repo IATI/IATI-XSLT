@@ -3,7 +3,7 @@
 
 <xsl:template match="/">
 	<GoogleCustomizations>
-		<CustomSearchEngine id="ps-jjept8dy" creator="009845794682232062836" language="en" enable_suggest="true">
+		<CustomSearchEngine id="ps-jjept8dy" creator="009845794682232062836" language="en" enable_suggest="true" top_refinements="All">
 		<Title>IATI Documents</Title>
 		<Description>International Aid Transparency Initiative Documents</Description>
 			<Context>
@@ -11,18 +11,18 @@
 					<Label name="iati_document" mode="FILTER"/>
 				</BackgroundLabels>
 				<Facet>
-					<FacetItem><Label name="A01" mode="BOOST"><Rewrite/></Label><Title>Pre- and post-project impact appraisal</Title></FacetItem>
-					<FacetItem><Label name="A02" mode="BOOST"><Rewrite/></Label><Title>Objectives / Purpose of activity</Title></FacetItem>
-					<FacetItem><Label name="A03" mode="BOOST"><Rewrite/></Label><Title>Intended ultimate beneficiaries</Title></FacetItem>
-					<FacetItem><Label name="A04" mode="BOOST"><Rewrite/></Label><Title>Conditions</Title></FacetItem>
-					<FacetItem><Label name="A05" mode="BOOST"><Rewrite/></Label><Title>Budget</Title></FacetItem>
-					<FacetItem><Label name="A06" mode="BOOST"><Rewrite/></Label><Title>Summary information about contract</Title></FacetItem>
-					<FacetItem><Label name="A07" mode="BOOST"><Rewrite/></Label><Title>Review of project performance and evaluation</Title></FacetItem>
-					<FacetItem><Label name="A08" mode="BOOST"><Rewrite/></Label><Title>Results, outcomes and outputs</Title></FacetItem>
-					<FacetItem><Label name="A09" mode="BOOST"><Rewrite/></Label><Title>Memorandum of understanding (If agreed by all parties)</Title></FacetItem>
-					<FacetItem><Label name="B01" mode="BOOST"><Rewrite/></Label><Title>Annual report</Title></FacetItem>
-					<FacetItem><Label name="B02" mode="BOOST"><Rewrite/></Label><Title>Strategy paper</Title></FacetItem>
-					<FacetItem><Label name="B03" mode="BOOST"><Rewrite/></Label><Title>Country strategy paper</Title></FacetItem>
+					<FacetItem Title="Pre/Post Impact Appraisal"><Label name="A01" mode="FILTER"><Rewrite/></Label><Title>Pre- and post-project impact appraisal</Title></FacetItem>
+					<FacetItem Title="Objectives"><Label name="A02" mode="FILTER"><Rewrite/></Label><Title>Objectives / Purpose of activity</Title></FacetItem>
+					<FacetItem Title="Intended Ultimate Beneficiaries"><Label name="A03" mode="FILTER"><Rewrite/></Label><Title>Intended ultimate beneficiaries</Title></FacetItem>
+					<FacetItem><Label name="A04" mode="FILTER"><Rewrite/></Label><Title>Conditions</Title></FacetItem>
+					<FacetItem><Label name="A05" mode="FILTER"><Rewrite/></Label><Title>Budget</Title></FacetItem>
+					<FacetItem><Label name="A06" mode="FILTER"><Rewrite/></Label><Title>Summary information about contract</Title></FacetItem>
+					<FacetItem><Label name="A07" mode="FILTER"><Rewrite/></Label><Title>Review of project performance and evaluation</Title></FacetItem>
+					<FacetItem><Label name="A08" mode="FILTER"><Rewrite/></Label><Title>Results, outcomes and outputs</Title></FacetItem>
+					<FacetItem><Label name="A09" mode="FILTER"><Rewrite/></Label><Title>Memorandum of understanding (If agreed by all parties)</Title></FacetItem>
+					<FacetItem><Label name="B01" mode="FILTER"><Rewrite/></Label><Title>Annual report</Title></FacetItem>
+					<FacetItem><Label name="B02" mode="FILTER"><Rewrite/></Label><Title>Strategy paper</Title></FacetItem>
+					<FacetItem><Label name="B03" mode="FILTER"><Rewrite/></Label><Title>Country strategy paper</Title></FacetItem>
 				</Facet>
 			</Context>
 		</CustomSearchEngine>
