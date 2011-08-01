@@ -1,29 +1,44 @@
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
-	<xsl:output method="xml" version="1.0" encoding="utf-8" indent="yes"/>
+<xsl:output method="xml" version="1.0" encoding="utf-8" indent="yes"/>
 
-	<xsl:template match="/">
-		<GoogleCustomizations>
-			<CustomSearchEngine id="ps-jjept8dy" creator="009845794682232062836" language="en" enable_suggest="true">
-			<Title>IATI Documents</Title>
-			<Description>International Aid Transparency Initiative Documents</Description>
-				<Context>
-					<BackgroundLabels>
-						<Label name="iati_document" mode="FILTER"/>
-					</BackgroundLabels>
-				</Context>
-			</CustomSearchEngine>
-				<Annotations>
-					<xsl:for-each select="//document-link">
+<xsl:template match="/">
+	<GoogleCustomizations>
+		<CustomSearchEngine id="ps-jjept8dy" creator="009845794682232062836" language="en" enable_suggest="true">
+		<Title>IATI Documents</Title>
+		<Description>International Aid Transparency Initiative Documents</Description>
+			<Context>
+				<BackgroundLabels>
+					<Label name="iati_document" mode="FILTER"/>
+				</BackgroundLabels>
+				<Facet>
+					<FacetItem><Label name="A01" mode="BOOST"><Rewrte/></Label><Title>Pre- and post-project impact appraisal</Title></FacetItem>
+					<FacetItem><Label name="A02" mode="BOOST"><Rewrte/></Label><Title>Objectives / Purpose of activity</Title></FacetItem>
+					<FacetItem><Label name="A03" mode="BOOST"><Rewrte/></Label><Title>Intended ultimate beneficiaries</Title></FacetItem>
+					<FacetItem><Label name="A04" mode="BOOST"><Rewrte/></Label><Title>Conditions</Title></FacetItem>
+					<FacetItem><Label name="A05" mode="BOOST"><Rewrte/></Label><Title>Budget</Title></FacetItem>
+					<FacetItem><Label name="A06" mode="BOOST"><Rewrte/></Label><Title>Summary information about contract</Title></FacetItem>
+					<FacetItem><Label name="A07" mode="BOOST"><Rewrte/></Label><Title>Review of project performance and evaluation</Title></FacetItem>
+					<FacetItem><Label name="A08" mode="BOOST"><Rewrte/></Label><Title>Results, outcomes and outputs</Title></FacetItem>
+					<FacetItem><Label name="A09" mode="BOOST"><Rewrte/></Label><Title>Memorandum of understanding (If agreed by all parties)</Title></FacetItem>
+					<FacetItem><Label name="B01" mode="BOOST"><Rewrte/></Label><Title>Annual report</Title></FacetItem>
+					<FacetItem><Label name="B02" mode="BOOST"><Rewrte/></Label><Title>Strategy paper</Title></FacetItem>
+					<FacetItem><Label name="B03" mode="BOOST"><Rewrte/></Label><Title>Country strategy paper</Title></FacetItem>
+				</Facet>
+			</Context>
+		</CustomSearchEngine>
+			<Annotations>
+				<xsl:for-each select="//document-link">
 					  <Annotation about="{@url}*" score="1">
 					    <Label name="iati_document" />
-						<xsl:for-each select="category">
-							<Label name="{@code}" />
-						</xsl:for-each>
-					  </Annotation>
+					<xsl:for-each select="category">
+						<Label name="{@code}" />
 					</xsl:for-each>
-				</Annotations>
+					  </Annotation>
+				</xsl:for-each>
+			</Annotations>
 
-		</GoogleCustomizations>	
-	</xsl:template>	
+	</GoogleCustomizations>
+</xsl:template>
 	
 </xsl:stylesheet>
+
