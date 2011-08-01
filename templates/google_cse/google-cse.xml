@@ -1,0 +1,28 @@
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+	<xsl:output method="xml" version="1.0" encoding="utf-8" indent="yes"/>
+
+	<xsl:template match="/">
+		<GoogleCustomizations>
+			<CustomSearchEngine id="ps-jjept8dy" creator="009845794682232062836" language="en" enable_suggest="true">
+			<Title>IATI Documents</Title>
+			<Description>International Aid Transparency Initiative Documents</Description>
+				<Context>
+					<BackgroundLabels>
+						<Label name="iati_document" mode="FILTER"/>
+					</BackgroundLabels>
+				</Context>
+				<Annotations>
+					<xsl:for-each select="//document-link">
+					  <Annotation about="{@url}" score="1">
+					    <Label name="iati_document" />
+						<xsl:for-each select="category">
+							<Label name="{@code}" />
+						</xsl:for-each>
+					  </Annotation>
+					</xsl:for-each>
+				</Annotations>
+			</CustomSearchEngine>
+		</GoogleCustomizations>	
+	</xsl:template>	
+	
+</xsl:stylesheet>
