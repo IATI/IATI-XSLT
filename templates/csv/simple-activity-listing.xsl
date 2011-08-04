@@ -36,43 +36,43 @@
 </xsl:text>
 
   <xsl:for-each select="//iati-activity">
-1
+
 	<!--Reporting Organisation-->
   	<xsl:call-template name="add"> <xsl:with-param name="value" select="reporting-org"/> </xsl:call-template>
-2
+
     <!-- iati-identifier -->
     <xsl:call-template name="add"> <xsl:with-param name="value" select="iati-identifier"/> </xsl:call-template>
-3
+
     <!-- titles -->
     <xsl:call-template name="add"> <xsl:with-param name="values" select="title"/> </xsl:call-template>
-4
+
 	<!--Description-->
     <xsl:call-template name="add"> <xsl:with-param name="values" select="description"/></xsl:call-template>
-5
+
     <!-- default-currency -->
     <xsl:call-template name="add"> <xsl:with-param name="value" select="@default-currency"/> </xsl:call-template>
-6
+
   	<!-- commitment -->
     <xsl:call-template name="sum_transaction_values"> <xsl:with-param name="transaction-type">C</xsl:with-param> </xsl:call-template>
-7
+
     <!-- disbursement -->
     <xsl:call-template name="sum_transaction_values"> <xsl:with-param name="transaction-type">D</xsl:with-param> </xsl:call-template>
-8
+
     <!-- reimbursement -->
     <xsl:call-template name="sum_transaction_values"> <xsl:with-param name="transaction-type">R</xsl:with-param> </xsl:call-template>
-9
+
     <!-- expenditure -->
     <xsl:call-template name="sum_transaction_values"> <xsl:with-param name="transaction-type">E</xsl:with-param> </xsl:call-template>
-10
+
     <!-- incoming-funds -->
     <xsl:call-template name="sum_transaction_values"> <xsl:with-param name="transaction-type">IF</xsl:with-param> </xsl:call-template>
-11
+
     <!-- loan-repayment -->
     <xsl:call-template name="sum_transaction_values"> <xsl:with-param name="transaction-type">LR</xsl:with-param> </xsl:call-template>
-12
+
     <!-- interest-repayment -->
     <xsl:call-template name="sum_transaction_values"> <xsl:with-param name="transaction-type">IR</xsl:with-param> </xsl:call-template>
-13
+
     <!-- participating-orgs_funding -->
     <xsl:call-template name="add_participating_org"> <xsl:with-param name="role">Funding</xsl:with-param> </xsl:call-template>
 
@@ -214,6 +214,41 @@
     <xsl:text>
 </xsl:text>
   </xsl:for-each>
+</xsl:template>
+
+<xsl:template name="add">
+  <xsl:param name="value" select="''"/>
+  <xsl:param name="quote"><xsl:text>"</xsl:text></xsl:param>
+  <xsl:param name="separator"><xsl:text>,</xsl:text></xsl:param>
+  <xsl:param name="remove"></xsl:param>
+  <xsl:variable name="doublequote">"</xsl:variable>
+  <xsl:value-of select="$quote"/>
+  <xsl:value-of select="translate(translate($value,$doublequote,''),$remove,'')"/>
+  <xsl:value-of select="$quote"/>
+  <xsl:value-of select="$separator"/>
+</xsl:template>
+
+<xsl:template name="join" >
+  <xsl:param name="values" select="''"/>
+  <xsl:param name="quote"><xsl:text>"</xsl:text></xsl:param>
+  <xsl:param name="separator"><xsl:text>,</xsl:text></xsl:param>
+  <xsl:param name="concatenation_separator"><xsl:text>; </xsl:text></xsl:param>
+  <xsl:param name="remove"></xsl:param>
+  <xsl:variable name="doublequote">"</xsl:variable>
+
+  <xsl:value-of select="$quote"/>
+  <xsl:for-each select="$values">
+    <xsl:choose>
+      <xsl:when test="position() = 1">
+        <xsl:value-of select="translate(translate(.,$doublequote,''),$remove,'')"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:value-of select="translate(translate(concat($concatenation_separator,.),$doublequote,''),$remove,'')"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:for-each>
+  <xsl:value-of select="$quote"/>
+  <xsl:value-of select="$separator"/>
 </xsl:template>
 
 </xsl:stylesheet>
