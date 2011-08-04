@@ -66,13 +66,13 @@
 10
     <!-- incoming-funds -->
     <xsl:call-template name="sum_transaction_values"> <xsl:with-param name="transaction-type">IF</xsl:with-param> </xsl:call-template>
-
+11
     <!-- loan-repayment -->
     <xsl:call-template name="sum_transaction_values"> <xsl:with-param name="transaction-type">LR</xsl:with-param> </xsl:call-template>
-
+12
     <!-- interest-repayment -->
     <xsl:call-template name="sum_transaction_values"> <xsl:with-param name="transaction-type">IR</xsl:with-param> </xsl:call-template>
-
+13
     <!-- participating-orgs_funding -->
     <xsl:call-template name="add_participating_org"> <xsl:with-param name="role">Funding</xsl:with-param> </xsl:call-template>
 
