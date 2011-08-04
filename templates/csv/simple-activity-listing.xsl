@@ -43,10 +43,10 @@
     <xsl:call-template name="add"> <xsl:with-param name="value" select="iati-identifier"/> </xsl:call-template>
 
     <!-- titles -->
-    <xsl:call-template name="add"> <xsl:with-param name="values" select="title"/> </xsl:call-template>
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="title"/> </xsl:call-template>
 
 	<!--Description-->
-    <xsl:call-template name="add"> <xsl:with-param name="values" select="description"/></xsl:call-template>
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="description"/></xsl:call-template>
 
     <!-- default-currency -->
     <xsl:call-template name="add"> <xsl:with-param name="value" select="@default-currency"/> </xsl:call-template>
