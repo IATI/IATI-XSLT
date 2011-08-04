@@ -3,8 +3,7 @@
 <xsl:import href="csv-utilities.xsl" />
 <xsl:import href="csv-iati-helpers.xsl" />
 
-<xsl:template match="/">
-  <xsl:text>reporting-organisation,</xsl:text>
+<xsl:template match="/"><xsl:text>reporting-organisation,</xsl:text>
   <xsl:text>iati-identifier,</xsl:text>
   <xsl:text>aid_project_title,</xsl:text>
   <xsl:text>activity_description,</xsl:text>
@@ -74,7 +73,7 @@
     <xsl:call-template name="sum_transaction_values"> <xsl:with-param name="transaction-type">IR</xsl:with-param> </xsl:call-template>
 
     <!-- participating-orgs_funding -->
-    <xsl:call-template name="add_participating_org"> <xsl:with-param name="role">Funding</xsl:with-param> </xsl:call-template>
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="participating-org[@role='Funding']"/> </xsl:call-template>
 
     <!-- Extending: The government entity (central, state or local government agency or department), or agency within an institution, financing the activity from its own budget -->
     <!-- http://iatistandard.org/codelists/organisation_role -->
@@ -82,7 +81,7 @@
     <!-- participating-org-types_extending -->
     <!-- participating-org-langs_extending -->
     <!-- participating-orgs_extending -->
-    <xsl:call-template name="add_participating_org"> <xsl:with-param name="role">Extending</xsl:with-param> </xsl:call-template>
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="participating-org[@role='Extending']"/> </xsl:call-template>
 
     <!-- Accountable: The government agency, civil society or private sector institution which is accountable for the implementation of the activity. -->
     <!-- http://iatistandard.org/codelists/organisation_role -->
@@ -90,7 +89,7 @@
     <!-- participating-org-types_accountable -->
     <!-- participating-org-langs_accountable -->
     <!-- participating-orgs_accountable -->
-    <xsl:call-template name="add_participating_org"> <xsl:with-param name="role">Accountable</xsl:with-param> </xsl:call-template>
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="participating-org[@role='Accountable']"/> </xsl:call-template>
 
     <!-- Implementing: The intermediary between the extending agency and the ultimate beneficiary. Also known as executing agency or channel of delivery. They can be public sector, non-governmental agencies (NGOs), Public-Private partnerships, or multilateral institutions -->
     <!-- http://iatistandard.org/codelists/organisation_role -->
@@ -98,7 +97,7 @@
     <!-- participating-org_types_implementing -->
     <!-- participating-org_langs_implementing -->
     <!-- participating-orgs_implementing -->
-    <xsl:call-template name="add_participating_org"> <xsl:with-param name="role">Implementing</xsl:with-param> </xsl:call-template>
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="participating-org[@role='Implementing']"/> </xsl:call-template>
 
     <!-- recipient-country_codes -->
     <!-- recipient-country_langs -->
