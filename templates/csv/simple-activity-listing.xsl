@@ -12,13 +12,15 @@
   <xsl:text>total_reimbursements,total_expenditure,</xsl:text>
   <xsl:text>total_incoming-funds,total_loan-repayment,</xsl:text>
   <xsl:text>total_interest-repayment,</xsl:text>
-  <xsl:text>funding-organisations,extending-organisations,accountable-organisations,implementing-organisations,</xsl:text>
-  <xsl:text>recipient-country_codes,recipient-countries,recipient-country_percentages,</xsl:text>
-  <xsl:text>recipient-region_codes,recipient-regions,recipient-region_percentages,</xsl:text>
   <xsl:text>start-planned_iso-date,start-planned,</xsl:text>
   <xsl:text>start-actual_iso-date,start-actual,</xsl:text>
   <xsl:text>end-planned_iso-date,end-planned,</xsl:text>
   <xsl:text>end-actual_iso-date,end-actual,</xsl:text>
+
+  <xsl:text>funding-organisations,extending-organisations,accountable-organisations,implementing-organisations,</xsl:text>
+  <xsl:text>recipient-country_codes,recipient-countries,recipient-country_percentages,</xsl:text>
+  <xsl:text>recipient-region_codes,recipient-regions,recipient-region_percentages,</xsl:text>
+
   <xsl:text>activity-website,</xsl:text>
   <xsl:text>activity-status_code,activity-status,</xsl:text>
   <xsl:text>collaboration-type_code,collaboration-type,</xsl:text>
@@ -72,6 +74,12 @@
     <!-- interest-repayment -->
     <xsl:call-template name="sum_transaction_values"> <xsl:with-param name="transaction-type">IR</xsl:with-param> </xsl:call-template>
 
+
+   <xsl:call-template name="add_activity_date_simple"> <xsl:with-param name="type">start-planned</xsl:with-param> </xsl:call-template>
+    <xsl:call-template name="add_activity_date_simple"> <xsl:with-param name="type">start-actual</xsl:with-param> </xsl:call-template>
+    <xsl:call-template name="add_activity_date_simple"> <xsl:with-param name="type">end-planned</xsl:with-param> </xsl:call-template>
+    <xsl:call-template name="add_activity_date_simple"> <xsl:with-param name="type">end-actual</xsl:with-param> </xsl:call-template>
+
     <!-- participating-orgs_funding -->
     <xsl:call-template name="join"> <xsl:with-param name="values" select="participating-org[@role='Funding']"/> </xsl:call-template>
 
@@ -112,12 +120,6 @@
     <!-- recipient-region_percentages -->
     <xsl:call-template name="join_with_code"> <xsl:with-param name="field">recipient-region</xsl:with-param> </xsl:call-template>
     <xsl:call-template name="join"> <xsl:with-param name="values" select="recipient-region/@percentage"/> </xsl:call-template>
-
-
-   <xsl:call-template name="add_activity_date_simple"> <xsl:with-param name="type">start-planned</xsl:with-param> </xsl:call-template>
-    <xsl:call-template name="add_activity_date_simple"> <xsl:with-param name="type">start-actual</xsl:with-param> </xsl:call-template>
-    <xsl:call-template name="add_activity_date_simple"> <xsl:with-param name="type">end-planned</xsl:with-param> </xsl:call-template>
-    <xsl:call-template name="add_activity_date_simple"> <xsl:with-param name="type">end-actual</xsl:with-param> </xsl:call-template>
 
     <!-- activity-website -->
     <xsl:call-template name="add"> <xsl:with-param name="value" select="activity-website"/> </xsl:call-template>

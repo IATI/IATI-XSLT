@@ -1,1 +1,6 @@
 These files are for turning IATI XML into CSV to open in spreadsheet software.
+
+
+## Simple-activity-listing
+
+This file was created to populate a simplified view of IATI Data on Buzz Data. It will be revised based on feedback from the user community.
