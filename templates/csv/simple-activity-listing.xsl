@@ -36,34 +36,34 @@
 </xsl:text>
 
   <xsl:for-each select="//iati-activity">
-  	|<xsl:call-template name="add"> <xsl:with-param name="value" select="."/> </xsl:call-template>|
+1
 	<!--Reporting Organisation-->
   	<xsl:call-template name="add"> <xsl:with-param name="value" select="reporting-org"/> </xsl:call-template>
-
+2
     <!-- iati-identifier -->
     <xsl:call-template name="add"> <xsl:with-param name="value" select="iati-identifier"/> </xsl:call-template>
-
+3
     <!-- titles -->
     <xsl:call-template name="join"> <xsl:with-param name="values" select="title"/> </xsl:call-template>
-
+4
 	<!--Description-->
     <xsl:call-template name="join"> <xsl:with-param name="values" select="description"/> <xsl:with-param name="concatenation_separator"><xsl:text> | </xsl:text></xsl:with-param> </xsl:call-template>
-
+5
     <!-- default-currency -->
     <xsl:call-template name="add"> <xsl:with-param name="value" select="@default-currency"/> </xsl:call-template>
-
+6
   	<!-- commitment -->
     <xsl:call-template name="sum_transaction_values"> <xsl:with-param name="transaction-type">C</xsl:with-param> </xsl:call-template>
-
+7
     <!-- disbursement -->
     <xsl:call-template name="sum_transaction_values"> <xsl:with-param name="transaction-type">D</xsl:with-param> </xsl:call-template>
-
+8
     <!-- reimbursement -->
     <xsl:call-template name="sum_transaction_values"> <xsl:with-param name="transaction-type">R</xsl:with-param> </xsl:call-template>
-
+9
     <!-- expenditure -->
     <xsl:call-template name="sum_transaction_values"> <xsl:with-param name="transaction-type">E</xsl:with-param> </xsl:call-template>
-
+10
     <!-- incoming-funds -->
     <xsl:call-template name="sum_transaction_values"> <xsl:with-param name="transaction-type">IF</xsl:with-param> </xsl:call-template>
 
