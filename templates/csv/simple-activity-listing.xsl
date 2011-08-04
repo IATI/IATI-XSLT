@@ -1,3 +1,4 @@
+
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
 <xsl:import href="csv-utilities.xsl" />
@@ -7,7 +8,8 @@
   <xsl:text>iati-identifier,</xsl:text>
   <xsl:text>aid_project_title,</xsl:text>
   <xsl:text>activity_description,</xsl:text>
-  <xsl:text>default-currency,</xsl:text>
+  <xsl:text>full_details,</xsl:text>
+  <xsl:text>default-currency_for_amounts,</xsl:text>
   <xsl:text>total_commitments,total_disbursements,</xsl:text>
   <xsl:text>total_reimbursements,total_expenditure,</xsl:text>
   <xsl:text>total_incoming-funds,total_loan-repayment,</xsl:text>
@@ -49,6 +51,9 @@
 
 	<!--Description-->
     <xsl:call-template name="join"> <xsl:with-param name="values" select="description"/></xsl:call-template>
+
+	<!--URI-->
+    <xsl:call-template name="add"> <xsl:with-param name="value" select="concat('http://tools.aidinfolabs.org/explorer/activity/?activity=',iati-identifier)"/> </xsl:call-template>
 
     <!-- default-currency -->
     <xsl:call-template name="add"> <xsl:with-param name="value" select="@default-currency"/> </xsl:call-template>
