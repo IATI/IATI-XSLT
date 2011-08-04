@@ -36,7 +36,7 @@
 </xsl:text>
 
   <xsl:for-each select="//iati-activity">
-	<xsl:value-of select="."></xsl:value-of>
+  	|<xsl:call-template name="add"> <xsl:with-param name="value" select="."/> </xsl:call-template>|
 	<!--Reporting Organisation-->
   	<xsl:call-template name="add"> <xsl:with-param name="value" select="reporting-org"/> </xsl:call-template>
 
