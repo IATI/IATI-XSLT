@@ -32,7 +32,8 @@
   <xsl:text>default-flow-type_code,default-flow-type,</xsl:text>
   <xsl:text>default-tied-status_code,default-tied-status,</xsl:text>
   <xsl:text>related-activities,related-activity_types,</xsl:text>
-  <xsl:text>last-updated-datetime</xsl:text>
+  <xsl:text>last-updated-datetime
+</xsl:text>
 
   <xsl:for-each select="//iati-activity">
 
@@ -205,8 +206,6 @@
     <!-- related-activities -->
     <xsl:call-template name="join"> <xsl:with-param name="values" select="related-activity/@ref"/> </xsl:call-template>
     <xsl:call-template name="join"> <xsl:with-param name="values" select="related-activity/@type"/> </xsl:call-template>
-
-
 
 
     <!-- last-updated-datetime -->
