@@ -31,9 +31,9 @@
   <xsl:text>default-finance-type_code,default-finance-type,</xsl:text>
   <xsl:text>default-flow-type_code,default-flow-type,</xsl:text>
   <xsl:text>default-tied-status_code,default-tied-status,</xsl:text>
-  <xsl:text>related-activities,related-activity_types</xsl:text>
+  <xsl:text>related-activities,related-activity_types,</xsl:text>
   <xsl:text>last-updated-datetime</xsl:text>
-</xsl:text>
+
   <xsl:for-each select="//iati-activity">
 
 	<!--Reporting Organisation-->
