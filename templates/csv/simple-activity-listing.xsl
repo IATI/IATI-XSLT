@@ -211,7 +211,7 @@
 
     <!-- last-updated-datetime -->
     <xsl:call-template name="add"> <xsl:with-param name="value" select="@last-updated-datetime"/> </xsl:call-template>
- </xsl:call-template>
+
 
     <xsl:text>
 </xsl:text>
