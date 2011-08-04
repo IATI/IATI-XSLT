@@ -36,7 +36,7 @@
 </xsl:text>
 
   <xsl:for-each select="//iati-activity">
-    <xsl:call-template name="add"> <xsl:with-param name="value" select="iati-identifier"/> </xsl:call-template>
+
 	<!--Reporting Organisation-->
   	<xsl:call-template name="add"> <xsl:with-param name="value" select="reporting-org"/> </xsl:call-template>
 
@@ -115,7 +115,7 @@
     <xsl:call-template name="join"> <xsl:with-param name="values" select="recipient-region/@percentage"/> </xsl:call-template>
 
 
-   <xsl:call-template name="add_activity_date_simple_simple"> <xsl:with-param name="type">start-planned</xsl:with-param> </xsl:call-template>
+   <xsl:call-template name="add_activity_date_simple"> <xsl:with-param name="type">start-planned</xsl:with-param> </xsl:call-template>
     <xsl:call-template name="add_activity_date_simple"> <xsl:with-param name="type">start-actual</xsl:with-param> </xsl:call-template>
     <xsl:call-template name="add_activity_date_simple"> <xsl:with-param name="type">end-planned</xsl:with-param> </xsl:call-template>
     <xsl:call-template name="add_activity_date_simple"> <xsl:with-param name="type">end-actual</xsl:with-param> </xsl:call-template>
