@@ -13,7 +13,7 @@
 	  </author>
 	  <id>urn:iati-updates</id>
 
-	<xsl:for-each select="/iati-activity">
+	<xsl:for-each select="//iati-activity">
 	  <entry>
 	    <title><xsl:value-of select="title" /></title>
 	    <link href="http://tools.aidinfolabs.org/explorer/activities/?activity={iati-identifier}"/>
