@@ -18,7 +18,8 @@
 	    <title><xsl:value-of select="title" /></title>
 	    <link href="http://tools.aidinfolabs.org/explorer/activities/?activity={iati-identifier}"/>
 	    <id>urn:uuid:<xsl:value-of select="iati-identifier"/></id>
-	    <updated><xsl:value-of select="replace(start-actual,'Z','')"/>T12:00:00Z</updated>
+		
+	    <updated><xsl:if test="activity-date[@type='start-actual']"><xsl:value-of select="translate(activity-date[@type='start-actual'],'Z','')"/></xsl:if><xsl:if test="not(activity-date[@type='start-actual'])"><xsl:value-of select="translate(activity-date[@type='start-planned'],'Z','')"/></xsl:if>T12:00:00Z</updated>
 	    <summary><xsl:value-of select="description"/></summary>
 	  </entry>
 	</xsl:for-each>
