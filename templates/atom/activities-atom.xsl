@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0" xmlns:ex="http://exslt.org/dates-and-times" 
+    extension-element-prefixes="ex">
     <xsl:output method="xml"/>
 
 <xsl:template match="/">
@@ -7,15 +8,15 @@
 
 	  <title>IATI Updates</title>
 	  <link href="http://example.org/"/>
-	  <updated>2003-12-13T18:30:02Z</updated>
+	  <updated><xsl:value-of select="ex:date-time()"/></updated>
 	  <author>
-	    <name>John Doe</name>
+	    <name>IATI</name>
 	  </author>
 	  <id>urn:iati-updates</id>
 
 	<xsl:for-each select="//iati-activity">
 	  <entry>
-	    <title><xsl:value-of select="title" /></title>
+	    <title><xsl:value-of select="reporting-org" /> project in <xsl:value-of select="recipient-region" /><xsl:value-of select="recipient-country" />: <xsl:value-of select="title" /></title>
 	    <link href="http://tools.aidinfolabs.org/explorer/activities/?activity={iati-identifier}"/>
 	    <id>urn:uuid:<xsl:value-of select="iati-identifier"/></id>
 		
