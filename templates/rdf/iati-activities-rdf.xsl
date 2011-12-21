@@ -139,7 +139,7 @@
 
 					<iati:defaultAidType rdf:resource="http://data.kasabi.com/dataset/iati/codelists/AidType/{default-aid-type/@code}"/>
 
-					<iati:defaultTiedStatusName rdf:resource="http://data.kasabi.com/dataset/iati/codelists/TiedStatus/{default-tied-status/text()"/>
+					<iati:defaultTiedStatusName rdf:resource="http://data.kasabi.com/dataset/iati/codelists/TiedStatus/{default-tied-status/text()}"/>
 
 					<xsl:for-each select="budget">
 						<iati:budget>
