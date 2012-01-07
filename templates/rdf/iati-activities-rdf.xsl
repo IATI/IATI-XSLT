@@ -238,11 +238,11 @@
 					<!-- This should use a better n-ary relationship pattern-->
 					<xsl:for-each select="related-activity">
 						<iati:relatedActivity>
-							<rdf:Description rdf:resource="http://data.kasabi.com/dataset/iati/activity/{translate(../iati-identifier,'/','_')}/related/{@ref}">
+							<rdf:Description rdf:about="http://data.kasabi.com/dataset/iati/activity/{translate(../iati-identifier,'/','_')}/related/{@ref}">
 								<iati:relatedActivityType><xsl:value-of select="@type"/></iati:relatedActivityType>
 								<iati:relatedActivityIdentifier><xsl:value-of select="@ref"/></iati:relatedActivityIdentifier>
 								<owl:sameAs rdf:resource="http://data.kasabi.com/dataset/iati/activity/{translate(@ref,'/','_')}"/>
-							abt	<iati:relatedActivityTitle><xsl:value-of select="."/></iati:relatedActivityTitle>
+								<iati:relatedActivityTitle><xsl:value-of select="."/></iati:relatedActivityTitle>
 							</rdf:Description>
 						</iati:relatedActivity>
 					</xsl:for-each>
