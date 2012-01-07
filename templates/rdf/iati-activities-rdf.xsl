@@ -86,10 +86,10 @@
 				
 					<xsl:for-each select="location">
 						<iati:location>
-							<rdf:Description about="http://data.kasabi.com/dataset/iati/activity/{translate(../iati-identifier,'/','_')}/location/{concat(@percentage,@country,administrative/@adm1,administrative/@adm2,@latitude,@longitude)}"><!--I can't come up with any other good way of getting unique URIs for these sections without using blank nodes)-->
+							<rdf:Description rdf:about="http://data.kasabi.com/dataset/iati/activity/{translate(../iati-identifier,'/','_')}/location/{concat(@percentage,@country,administrative/@adm1,administrative/@adm2,@latitude,@longitude)}"><!--I can't come up with any other good way of getting unique URIs for these sections without using blank nodes)-->
 							<iati:locationPercentage><xsl:value-of select="@percentage"/></iati:locationPercentage>
 							<iati:locationType><xsl:value-of select="location-type"/></iati:locationType>
-							<iati:locationTypeCode rdf:about="http://data.kasabi.com/dataset/iati/codelists/IATI/LocationType/{location-type/@code}"/>
+							<iati:locationTypeCode rdf:resource="http://data.kasabi.com/dataset/iati/codelists/IATI/LocationType/{location-type/@code}"/>
 							<iati:locationName><xsl:value-of select="name"/></iati:locationName>
 							<iati:locationDescription><xsl:value-of select="description"/></iati:locationDescription>
 							<iati:locationDescription><xsl:value-of select="description/text()"/></iati:locationDescription>
