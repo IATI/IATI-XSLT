@@ -46,7 +46,7 @@
 				
 				<xsl:for-each select="participating-org">
 					<iati:participatingOrg>
-						<rdf:Description rdf:about="http://data.kasabi.com/dataset/iati/activity/{translate(normalize-space(../iati-identifier),'/','_')}/orgs/{translate(./@ref,','_')}">
+						<rdf:Description rdf:about="http://data.kasabi.com/dataset/iati/activity/{translate(../iati-identifier,'/','_')}/orgs/{translate(@ref,' ','_')}">
 							<rdfs:seeAlso>
 								<rdf:Description rdf:about="http://data.kasabi.com/dataset/iati/org/{translate(./@ref,' ','_')}">
 									<dc:title><xsl:value-of select="."/></dc:title> 
@@ -144,11 +144,11 @@
 						</iati:policyMarker>
 					</xsl:for-each>
 						
-					<xsl:if test="collaboration-type/@code"><iati:collaborationType rdf:resource="http://data.kasabi.com/dataset/iati/codelists/IATI/CollaborationType/{collaboration-type/@code}	"/></xsl:if>
+					<xsl:if test="collaboration-type/@code"><iati:collaborationType rdf:resource="http://data.kasabi.com/dataset/iati/codelists/IATI/CollaborationType/{collaboration-type/@code}"/></xsl:if>
 					<xsl:if test="default-flow-type/@code"><iati:defaultFlowType rdf:resource="http://data.kasabi.com/dataset/iati/codelists/IATI/FlowType/{default-flow-type/@code}"/></xsl:if>	
-					<xsl:if text="default-finance-type/@code"><iati:defaultFinanceType rdf:resource="http://data.kasabi.com/dataset/iati/codelists/IATI/FinanceType/{default-finance-type/@code}"/></xsl:if>
-					<xsl:if text="default-aid-type/@code"><iati:defaultAidType rdf:resource="http://data.kasabi.com/dataset/iati/codelists/IATI/AidType/{default-aid-type/@code}"/></xsl:if>	
-					<xsl:if text="default-tied-status/@code"><iati:defaultTiedStatusName rdf:resource="http://data.kasabi.com/dataset/iati/codelists/IATI/TiedStatus/{default-tied-status/@code}"/></xsl:if>
+					<xsl:if test="default-finance-type/@code"><iati:defaultFinanceType rdf:resource="http://data.kasabi.com/dataset/iati/codelists/IATI/FinanceType/{default-finance-type/@code}"/></xsl:if>
+					<xsl:if test="default-aid-type/@code"><iati:defaultAidType rdf:resource="http://data.kasabi.com/dataset/iati/codelists/IATI/AidType/{default-aid-type/@code}"/></xsl:if>	
+					<xsl:if test="default-tied-status/@code"><iati:defaultTiedStatusName rdf:resource="http://data.kasabi.com/dataset/iati/codelists/IATI/TiedStatus/{default-tied-status/@code}"/></xsl:if>
 
 					<xsl:for-each select="budget">
 						<iati:budget>
