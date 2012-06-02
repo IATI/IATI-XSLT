@@ -15,7 +15,7 @@
 		<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dc="http://purl.org/dc/elements/1.1/">
 			
 		<xsl:for-each select="//iati-activity">
-			<rdf:Description rdf:about="http://data.kasabi.com/dataset/iati/activity/{translate(iati-identifier,'/','_')}">	
+			<rdf:Description rdf:about="http://data.kasabi.com/dataset/iati/activity/{translate(normalize-space(iati-identifier),'/','_')}">	
 				<dc:title><xsl:value-of select="title"/></dc:title>
 				<iati:defaultCurrency rdf:resource="http://data.kasabi.com/dataset/iati/codelists/IATI/Currency/{./@default-currency}"/>
 				<iati:hierarchicalPosition><xsl:value-of select="./@hierarchy"/></iati:hierarchicalPosition>
@@ -46,7 +46,7 @@
 				
 				<xsl:for-each select="participating-org">
 					<iati:participatingOrg>
-						<rdf:Description rdf:about="http://data.kasabi.com/dataset/iati/activity/{translate(../iati-identifier,'/','_')}/orgs/{./@ref}">
+						<rdf:Description rdf:about="http://data.kasabi.com/dataset/iati/activity/{translate(normalize-space(../iati-identifier),'/','_')}/orgs/{translate(./@ref,','_')}">
 							<rdfs:seeAlso>
 								<rdf:Description rdf:about="http://data.kasabi.com/dataset/iati/org/{translate(./@ref,' ','_')}">
 									<dc:title><xsl:value-of select="."/></dc:title> 
@@ -60,7 +60,7 @@
 				
 				<xsl:for-each select="recipient-country">
 					<iati:recipientCountry>
-						<rdf:Description rdf:about="http://data.kasabi.com/dataset/iati/activity/{translate(iati-identifier,'/','_')}/recipientCountry/{./@code}">
+						<rdf:Description rdf:about="http://data.kasabi.com/dataset/iati/activity/{translate(normalize-space(iati-identifier),'/','_')}/recipientCountry/{./@code}">
 							<iati:country> 
 								<rdf:Description rdf:about="http://data.kasabi.com/dataset/iati/codelists/IATI/Country/{./@code}">
 									<dc:title><xsl:value-of select="."/></dc:title>
@@ -73,7 +73,7 @@
 				
 				<xsl:for-each select="recipient-region">
 					<iati:recipientRegion>
-						<rdf:Description rdf:about="http://data.kasabi.com/dataset/iati/activity/{translate(iati-identifier,'/','_')}/recipientRegion/{./@code}">
+						<rdf:Description rdf:about="http://data.kasabi.com/dataset/iati/activity/{translate(normalize-space(iati-identifier),'/','_')}/recipientRegion/{./@code}">
 							<iati:region>
 								<rdf:Description rdf:about="http://data.kasabi.com/dataset/iati/codelists/IATI/Region/{./@code}">
 									<dc:title><xsl:value-of select="."/></dc:title>
@@ -86,7 +86,7 @@
 				
 					<xsl:for-each select="location">
 						<iati:location>
-							<rdf:Description rdf:about="http://data.kasabi.com/dataset/iati/activity/{translate(../iati-identifier,'/','_')}/location/{concat(@percentage,@country,administrative/@adm1,administrative/@adm2,@latitude,@longitude)}"><!--I can't come up with any other good way of getting unique URIs for these sections without using blank nodes)-->
+							<rdf:Description rdf:about="http://data.kasabi.com/dataset/iati/activity/{translate(normalize-space(../iati-identifier),'/','_')}/location/{concat(@percentage,@country,administrative/@adm1,administrative/@adm2,@latitude,@longitude)}"><!--I can't come up with any other good way of getting unique URIs for these sections without using blank nodes)-->
 							<iati:locationPercentage><xsl:value-of select="@percentage"/></iati:locationPercentage>
 							<iati:locationType><xsl:value-of select="location-type"/></iati:locationType>
 							<iati:locationTypeCode rdf:resource="http://data.kasabi.com/dataset/iati/codelists/IATI/LocationType/{location-type/@code}"/>
@@ -106,7 +106,7 @@
 
 							<xsl:for-each select="gazetteer-entry">
 								<iati:locationGazetteerEntry>
-									<rdf:Description about="http://data.kasabi.com/dataset/iati/activity/{translate(../../iati-identifier,'/','_')}/location/gazeteer/{@gazetteer-ref}/{.}">
+									<rdf:Description about="http://data.kasabi.com/dataset/iati/activity/{translate(normalize-space(../../iati-identifier),'/','_')}/location/gazeteer/{@gazetteer-ref}/{.}">
 										<iati:locationGazetteerAgency><xsl:value-of select="@gazetteer-ref"/></iati:locationGazetteerAgency>
 										<iati:locationGazetteerIdentifier><xsl:value-of select="."/></iati:locationGazetteerIdentifier>	
 									</rdf:Description>
@@ -118,7 +118,7 @@
 				
 					<xsl:for-each select="sector">
 						<iati:sector>
-							<rdf:Description rdf:about="http://data.kasabi.com/dataset/iati/activity/{translate(../iati-identifier,'/','_')}/sector/{@vocabulary}-{@code}">
+							<rdf:Description rdf:about="http://data.kasabi.com/dataset/iati/activity/{translate(normalize-space(../iati-identifier),'/','_')}/sector/{@vocabulary}-{@code}">
 								<iati:sectorVocabulary><xsl:value-of select="@vocabulary"/></iati:sectorVocabulary>
 								<iati:sectorCode>
 									<rdf:Description rdf:about="http://data.kasabi.com/dataset/iati/codelists/IATI/Sector/{./@code}">
@@ -132,7 +132,7 @@
 					
 					<xsl:for-each select="policy-marker">
 						<iati:policyMarker>
-							<rdf:Description rdf:about="http://data.kasabi.com/dataset/iati/activity/{translate(../iati-identifier,'/','_')}/policyMarker/{@vocabulary}-{@code}">
+							<rdf:Description rdf:about="http://data.kasabi.com/dataset/iati/activity/{translate(normalize-space(../iati-identifier),'/','_')}/policyMarker/{@vocabulary}-{@code}">
 								<iati:policyMarkerVocabulary><xsl:value-of select="@vocabulary"/></iati:policyMarkerVocabulary>
 								<iati:policyMarkerCode>
 									<rdf:Description rdf:about="http://data.kasabi.com/dataset/iati/codelists/IATI/PolicyMarker/{./@code}">
@@ -152,7 +152,7 @@
 
 					<xsl:for-each select="budget">
 						<iati:budget>
-							<rdf:Description rdf:about="http://data.kasabi.com/dataset/iati/activity/{translate(../iati-identifier,'/','_')}/budget/{period-start}">
+							<rdf:Description rdf:about="http://data.kasabi.com/dataset/iati/activity/{translate(normalize-space(../iati-identifier),'/','_')}/budget/{period-start}">
 								<iati:budgetType rdf:resource="http://data.kasabi.com/dataset/iati/codelists/IATI/BudgetType/{@type}" />
 								<iati:budgetPeriodStart><xsl:value-of select="period-start"/></iati:budgetPeriodStart>
 								<iati:budgetPeriodStartDate><xsl:value-of select="period-start/@iso-date"/></iati:budgetPeriodStartDate>
@@ -172,13 +172,13 @@
 					
 					<xsl:for-each select="transaction">
 						<iati:transaction>
-							<rdf:Description rdf:about="http://data.kasabi.com/dataset/iati/activity/{translate(../iati-identifier,'/','_')}/transaction/{translate(@ref,'/','_')}-{transaction-type/@code}-{value/@value-date}">
+							<rdf:Description rdf:about="http://data.kasabi.com/dataset/iati/activity/{translate(normalize-space(../iati-identifier),'/','_')}/transaction/{translate(@ref,'/','_')}-{transaction-type/@code}-{value/@value-date}">
 							<iati:transactionTransactionReference><xsl:value-of select="@ref"/></iati:transactionTransactionReference>
 							<iati:transactionType rdf:resource="http://data.kasabi.com/dataset/iati/codelists/IATI/TransactionType/{transaction-type/@code}"/>
 							
 								<xsl:if test="provider-org">
 								<iati:providerOrg>
-									<rdf:Description rdf:about="http://data.kasabi.com/dataset/iati/org/{translate(provider-org/@ref,'/','_')}">
+									<rdf:Description rdf:about="http://data.kasabi.com/dataset/iati/org/{translate(translate(provider-org/@ref,'/','_'),' ','_')}">
 											<dc:title><xsl:value-of select="provider-org"/></dc:title>
 											<xsl:if test="provider-org/@type"><iati:orgType rdf:resource="http://data.kasabi.com/dataset/iati/codelists/IATI/OrganisationType/{provider-org/@type}"/></xsl:if>
 									</rdf:Description>
@@ -187,7 +187,7 @@
 								
 								<xsl:if test="receiver-org">
 								<iati:receiverOrg>
-									<rdf:Description rdf:about="http://data.kasabi.com/dataset/iati/org/{translate(receiver-org/@ref,'/','_')}">
+									<rdf:Description rdf:about="http://data.kasabi.com/dataset/iati/org/{translate(translate(receiver-org/@ref,'/','_'),' ','_')}">
 											<dc:title><xsl:value-of select="receiver-org"/></dc:title>
 											<xsl:if test="receiver-org/@type"><iati:orgType rdf:resource="http://data.kasabi.com/dataset/iati/codelists/IATI/OrganisationType/{receiver-org/@type}"/></xsl:if>
 									</rdf:Description>
@@ -234,10 +234,10 @@
 					<!-- This should use a better n-ary relationship pattern-->
 					<xsl:for-each select="related-activity">
 						<iati:relatedActivity>
-							<rdf:Description rdf:about="http://data.kasabi.com/dataset/iati/activity/{translate(../iati-identifier,'/','_')}/related/{@ref}">
+							<rdf:Description rdf:about="http://data.kasabi.com/dataset/iati/activity/{translate(normalize-space(../iati-identifier),'/','_')}/related/{normalize-space(@ref)}">
 								<iati:relatedActivityType><xsl:value-of select="@type"/></iati:relatedActivityType>
-								<iati:relatedActivityIdentifier><xsl:value-of select="@ref"/></iati:relatedActivityIdentifier>
-								<owl:sameAs rdf:resource="http://data.kasabi.com/dataset/iati/activity/{translate(@ref,'/','_')}"/>
+								<iati:relatedActivityIdentifier><xsl:value-of select="normalize-space(@ref)"/></iati:relatedActivityIdentifier>
+								<owl:sameAs rdf:resource="http://data.kasabi.com/dataset/iati/activity/{normalize-space(@ref)}"/>
 								<iati:relatedActivityTitle><xsl:value-of select="."/></iati:relatedActivityTitle>
 							</rdf:Description>
 						</iati:relatedActivity>
