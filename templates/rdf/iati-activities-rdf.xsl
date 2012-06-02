@@ -48,8 +48,8 @@
 					<iati:participatingOrg>
 						<rdf:Description rdf:about="http://data.kasabi.com/dataset/iati/activity/{translate(../iati-identifier,'/','_')}/orgs/{./@ref}">
 							<rdfs:seeAlso>
-								<rdf:Description rdf:about="http://data.kasabi.com/dataset/iati/org/{./@ref}">
-									<dc:title><xsl:value-of select="."/></dc:title>
+								<rdf:Description rdf:about="http://data.kasabi.com/dataset/iati/org/{translate(./@ref,' ','_')}">
+									<dc:title><xsl:value-of select="."/></dc:title> 
 									<iati:orgType rdf:resource="http://data.kasabi.com/dataset/iati/codelists/IATI/OrganisationType/{./@type}"/>
 								</rdf:Description>
 							</rdfs:seeAlso> 							

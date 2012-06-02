@@ -17,7 +17,7 @@
 	<xsl:for-each select="//iati-activity">
 	  <entry>
 	    <title><xsl:value-of select="reporting-org" /> project in <xsl:value-of select="recipient-region" /><xsl:value-of select="recipient-country" />: <xsl:value-of select="title" /></title>
-	    <link href="http://tools.aidinfolabs.org/explorer/activities/?activity={iati-identifier}"/>
+	    <link href="http://www.iatiexplorer.org/explorer/activity/?activity={iati-identifier}"/>
 	    <id>urn:uuid:<xsl:value-of select="iati-identifier"/></id>
 		
 	    <updated><xsl:if test="activity-date[@type='start-actual']"><xsl:value-of select="translate(activity-date[@type='start-actual'],'Z','')"/></xsl:if><xsl:if test="not(activity-date[@type='start-actual'])"><xsl:value-of select="translate(activity-date[@type='start-planned'],'Z','')"/></xsl:if>T12:00:00Z</updated>
