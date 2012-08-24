@@ -1,2 +1,9 @@
-These files are used for producing human raedable documentation tables from a schema.
+These XSL templates can be used to produce human readable documentations tables
+from an XML table. There is support for outputting as HTML, CSV and ODS. Most
+of the parsing functionality is in base.xsl, but you should not call this
+directly. Instead, use the schemaname-filetype.xsl template. E.g. for html
+output of the iati actvities schema use iati-actvities-html.xsl
+
+The ODS template produces only the content.xml part of an ODS file.
+
 
