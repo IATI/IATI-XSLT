@@ -1,3 +1,4 @@
+#!/bin/bash
 for f in html csv ods; do
     xsltproc implementation-$f.xsl implementation.xsd > out/implementation.$f
     xsltproc iati-activities-schema-$f.xsl  iati-activities-schema.xsd > out/iati-activities-schema.$f
