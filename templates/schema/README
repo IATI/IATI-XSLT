@@ -4,6 +4,9 @@ of the parsing functionality is in base.xsl, but you should not call this
 directly. Instead, use the schemaname-filetype.xsl template. E.g. for html
 output of the iati actvities schema use iati-actvities-html.xsl
 
-The ODS template produces only the content.xml part of an ODS file.
-
+The ODS template produces only the content.xml part of an ODS file. To produce a .ods file, move this content.xml into the ods folder, and compress the contents of the folder into a zip file. Rename this file to give it a .ods file extension. 
+e.g. on a unix-esque commandline:
+    cp content.xml ods/
+    cd ods 
+    zip ../something.ods *.xml META-INF/*
 
