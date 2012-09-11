@@ -18,12 +18,16 @@
     <xsl:template name="documentation">
         <xsl:param name="parent" select="." />
         <xsl:param name="parentRef" />
+        <xsl:param name="attributeName" select="''" />
         <xsl:choose>
             <xsl:when test="$parentRef and $parentRef/xsd:annotation/xsd:documentation">
-                <xsl:value-of select="$parentRef/xsd:annotation/xsd:documentation"/>
+                <xsl:copy-of select="$parentRef/xsd:annotation/xsd:documentation"/>
+            </xsl:when>
+            <xsl:when test="$attributeName = 'xml:lang'">
+                <xsl:text>ISO 2 letter code specifying the language of text in this element.</xsl:text>
             </xsl:when>
             <xsl:otherwise>
-                <xsl:value-of select="$parent/xsd:annotation/xsd:documentation"/>
+                <xsl:copy-of select="$parent/xsd:annotation/xsd:documentation" />
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
@@ -95,6 +99,11 @@
                     <xsl:with-param name="path" select="$path"/>
                     <xsl:with-param name="parent" select="$complexType"/>
                 </xsl:call-template>
+                <xsl:call-template name="elementsLoop">
+                    <xsl:with-param name="complexType" select="$complexType"/> 
+                    <xsl:with-param name="path" select="$path"/> 
+                    <xsl:with-param name="depth" select="$depth"/> 
+                </xsl:call-template>
             </xsl:when>
             <xsl:otherwise>
                 <xsl:call-template name="textRow">
@@ -106,6 +115,15 @@
                         <xsl:with-param name="path" select="$path"/>
                     </xsl:call-template>
                 </xsl:for-each>
+                <xsl:variable name="base" select="$element/xsd:complexType/*/xsd:extension/@base"/>
+                <xsl:if test="$base">
+                    <xsl:variable name="complexType" select="($includes|/)/xsd:schema/xsd:complexType[@name=$base]"/>
+                    <xsl:call-template name="elementsLoop">
+                        <xsl:with-param name="complexType" select="$complexType"/> 
+                        <xsl:with-param name="path" select="$path"/> 
+                        <xsl:with-param name="depth" select="$depth"/> 
+                    </xsl:call-template>
+                </xsl:if>
             </xsl:otherwise>
         </xsl:choose>
         <xsl:call-template name="attributeGroup">
@@ -113,7 +131,18 @@
             <xsl:with-param name="parent" select="$element"/>
         </xsl:call-template>
 
-        <xsl:for-each select="$element/xsd:complexType/xsd:choice/xsd:element | $element/xsd:complexType/xsd:all/xsd:element">
+        <xsl:call-template name="elementsLoop">
+            <xsl:with-param name="complexType" select="$element/xsd:complexType"/> 
+            <xsl:with-param name="path" select="$path"/> 
+            <xsl:with-param name="depth" select="$depth"/> 
+        </xsl:call-template>
+    </xsl:template>
+
+    <xsl:template name="elementsLoop">
+        <xsl:param name="complexType"/>
+        <xsl:param name="path"/>
+        <xsl:param name="depth"/>
+        <xsl:for-each select="$complexType/xsd:choice/xsd:element | $complexType/xsd:all/xsd:element">
             <xsl:if test="@ref">
                 <xsl:variable name="nextPath">
                     <xsl:choose>
@@ -251,6 +280,7 @@
                 <xsl:call-template name="documentation">
                     <xsl:with-param name="parent" select="$attribute"/>
                     <xsl:with-param name="parentRef" select="$attributeRef"/>
+                    <xsl:with-param name="attributeName" select="$attributeName" />
                 </xsl:call-template>
             </xsl:with-param>
             <xsl:with-param name="cell4">
