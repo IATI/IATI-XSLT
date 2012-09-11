@@ -5,7 +5,7 @@
     version="1.0"
     >
     <xsl:include href="base.xsl"/>
-    <xsl:variable name="maxdepth" select="2" type="xs:integer" />
+    <xsl:variable name="maxdepth" select="3" type="xs:integer" />
 
     <!-- No relevant documentation url, so ignore -->
     <xsl:template name="docURL">

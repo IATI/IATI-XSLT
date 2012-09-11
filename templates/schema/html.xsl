@@ -77,7 +77,7 @@
                 <xsl:value-of select="$cell2" />
             </td>
             <td  class='s{$stylenum}'>
-                <xsl:value-of select="$cell3" />
+                <xsl:copy-of select="$cell3" />
             </td>
             <td class='s{$stylenum}'>
                 <xsl:value-of select="$cell4" />
