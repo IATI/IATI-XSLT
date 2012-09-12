@@ -15,19 +15,30 @@
         </xsl:call-template>
     </xsl:template>
 
+    <xsl:template match="*" mode="stripNamespace" >
+        <xsl:element name="{local-name()}">
+            <xsl:for-each select="@*">
+                <xsl:attribute name="{local-name()}">
+                    <xsl:value-of select="." />
+                </xsl:attribute>
+            </xsl:for-each>
+            <xsl:apply-templates mode="stripNamespace" />
+        </xsl:element>
+    </xsl:template>
+
     <xsl:template name="documentation">
         <xsl:param name="parent" select="." />
         <xsl:param name="parentRef" />
         <xsl:param name="attributeName" select="''" />
         <xsl:choose>
             <xsl:when test="$parentRef and $parentRef/xsd:annotation/xsd:documentation">
-                <xsl:copy-of select="$parentRef/xsd:annotation/xsd:documentation"/>
+                <xsl:apply-templates select="$parentRef/xsd:annotation/xsd:documentation" mode="stripNamespace" />
             </xsl:when>
             <xsl:when test="$attributeName = 'xml:lang'">
                 <xsl:text>ISO 2 letter code specifying the language of text in this element.</xsl:text>
             </xsl:when>
             <xsl:otherwise>
-                <xsl:copy-of select="$parent/xsd:annotation/xsd:documentation" />
+                <xsl:apply-templates select="$parent/xsd:annotation/xsd:documentation" mode="stripNamespace" />
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
