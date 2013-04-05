@@ -8,10 +8,11 @@
     <xsl:template match="/iati-activities">
         <xsl:variable name="unique-list" select="./iati-activity/recipient-country/@code[not(.=following::iati-activity/recipient-country/@code)]" />
         <xsl:for-each select="$unique-list">
+            <xsl:variable name="code" select="." />
             <exsl:document method="xml" href="{$outprefix}-{.}.xml">
                 <iati-activities>
                     <xsl:copy-of select="/iati-activities/@*" />
-                    <xsl:for-each select="/iati-activities/iati-activity">
+                    <xsl:for-each select="/iati-activities/iati-activity[recipient-country/@code=$code]">
                         <xsl:copy-of select="."/>
                     </xsl:for-each>
                 </iati-activities>
