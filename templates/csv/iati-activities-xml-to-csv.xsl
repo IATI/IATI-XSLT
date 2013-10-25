@@ -130,7 +130,7 @@
     <xsl:call-template name="join"> <xsl:with-param name="values" select="transaction/value/@value-date"/> <xsl:with-param name="remove">Z</xsl:with-param> </xsl:call-template>
 
     <!-- transaction-types -->
-    <xsl:call-template name="join"> <xsl:with-param name="values" select="transaction/transaction-type"/> </xsl:call-template>
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="transaction/transaction-type/@code"/> </xsl:call-template>
 
     <!-- transaction-dates -->
     <xsl:call-template name="join"> <xsl:with-param name="values" select="transaction/transaction-date"/> </xsl:call-template>
