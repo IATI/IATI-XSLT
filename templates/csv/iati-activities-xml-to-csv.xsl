@@ -13,7 +13,7 @@
   <xsl:text>interest-repayment,</xsl:text>
   <xsl:text>transaction_values,</xsl:text>
   <xsl:text>transaction-value_value-dates,</xsl:text>
-  <xsl:text>transaction-types,transaction-dates,transaction-date_iso-dates,</xsl:text>
+  <xsl:text>transaction-types,transaction-type_codes,transaction-dates,transaction-date_iso-dates,</xsl:text>
   <xsl:text>transaction_provider-org_refs,transaction_provider-orgs,transaction_provider-org_provider-activity-ids,</xsl:text>
   <xsl:text>transaction_receiver-org_refs,transaction_receiver-orgs,transaction_receiver-org_receiver-activity-ids,</xsl:text>
   <xsl:text>transaction_description_langs,transaction_descriptions,</xsl:text>
@@ -130,6 +130,7 @@
     <xsl:call-template name="join"> <xsl:with-param name="values" select="transaction/value/@value-date"/> <xsl:with-param name="remove">Z</xsl:with-param> </xsl:call-template>
 
     <!-- transaction-types -->
+    <xsl:call-template name="join"> <xsl:with-param name="values" select="transaction/transaction-type"/> </xsl:call-template>
     <xsl:call-template name="join"> <xsl:with-param name="values" select="transaction/transaction-type/@code"/> </xsl:call-template>
 
     <!-- transaction-dates -->
