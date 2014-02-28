@@ -1,0 +1,46 @@
+--- iati-activities-schema.xsd	2012-08-15 19:45:39.919164183 +0100
++++ mod.xsd	2012-08-22 12:15:22.541790155 +0100
+@@ -148,10 +148,15 @@
+         different languages.
+       </xsd:documentation>
+     </xsd:annotation>
+     <xsd:complexType>
+       <xsd:simpleContent>
++        <xsd:annotation>
++          <xsd:documentation xml:lang="en">
++              Test text
++          </xsd:documentation>
++        </xsd:annotation>
+         <xsd:extension base="xsd:anyURI">
+           <xsd:anyAttribute processContents="lax" namespace="##other"/>
+         </xsd:extension>
+       </xsd:simpleContent>
+     </xsd:complexType>
+@@ -173,15 +178,26 @@
+         officially-registered organizations at
+         http://iatistandard.org/codelists/organisation
+       </xsd:documentation>
+     </xsd:annotation>
+     <xsd:complexType mixed="true">
++        <xsd:annotation>
++          <xsd:documentation xml:lang="en">
++              Test text
++          </xsd:documentation>
++        </xsd:annotation>
+       <xsd:sequence>
+         <xsd:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+       </xsd:sequence>
+       <xsd:attributeGroup ref="textAtts"/>
+-      <xsd:attribute ref="ref" use="optional"/>
++      <xsd:attribute ref="ref" use="optional">
++        <xsd:annotation>
++          <xsd:documentation xml:lang="en">
++              Test text about this particular ref
++          </xsd:documentation>
++        </xsd:annotation>
++      </xsd:attribute>
+       <xsd:attribute ref="type" use="optional"/>
+       <xsd:attribute name="role" type="xsd:string" use="required">
+         <xsd:annotation>
+           <xsd:documentation xml:lang="en">
+             A code describing the organisation's role in the activity
